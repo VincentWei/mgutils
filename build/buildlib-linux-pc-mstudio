@@ -1,0 +1,9 @@
+#!/bin/sh
+
+rm config.cache config.status -f
+
+./configure \
+    --disable-static \
+    --with-targetname=mstudio \
+    --with-libsuffix=msd 
+

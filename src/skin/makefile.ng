@@ -1,0 +1,4 @@
+include Makefile.am
+include ../../build/Defs-mgext.win32
+include ../../rules.make
+

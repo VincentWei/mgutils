@@ -1,0 +1,149 @@
+*******************************************************************************
+What's new in trunk:
+
+03/24: Merge from rel-3-0 (wanzheng)
+	* samples/notebook/main.c
+	* samples/picview/picview.c
+	* configure.in
+	* src/templates/filedlg.c
+
+02/05: BUGFIXING #4360: fix bug: newfiledialog can not show new filename when
+change file with keyboard. merge from branch (ZhaolinHu)
+	* src/mywins/newfiledlg.c
+
+?????: BUGFIXING #4439: by dongjunjie, need to merge to rel
+
+01/27: BUGFIXING #?: fix compiling error (wanzheng)
+	* configure.in
+
+01/18: BUGFIXING #?: fix the error of compiling mstudio (wanzheng)
+	* configure.in
+
+01/18: BUGFIXING #?: fix bug: samples/picview samples/painter can not compile 
+	* samples/notebook/Makefile.in 
+	* samples/notebook/Makefile.am
+	* samples/painter/Makefile.in
+	* samples/painter/Makefile.am
+	* samples/painter/Makefile
+	* samples/skin/Makefile.am
+	* samples/mywins/Makefile.am
+	* samples/picview/Makefile.in
+	* samples/picview/picview.c
+	* samples/picview/Makefile.am
+	* samples/picview/Makefile
+	* samples/mginit/Makefile.am
+	* samples/Makefile.am
+	* samples/vcongui/Makefile.am
+	* samples/templates/Makefile.am
+	* configure.in
+	* ChangeLog
+
+
+01/13: BUGFIXING #4337: fix bug: sample/notebook can not compile 
+	* samples/notebook/main.c
+	* samples/notebook/Makefile (deleted)
+	* samples/Makefile.am
+	* configure.in
+
+
+07/22: BUGFIXING #?: Add the suffix for libraries libmgutils in the samples
+Makefile
+	* samples/mginit/Makefile.am
+	* samples/mywins/Makefile.am
+	* samples/notebook/Makefile.am
+	* samples/picview/Makefile.am
+	* samples/skin/Makefile.am
+	* samples/templates/Makefile.am
+	* samples/vcongui/Makefile.am
+
+07/22: MAINTENANCE #3: Add the script for mstudio building
+	* build/buildlib-linux-pc-mstudio
+
+07/21: MAINTENANCE #2: Add option to configure the suffix of library name.
+	* configure.in
+	* src/Makefile.am
+
+06/20: ENHANCEMENT #1: Import skin support from MiniGUI patch-2-0-4.
+	* configure.in
+	* include/skin.h
+	* src/skin/*.[ch]
+	* samples/skin/*.[ch]
+
+*******************************************************************************
+What's new in this version (1.0.0, 2008/01/01 ~ 2009/04/13):
+
+04/13: Fix bug 3453(ymwei).
+	* src/vcongui/key.c
+
+04/13: Fix bug 3465(ymwei).
+	* samples/mginit/Makefile.am
+
+10/30: Fix bug 3107(tangjb).
+	* src/templates/infodlg.c
+
+10/28: Fix bug 3108(tangjb).
+	* src/templates/colordlg.c
+
+10/28: Fix bug 3106(tangjb).
+	* src/templates/colordlg.c
+
+10/27: Fix bug 3103(tangjb).
+	* src/vcongui/Makefile.am
+
+10/07: Fix bug 3095(houhh): get panel cell color error.
+	* src/template/colordlg.c
+	* src/template/colorpanel.h
+
+08/26: Move ToolTip window implementation to MiniGUI core:
+	* include/mgutils.h
+	* src/mywins/mywindows.c
+
+08/25: Tune the samples.
+
+08/25: Fix bug 2836 (dongjunjie): cannot get custom color.
+	* src/template/colordlg.c
+	* src/template/colorpanel.h
+
+06/27: Make the Path combobox accept user input (dongjunjie)
+   * src/template/fontdlg.c
+
+06/27: Fixed bug 2825 (dongjunjie)
+	For ttf fonts, it show the font size from FONT_MIN_SIZE to FONT_MAX_SIZE;
+	For fix fonts, it enum the support font sizes
+	* src/template/fontdlg.c
+
+08/06/27: Fixed bug 2849 .(wangjian)
+	* src/template/colordlg.c
+
+06/26: Remove Resizable border (dongjunjie)
+	Add the WS_DLGFRAM to dialog template
+	* src/template/colordlg.c
+	* src/template/filedlg.c
+	* src/template/fontdlg.c
+	* src/tmeplate/infodlg.c
+
+06/25: Update the Colordlg: (dongjunjie)
+	RGB2HSV and HSV2RGB caculate is not right 
+	* src/templetes/colordlg.c
+	* src/mywins/colorspace.c
+
+06/25: Update the Filedlg: (dongjunjie)
+	when close button is clicked in the caption, the filedialog is cancled.
+
+06/25: Update the Colordlg: (dongjunjie)
+	update the limite eidt: when the input is greater then max value or less
+	then min value, the edit control will change to max or min value. this
+	effect the R, G, B, H, S, V edit boxes.
+
+06/18: Update the Colordlg: (dongjunjie)
+	1) Add the Number Limite SLEdit. by subclass SLEdit, it can veritfy input
+	digit chars
+	2) Update the Value Change releation: R G B will change H S V Edits and H
+	S V Edits will change R G B Edits
+	3) Add the TabStop style for R G B , H S V edits and BASIC COLOR BOX,
+	"TAB" key can switch in the controls
+	4) the "UP" key  and "DOWN" key can switch the H S V and R G B focus when
+	you input digitals
+
+	* src/templates/colordlg.c
+
