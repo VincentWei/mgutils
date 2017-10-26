@@ -1,5 +1,5 @@
 /*
-** $Id: error.c 1 2007-12-28 06:28:48Z xwyan $
+** $Id: error.c 231 2017-10-26 07:25:36Z weiym $
 **
 ** KON2 - Kanji ON Console -
 ** Copyright (C) 1992-1996 Takashi MANABE (manabe@papilio.tutics.tut.ac.jp)
@@ -36,7 +36,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include <sys/time.h>
 
 #include <minigui/common.h>
 #include <minigui/minigui.h>

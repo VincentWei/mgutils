@@ -303,6 +303,7 @@ static int ViewWinProc(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
                     strcpy (filepathdata.filepath, "./");
                     strcpy (filepathdata.filter, 
                             "All file(*.*) | Bitmap file(*.bmp)");
+                    memset (filepathdata.filename, 0, sizeof(filepathdata.filename));
 
                     choise = ShowOpenDialog (hWnd, 100, 100, 350, 250, &filepathdata);
 

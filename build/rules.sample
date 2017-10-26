@@ -1,0 +1,38 @@
+# an sample of the makefile.ng rules 
+
+# set your own targaet_os
+TARGET_OS=your_target_os
+
+##################################################
+# set your compile tool #
+CC=gcc
+CXX=g++
+CPP=g++
+AR=ar
+AS=as
+RANLIB=ranlib
+MAKE=/usr/bin/make
+##################################################
+
+ARFLAGS=-rc
+COFLAG=-c
+
+OBJ=o
+LIBA=a
+
+##################################################
+# if you don't want to create dynamic, delete it # 
+LIBSO=so
+SOFLAGS=-fPIC -shared -o
+##################################################
+
+
+##################################################
+# set your compile flags and install prefix path # 
+PREFIX=/usr/local
+CFLAGS+=-g -Wall
+CXXFLAGS+=-g -Wall
+CPPFLAGS+=-g -Wall
+LDFLAGS+=
+##################################################
+

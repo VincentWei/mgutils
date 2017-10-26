@@ -1,0 +1,6 @@
+src_files= src/mywins/mywindows.c src/mywins/helpwin.c src/mywins/colordlg.c src/mywins/colorspace.c src/mywins/newfiledlg.c src/skin/skin.c src/skin/cmdbutton.c src/skin/chkbutton.c src/skin/label.c src/skin/bmplabel.c src/skin/slider.c src/skin/rotslider.c src/skin/mgcontrol.c  src/templates/commdlg.c src/templates/filedlg.c src/templates/colordlg.c src/templates/fontdlg.c src/templates/infodlg.c src/templates/colorpanel.c src/templates/windows-funcs.c 
+project_name=mgutils
+lib_name=libmgutils
+lib_major_version=1
+lib_minor_version=0
+lib_micro_version=2

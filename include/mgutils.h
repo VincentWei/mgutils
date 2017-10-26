@@ -14,7 +14,7 @@
  */
 
 /*
- * $Id: mgutils.h 151 2009-06-20 09:51:20Z weiym $
+ * $Id: mgutils.h 231 2017-10-26 07:25:36Z weiym $
  *
  * mGUtils: A MiniGUI component which contains miscellaneous 
  * utilities like ColorSelectionDialogBox, FileOpenDialogBox, and so on. 
@@ -35,8 +35,10 @@ extern "C" {
   #else
   #define MGUTILS_EXPORT       __declspec(dllimport) 
   #endif
+#elif defined(__NODLL__) && defined(WIN32)
+  #define MGUTILS_EXPORT       __declspec(dllimport) 
 #else
-  #define MGUTILS_EXPORT
+  #define MGUTILS_EXPORT       
 #endif
 
 #define MGUTILS_MSG_BASE            MSG_USER + 0x40
@@ -677,6 +679,10 @@ typedef NEWFILEDLGDATA* PNEWFILEDLGDATA;
  *
  * \retval IDOK The user choosed a file and OK button clicked.
  * \retval IDCANCLE CANCEL button clicked.
+ *
+ * \attention pnfdd->filename is an input & output parameter, you can set
+ * your default filename by it. So before use this function, you must init 
+ * pnfdd->filename.
  * 
  * \sa NEWFILEDLGDATA, ShowOpenDialog
  */
@@ -1040,27 +1046,27 @@ WNDPROC proc, PINFODLGDATA pidd)
 MGUTILS_EXPORT BOOL InfoShowDialog  (PDLGTEMPLATE dlg_template, HWND hwnd, 
         WNDPROC proc, PINFODLGDATA pidd);
 
-extern DLGTEMPLATE DefFileDlg;
-extern DLGTEMPLATE DefColorDlg;
-extern DLGTEMPLATE DefFontDlg;
-extern DLGTEMPLATE DefInfoDlg;
+MGUTILS_EXPORT extern DLGTEMPLATE DefFileDlg;
+MGUTILS_EXPORT extern DLGTEMPLATE DefColorDlg;
+MGUTILS_EXPORT extern DLGTEMPLATE DefFontDlg;
+MGUTILS_EXPORT extern DLGTEMPLATE DefInfoDlg;
 
-extern DLGTEMPLATE DefSimpleFileDlg;
-extern DLGTEMPLATE DefSimpleColorDlg;
-extern DLGTEMPLATE DefSimpleFontDlg;
-extern DLGTEMPLATE DefSimpleInfoDlg;
+MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleFileDlg;
+MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleColorDlg;
+MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleFontDlg;
+MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleInfoDlg;
 
 /** The default File Open/Save Dialog callback procedure. */
-extern int DefFileDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam);
+MGUTILS_EXPORT int DefFileDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam);
 
 /** The default Color Selection Dialog callback procedure. */
-extern int DefColorDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam);
+MGUTILS_EXPORT int DefColorDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam);
 
 /** The default Font Selection Dialog callback procedure. */
-extern int DefFontDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam);
+MGUTILS_EXPORT int DefFontDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam);
 
 /** The default Information Dialog callback procedure. */
-extern int DefInfoDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam);
+MGUTILS_EXPORT int DefInfoDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam);
 
     /** @} end of templates_fns */
 

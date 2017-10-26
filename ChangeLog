@@ -1,10 +1,85 @@
 *******************************************************************************
 What's new in trunk:
+10/26-2017 CLEANUP: merge from rel-3-0 branch.
+	* svn merge -r191:230 ^/branches/rel-3-0
+
+06/21 BUGFIXING #5658: use strtrimall to cause operation failure.(xwyan)
+	* src/mywins/newfiledlg.c
 
 03/24: Merge from rel-3-0 (wanzheng)
 	* samples/notebook/main.c
 	* samples/picview/picview.c
-	* configure.in
+
+03/30. BUGFIXING #5503: Listview return HLVITEM not index for 
+LVM_GETSELECTEDITEM.(xwyan)
+	* src/mywins/newfiledlg.c
+
+03/25. CLEANUP #?: Fix compiling issues on VxWorks. (modified by PT, commited
+by wanzheng)
+	* build/rules-mips.vxworks
+	* files.ng
+	* makefile.ng
+	* source.ng
+	* src/templates/filedlg.c
+	* src/vcongui/child.c
+	* src/vcongui/error.c
+	* src/vcongui/key.c
+
+01/18. ENHANCEMENT #?: Add makefile.ng compile script. (humingming)
+	* A makefile.ng
+	* A get-files.sh
+	* A build/rules-pc.linux
+	* A build/rules.sample
+	* M CMakeLists.txt
+
+11/22. CLEANUP #?: Modify autotool scripts to install cmake modules of mGUtils.
+(wanzheng)
+	* A cmake/Makefile.am
+	* M configure.in
+	* M Makefile.am
+
+09/25: BUGFIXING #?: Fixed the bug of windows(dongjunjie)
+	* src/templates/filedlg.c
+
+09/25: ENHANCEMENT #?: add FindMGUTILS.cmake (ZhaolinHu)
+	* cmake
+	* cmake/FindMGUTILS.cmake
+	* CMakeLists.txt
+
+09/09: ENHANCEMENT #?: Adjust for win32 platform. (humingming)
+	* include/mgutils.h
+	* samples/mywins/mywins.c
+	* samples/mywins/CMakeLists.txt
+	* samples/CMakeLists.txt
+	* src/CMakeLists.txt
+	* src/templates/filedlg.c
+	* src/templates/windows-funcs.c
+	* src/templates/CMakeLists.txt
+
+09/03: ENHANCEMENT #?: Add CMake scripts for mGUtils (ZhaolinHu)
+	* samples/notebook/CMakeLists.txt
+	* samples/painter/CMakeLists.txt
+	* samples/skin/CMakeLists.txt
+	* samples/mywins/CMakeLists.txt
+	* samples/picview/CMakeLists.txt
+	* samples/mginit/CMakeLists.txt
+	* samples/vcongui/CMakeLists.txt
+	* samples/CMakeLists.txt
+	* samples/templates/CMakeLists.txt
+	* src/skin/CMakeLists.txt
+	* src/mywins/CMakeLists.txt
+	* src/vcongui/CMakeLists.txt
+	* src/CMakeLists.txt
+	* src/templates/CMakeLists.txt
+	* CMakeLists.txt
+
+05/12: BUGFIXING #4655: Newfiledialog can't set a default file name. (rlzheng)
+	* include/mgutils.h
+	* src/mywins/newfiledlg.c
+	* samples/notebook/main.c
+	* samples/picview/picview.c
+
+02/07: CLEANUP #1: Remove AC_FUNC_MALLOC from configure.in (wanzheng)
 	* src/templates/filedlg.c
 
 02/05: BUGFIXING #4360: fix bug: newfiledialog can not show new filename when

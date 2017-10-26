@@ -1,6 +1,10 @@
-AUTOMAKE_OPTIONS=foreign
+if MGUTILS_NOSUFFIX
+SAMPLES=samples
+else
+SAMPLES=
+endif
 
-SUBDIRS = src include samples m4
+SUBDIRS = src include $(SAMPLES) m4 cmake
 
 # The directory where the include files will be installed
 libmgutilsincludedir =
@@ -9,4 +13,7 @@ libmgutilsincludedir =
 libmgutilsinclude_HEADERS =
 
 EXTRA_DIST = INSTALL README
+
+pkgconfigdir = $(libdir)/pkgconfig
+pkgconfig_DATA = mgutils.pc
 

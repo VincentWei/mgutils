@@ -29,11 +29,12 @@
 #include <unistd.h>
 #include <pwd.h>
 #elif defined(WIN32)
-#define R_OK    4       /* Test for read permission.  */
-#define W_OK    2       /* Test for write permission.  */
-#define X_OK    1       /* Test for execute permission.  */
-#define F_OK    0       /* Test for existence.  */
+#include <time.h>
 #include <io.h>
+#elif defined(__VXWORKS__)
+#include <time.h>
+#include <dirent.h>
+#include "sys/stat.h"
 #endif
 #include <errno.h>
 
@@ -42,6 +43,17 @@
 #define MIN_WIDTH       490
 #define OTHERS_WIDTH    330
 #define COL_COUNT       4
+
+/* http://msdn.microsoft.com/en-us/library/1w06ktdy(v=vs.80).aspx */
+#ifdef WIN32
+#   define access(x, y) _access(x, y)
+#endif
+#ifndef F_OK
+#   define	F_OK	0
+#   define	R_OK	4
+#   define	W_OK	2
+#   define	X_OK	1
+#endif /* F_OK */
 
 static HICON icon_ft_dir, icon_ft_file;
 
@@ -555,6 +567,12 @@ ListViewSortByDate( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
     return nResult;
 }
 
+#ifdef __LINUX__
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+#endif
+
 static inline BOOL is_dir(const char* path)
 {
 	if(path == NULL)
@@ -570,27 +588,27 @@ static inline BOOL is_dir(const char* path)
 #endif
 }
 
+#ifdef WIN32
+#include "windows-funcs.h"
 static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
 {
-    HWND     hCtrlWnd;
-    struct   dirent* pDirEnt;
-    DIR*     dir;
-    struct   stat ftype;
-    char     fullpath [MY_PATHMAX + 1];
-    char     filefullname[MY_PATHMAX+MY_NAMEMAX+1];
-    FILEINFO fileinfo;
-    int      nRet;
-    int      nCheckState;
-#ifdef WIN32
-	char szcwd[MY_PATHMAX+1];
-#endif
+	HWND     hCtrlWnd;
+	FILEINFO fileinfo;
+	int      nCheckState;
+	int len;
+	win_find_file_info find_file_info; 
 
-	if(!is_dir(path))
-		return ;
+	if(!path)
+		return;
+	path = strtrimall (path);
+	if ((len = strlen (path)) == 0) return;
 
-    hCtrlWnd = GetDlgItem (hWnd, IDC_FOSD_ISHIDE);
+	hCtrlWnd = GetDlgItem (hWnd, IDC_FOSD_ISHIDE);
 
-    if (hCtrlWnd)
+	SendMessage (hCtrlWnd, LVM_COLSORT, (WPARAM)0, 0);
+    SendMessage (hCtrlWnd, MSG_FREEZECTRL, FALSE, 0);
+
+	if (hCtrlWnd)
         nCheckState = SendMessage (hCtrlWnd, BM_GETCHECK, 0, 0);
     else
         /*For DefSimpleFileCtrl*/
@@ -598,12 +616,7 @@ static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
 
     hCtrlWnd = GetDlgItem (hWnd, IDC_FOSD_FILELIST);
     SendMessage (hCtrlWnd, LVM_DELALLITEM, 0, 0);
-   
-    if (path == NULL) return;
-    strtrimall (path);
-    if (strlen (path) == 0) return;
 
-#ifdef WIN32
 	if(strcmp(path, "/") == 0)
 	{
 		int i;
@@ -623,23 +636,78 @@ static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
 		return ;
 	}
 
-	if((path[strlen(path)-1] == '\\' ||
-		path[strlen(path)-1] == '/') && path[strlen(path)-2] != ':')
+
+	if(!win_find_first_file(path, &find_file_info))
+		return ;
+	do{
+		if(find_file_info.file_attrs & WIN_FFI_DIR
+			&& (strcmp(find_file_info.file_name, ".") == 0
+			|| strcmp(find_file_info.file_name, "..") == 0))
+			continue;
+
+		if(nCheckState != BST_CHECKED && (find_file_info.file_attrs & WIN_FFI_HIDE))
+			continue;
+
+		if(find_file_info.file_attrs & WIN_FFI_DIR) {
+			fileinfo.IsDir = TRUE;
+		}
+		else if(find_file_info.file_attrs & WIN_FFI_NORMAL) {
+			if ( !IsInFilter (filtstr, find_file_info.file_name) )
+                continue;
+			fileinfo.IsDir = FALSE;
+		}
+		else
+			continue;
+
+		strcpy(fileinfo.filename, find_file_info.file_name);
+		fileinfo.filesize = find_file_info.file_size;
+		fileinfo.accessmode = find_file_info.access_mode;
+		fileinfo.modifytime = find_file_info.last_access_time;
+
+		InsertToListView (hWnd, &fileinfo);
+
+	}while(win_find_next_file(&find_file_info));
+
+	win_end_find_file(&find_file_info);
+
+}
+
 #else
+static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
+{
+    HWND     hCtrlWnd;
+    struct   dirent* pDirEnt;
+    DIR*     dir;
+    char     fullpath [MY_PATHMAX + 1];
+    char     filefullname[MY_PATHMAX+MY_NAMEMAX+1];
+    FILEINFO fileinfo;
+    int      nRet;
+    int      nCheckState;
+	struct   stat ftype;
+
+	if(!is_dir(path))
+		return ;
+
+    hCtrlWnd = GetDlgItem (hWnd, IDC_FOSD_ISHIDE);
+
+    if (hCtrlWnd)
+        nCheckState = SendMessage (hCtrlWnd, BM_GETCHECK, 0, 0);
+    else
+        /*For DefSimpleFileCtrl*/
+        nCheckState = BST_CHECKED;
+
+    hCtrlWnd = GetDlgItem (hWnd, IDC_FOSD_FILELIST);
+    SendMessage (hCtrlWnd, LVM_DELALLITEM, 0, 0);
+   
+    if (path == NULL) return;
+    path = strtrimall (path);
+    if (strlen (path) == 0) return;
+
     if (strcmp (path, "/") != 0 && path [strlen(path)-1] == '/')
-#endif
         path [strlen(path)-1]=0;
 
     SendMessage (hCtrlWnd, MSG_FREEZECTRL, TRUE, 0);
  
-
-	/* bug :for windows
-	* the opendir function will change currend work dir
-	* to "path"
-	*/
-#ifdef WIN32
-	getcwd(szcwd, sizeof(szcwd)-1);
-#endif
     dir = opendir (path);
 
     while ((pDirEnt = readdir ( dir )) != NULL ) {
@@ -655,11 +723,11 @@ static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
             if (pDirEnt->d_name [0] == '.') 
                 continue;
         }
-
 		strncpy (fullpath, path, MY_PATHMAX);
         strcat (fullpath, "/");
         strcat (fullpath, pDirEnt->d_name);
 
+		memset(&ftype, 0, sizeof(ftype));
         if (stat (fullpath, &ftype) < 0 ){
            continue;
         }
@@ -678,13 +746,8 @@ static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
         
         strcpy (fileinfo.filename, pDirEnt->d_name);
         
-#ifdef WIN32
-		sprintf (filefullname, "%s\\%s", 
-            strcmp (path, "\\") == 0 ? "" : path, pDirEnt->d_name);  
-#else
         sprintf (filefullname, "%s/%s", 
             strcmp (path, "/") == 0 ? "" : path, pDirEnt->d_name);  
-#endif
 
         fileinfo.accessmode = 0;
         nRet = GetAccessMode (hWnd, filefullname, FALSE, FALSE);
@@ -703,12 +766,10 @@ static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
 
     closedir (dir);
 
-#ifdef WIN32
-	chdir(szcwd);
-#endif
     SendMessage (hCtrlWnd, LVM_COLSORT, (WPARAM)0, 0);
     SendMessage (hCtrlWnd, MSG_FREEZECTRL, FALSE, 0);
 }
+#endif
 
 static void InitListView( HWND hWnd)
 {
@@ -854,7 +915,7 @@ int DefFileDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
     char chFilter[MAX_FILTER_LEN+1];
     char chFileName[MY_NAMEMAX+1];
     char chFullName[MY_PATHMAX+MY_NAMEMAX+1];
-    int  nSelItem;
+    GHANDLE  nSelItem;
     int  nIsDir;
     LVSUBITEM subItem; 
 
@@ -955,7 +1016,7 @@ int DefFileDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
                         else {
                             hCtrlWnd = GetDlgItem (hDlg, IDC_FOSD_FILELIST);
                             nSelItem = SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
-                            if (nSelItem > 0) {
+                            if (nSelItem != 0) {
                                 nIsDir = SendMessage (hCtrlWnd, 
                                         LVM_GETITEMADDDATA, 0, nSelItem);
                                 memset (&subItem, 0, sizeof (subItem));
@@ -971,7 +1032,13 @@ int DefFileDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
 									if(strcmp(chPath, "/") == 0)
 										strcpy(chPath,subItem.pszText);
 									else
-										sprintf(chPath,"%s\\%s",chPath,subItem.pszText);
+									{
+										int len = strlen(chPath);
+										if(chPath[len-1] == '\\')
+											sprintf(chPath, "%s%s",chPath,subItem.pszText);
+										else
+											sprintf(chPath,"%s\\%s",chPath,subItem.pszText);
+									}
 #else
                                     sprintf (chPath, "%s/%s", 
                                             strcmp (chPath, "/") == 0 ? "" : chPath, subItem.pszText);

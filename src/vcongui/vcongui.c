@@ -1,5 +1,5 @@
 /*
-** $Id: vcongui.c 110 2008-08-22 10:59:29Z weiym $
+** $Id: vcongui.c 231 2017-10-26 07:25:36Z weiym $
 **
 ** VCOnGUI - Virtual Console On MiniGUi -
 ** Copyright (c) 1999-2002 Wei Yongming (ymwei@minigui.org)
@@ -431,7 +431,7 @@ static BOOL SetTerminalCharset (PCONINFO pConInfo, WPARAM cmd_id)
     LOGFONT log_font;
     PLOGFONT sys_font;
     char* charset;
-    HDC hdc;
+    //HDC hdc;
 
     if (pConInfo->termCharset == cmd_id)
         return FALSE;

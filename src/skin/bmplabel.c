@@ -171,10 +171,13 @@ static void bmplabel_draw_attached (HDC hdc, skin_item_t* item)
 
     p = mylabel->label;
     xx = item->x;
+
+    x = 0;
+    y = 0;
     while (p && *p != '\0') {
         get_char_bmp_pos (item, *p, &x, &y, &w, &h);
-        FillBoxWithBitmapPart (    hdc, xx, item->y, w, h, 0, 0, 
-                                &ITEMBMP(item), x, y);
+        FillBoxWithBitmapPart (hdc, xx, item->y, w, h, 0, 0,
+                &ITEMBMP(item), x, y);
         p++;
         xx += w;
     }

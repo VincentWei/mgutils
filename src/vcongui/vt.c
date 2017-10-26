@@ -1,5 +1,5 @@
 /*
-** $Id: vt.c 108 2008-08-21 09:02:07Z weiym $
+** $Id: vt.c 231 2017-10-26 07:25:36Z weiym $
 **
 ** KON2 - Kanji ON Console -
 ** Copyright (C) 1992-1996 Takashi MANABE (manabe@papilio.tutics.tut.ac.jp)
@@ -1071,8 +1071,8 @@ void VtCleanup (PCONINFO con)
     con->scrollLine = con->textHead = con->currentScroll = 0;
     con->scroll = 0;
     
-    SafeFree ((void**)&(con->textBuff));
-    SafeFree ((void**)&(con->attrBuff));
-    SafeFree ((void**)&(con->flagBuff));
+    SafeFree ((void*)&(con->textBuff));
+    SafeFree ((void*)&(con->attrBuff));
+    SafeFree ((void*)&(con->flagBuff));
 }
 

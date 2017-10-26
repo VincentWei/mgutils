@@ -1,5 +1,5 @@
 /*
-** $Id: child.c 1 2007-12-28 06:28:48Z xwyan $
+** $Id: child.c 231 2017-10-26 07:25:36Z weiym $
 **
 ** KON2 - Kanji ON Console -
 ** Copyright (C) 1992-1996 Takashi MANABE (manabe@papilio.tutics.tut.ac.jp)
@@ -33,7 +33,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include <sys/time.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
@@ -97,7 +96,7 @@ void ChildStart (PCONINFO con, FILE *errfp, bool startupMessage,
            "%s\r\n"
            "%s\r\n"
            "%s\r\n\r\n",
-           *(ttyname (fileno (errfp)) + 8),
+           *((char *)ttyname(fileno (errfp)) + 8),
 "Copyright (C) 1999-2001 Wei Yongming (ymwei@minigui.org).",
 "Some idea comes from CCE by He Rui and others.",
 "    CCE: Copyright (C) 1998-1999 He Rui and others.");
@@ -111,10 +110,10 @@ void ChildStart (PCONINFO con, FILE *errfp, bool startupMessage,
         {
         if ((execProg = getenv("SHELL")) == NULL)
             execProg = "/bin/sh";
-        if ((tail = rindex(execProg, '/')) == NULL)
+        if ((tail = strrchr(execProg, '/')) == NULL)
             tail = " sh";
         sprintf (buff, "-%s", tail + 1);
-        execl (execProg, buff, 0);
+        execl (execProg, buff, NULL);
     }
     
     fprintf (errfp, "VCOnGUI> couldn't exec shell\r\n");

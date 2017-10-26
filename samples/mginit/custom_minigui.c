@@ -498,7 +498,7 @@ static char *SYSTEMFONT_VALUES[] =
     "*-SansSerif-rrncnn-*-16-GB2312",
     "0", "1", "1", "2", "2", "2"
 };
-        
+#if 0
 const MGRUNINFO mgRunInfo = {
     SYSTEM_VALUES,
     SHADOW_VALUES,
@@ -512,6 +512,7 @@ const MGRUNINFO mgRunInfo = {
     TABLESIZE (SYSTEMFONT_KEYS),
     SYSTEMFONT_VALUES,
 };
+#endif
 #endif
 
 

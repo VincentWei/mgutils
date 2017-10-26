@@ -610,6 +610,7 @@ BOOL NBSaveAs (PNOTEINFO pNoteInfo, HWND hParent, HWND hMLEditWnd)
 
     strcpy (myWinFileData.filepath, pNoteInfo->filePath);
     strcpy (myWinFileData.filter, "All file (*.*) |Text file (*.txt)");
+    memset (myWinFileData.filename, 0, sizeof(myWinFileData.filename));
     myWinFileData.IsSave = TRUE;
     
     choise = ShowOpenDialog (hParent, 0, 0, 320, 240, &myWinFileData);
@@ -670,6 +671,7 @@ BOOL NBOpen(PNOTEINFO pNoteInfo, HWND hParent, HWND hMLEditWnd)
     strcpy (myWinFileData.filepath, "./");
     strcpy (myWinFileData.filter, 
             "All file(*.*)|Text file(*.txt)|Bitmap file(*.bmp)");
+    memset (myWinFileData.filename, 0, sizeof(myWinFileData.filename));
 
 
     if (pNoteInfo->isChanged) {

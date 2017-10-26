@@ -1,5 +1,5 @@
 /*
-** $Id: newfiledlg.c 187 2010-02-05 06:40:07Z huzhaolin $
+** $Id: newfiledlg.c 231 2017-10-26 07:25:36Z weiym $
 ** 
 ** newopenfiledlg.c: New Open File Dialog.
 ** 
@@ -114,8 +114,8 @@ static BOOL IsInFilter (char *filtstr, char *filename)
     if (filtstr == NULL)
         return TRUE;
    
-    strtrimall (filename);
-    strtrimall (filtstr);
+    //strtrimall (filename);
+    //strtrimall (filtstr);
     if (filename [0] == '\0')
         return FALSE;
     if (strlen (filtstr) == 0)
@@ -148,7 +148,7 @@ static BOOL IsInFilter (char *filtstr, char *filename)
     p2 = chFilter;
     while ( p1 != NULL ) {
         strncpy (chTemp, p2, p1 - p2);
-        strtrimall (chTemp);
+        //strtrimall (chTemp);
         if ( strcmp (chTemp, "*.*") == 0 || strcmp (chTemp, chFileExt) == 0 ) 
             return TRUE;
         p2 = p1 + 1;
@@ -156,7 +156,7 @@ static BOOL IsInFilter (char *filtstr, char *filename)
     }
 
     strcpy (chTemp, p2);
-    strtrimall (chTemp);
+    //strtrimall (chTemp);
     if ( strcmp (chTemp, "*.*") == 0 || strcmp (chTemp, chFileExt) == 0)
         return TRUE;
 
@@ -260,7 +260,7 @@ static void InsertToListView( HWND hWnd, PFILEINFO pfi)
     SendMessage (hListView, LVM_ADDITEM, 0, (LPARAM)&item);
 
     subdata.nItem = nItemCount;
-    subdata.nTextColor = 0;
+    subdata.nTextColor = PIXEL_black;
     subdata.flags = LVFLAG_ICON;
     
     if (pfi->IsDir)
@@ -475,7 +475,7 @@ static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
     SendMessage (hCtrlWnd, LVM_DELALLITEM, 0, 0);
    
     if (path == NULL) return;
-    strtrimall (path);
+    //strtrimall (path);
     if (strlen (path) == 0) return;
 
     if (strcmp (path, "/") != 0 && path [strlen(path)-1] == '/')
@@ -484,7 +484,7 @@ static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
     SendMessage (hCtrlWnd, MSG_FREEZECTRL, TRUE, 0);
  
     dir = opendir (path);
-    while ((pDirEnt = readdir ( dir )) != NULL ) {
+    while (dir && (pDirEnt = readdir ( dir )) != NULL ) {
 
         memset (&fileinfo, 0, sizeof (fileinfo));    
         
@@ -589,7 +589,7 @@ static void InitPathCombo(HWND hWnd, char *path)
     if (path == NULL) return;
 
     strcpy (chPath, path);
-    strtrimall (chPath);
+    //strtrimall (chPath);
     if ( strlen (chPath) == 0 ) return;
 
     if (strcmp (chPath, "/") != 0 &&  chPath[strlen(chPath)-1] == '/') {
@@ -630,7 +630,7 @@ static void InitFilterCombo( HWND hWnd, char * filtstr, int _index)
     if ( filtstr ==NULL ) return;
     
     strcpy (chFilter, filtstr);    
-    strtrimall (chFilter);
+    //strtrimall (chFilter);
     if ( strlen(chFilter) == 0 ) return;
      
     
@@ -675,6 +675,8 @@ static void InitOpenDialog( HWND hWnd, PNEWFILEDLGDATA pnfdd)
     //if ( GetAccessMode (hWnd, pnfdd->filepath, pnfdd->IsSave, TRUE)==0)
     GetFileAndDirList (hWnd, pnfdd->filepath, chFilter);
 
+    hCtrlWnd = GetDlgItem (hWnd, IDC_FILENAME);
+    SetWindowText (hCtrlWnd, pnfdd->filename);
     //hCtrlWnd = GetDlgItem (hWnd, IDC_FILECHOISE);
     //SendMessage (hCtrlWnd, LVM_COLSORT, (WPARAM)1, 0);
 }
@@ -687,7 +689,7 @@ static int WinFileProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
     char chFilter[MAX_FILTER_LEN+1];
     char chFileName[MY_NAMEMAX+1];
     char chFullName[MY_PATHMAX+MY_NAMEMAX+1];
-    int  nSelItem;
+    HLVITEM hSelItem;
     int  nIsDir;
     LVSUBITEM subItem;
 
@@ -760,35 +762,19 @@ static int WinFileProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
             } 
             break;
         case IDC_OKAY:
-            if (strlen (chFileName) != 0) {
-                memset (chFullName, 0, sizeof(chFullName));
-                sprintf (chFullName, "%s/%s", 
-                    strcmp (chPath, "/") == 0 ? "" : chPath, chFileName);
-                if (!pnfdd->IsSave 
-                    || (pnfdd->IsSave 
-                        && FileExistDlg (hDlg, chFullName, chFileName) == 0))
-                {
-                        strcpy (pnfdd->filefullname, chFullName);
-                        strcpy (pnfdd->filename, chFileName);
-                        strcpy (pnfdd->filepath, chPath);
-                        EndDialog (hDlg, IDOK);
-                }
-            }
-            else {
+            {
                 hCtrlWnd = GetDlgItem (hDlg, IDC_FILECHOISE);
-                nSelItem = SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
-                if (nSelItem > 0) {
-                    nIsDir = SendMessage (hCtrlWnd, 
-                                LVM_GETITEMADDDATA, 0, nSelItem);
-                    memset (&subItem, 0, sizeof (subItem));
-                    //subItem.nItem = nSelItem;
-                    subItem.subItem = 0;
-                    subItem.pszText = (char *)malloc (MY_NAMEMAX+1);
-                    if (subItem.pszText == NULL) 
-                        break;
-                    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT, 
-                            (WPARAM)nSelItem, (LPARAM)&subItem);
+                hSelItem = SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
+                if (hSelItem) {
+                    nIsDir = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, hSelItem);
                     if (nIsDir == 1 ) {
+                        memset (&subItem, 0, sizeof (subItem));
+                        subItem.subItem = 0;
+                        subItem.pszText = (char *)malloc (MY_NAMEMAX+1);
+                        if (subItem.pszText == NULL) 
+                            break;
+                        SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT, 
+                                (WPARAM)hSelItem, (LPARAM)&subItem);
                         sprintf (chPath, "%s/%s", 
                             strcmp (chPath, "/") == 0 ? "" : chPath, subItem.pszText);
                         hCtrlWnd = GetDlgItem (hDlg, IDC_PATH);
@@ -799,9 +785,24 @@ static int WinFileProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
                                 SendMessage (hCtrlWnd, 
                                     CB_INSERTSTRING, 0,(LPARAM)chPath);
                         }
-                    }
 
-                    if (subItem.pszText != NULL ) free (subItem.pszText);
+                        if (subItem.pszText != NULL ) free (subItem.pszText);
+                        break;
+                    }
+                } 
+                if (strlen (chFileName) != 0) {
+                    memset (chFullName, 0, sizeof(chFullName));
+                    sprintf (chFullName, "%s/%s", 
+                            strcmp (chPath, "/") == 0 ? "" : chPath, chFileName);
+                    if (!pnfdd->IsSave 
+                            || (pnfdd->IsSave 
+                                && FileExistDlg (hDlg, chFullName, chFileName) == 0))
+                    {
+                        strcpy (pnfdd->filefullname, chFullName);
+                        strcpy (pnfdd->filename, chFileName);
+                        strcpy (pnfdd->filepath, chPath);
+                        EndDialog (hDlg, IDOK);
+                    }
                 }
             } 
             break;
@@ -812,30 +813,26 @@ static int WinFileProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
 
             break;
         case IDC_FILECHOISE:
-            //if ( nNc == LVN_SELCHANGE || nNc == LVN_ITEMDBCLK || nNc == LVN_ITEMCLK) {
             if (nNc == LVN_SELCHANGE || nNc == LVN_ITEMDBCLK || nNc == LVN_ITEMCLK || nNc == LVN_CLICKED) {
-                nSelItem = SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
-                if (nSelItem > 0 ) {
-                    nIsDir = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, nSelItem);    
+                hSelItem = SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
+                if (hSelItem) {
+                    nIsDir = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, hSelItem);    
                     memset (&subItem, 0, sizeof (subItem));
-                    //subItem.nItem = nSelItem;
                     subItem.subItem = 0;
                     subItem.pszText = (char *)calloc (MY_NAMEMAX + 1, 1);
                     if (subItem.pszText == NULL) 
                         break;
-                    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT,  (WPARAM)nSelItem, (LPARAM)&subItem);
+                    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT,  (WPARAM)hSelItem, (LPARAM)&subItem);
 
                     hCtrlWnd = GetDlgItem (hDlg, IDC_FILENAME);
                     if (nIsDir == 0){
                         SetWindowText (hCtrlWnd, subItem.pszText);
                     }
-                    else 
-                        SetWindowText (hCtrlWnd, "");
 
                     if ((nIsDir == 0 && nNc == LVN_ITEMDBCLK) || (nIsDir == 1 && nNc != LVN_SELCHANGE)) 
                         SendNotifyMessage (hDlg, MSG_COMMAND, IDC_OKAY, 0);
 
-                    if (subItem.pszText !=NULL ) free (subItem.pszText); 
+                    if (subItem.pszText != NULL ) free (subItem.pszText); 
                 }          
             }
  

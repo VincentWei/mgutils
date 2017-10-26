@@ -1,5 +1,5 @@
 /*
-** $Id: key.c 147 2009-04-13 12:43:04Z weiym $
+** $Id: key.c 231 2017-10-26 07:25:36Z weiym $
 **
 ** key.c: scancode to key, use Linux's default keymap.
 ** 
@@ -33,9 +33,11 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-#include <linux/types.h>
-#include <linux/keyboard.h>
-#include <linux/kd.h>
+#ifndef __NOUNIX__
+#   include <linux/types.h>
+#   include <linux/keyboard.h>
+#   include <linux/kd.h>
+#endif
 
 #include <minigui/common.h>
 

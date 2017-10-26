@@ -1,0 +1,193 @@
+# Makefile for building the libmgutils with GNU Make
+# Useful for non-gcc compilers
+# Use: make -f makefile.ng [options]
+
+###############################################################################
+
+# This is the top project directory
+TOPPROJALL = 1
+TOPLOOP=1
+abs_top_srcdir=.
+
+###############################################################################
+
+# ------> Please changes to your own rules specific to platform. <------
+TARGET_RULES=build/rules-mips.vxworks
+include $(abs_top_srcdir)/$(TARGET_RULES)
+
+######################################################################
+
+files=
+src_files=
+
+# include source files
+include files.ng
+include source.ng
+
+obj_files := $(src_files:.c=.o)
+
+# set version
+NAME=$(project_name)
+LIB_NAME=$(lib_name)
+LIB_MAJOR_VERSION=$(lib_major_version)
+LIB_MINOR_VERSION=$(lib_minor_version)
+LIB_MICRO_VERSION=$(lib_micro_version)
+
+LIB_VERSION=$(LIB_MAJOR_VERSION).$(LIB_MINOR_VERSION).$(LIB_MICRO_VERSION)
+LIB_SO_VERSION=$(LIB_MAJOR_VERSION).$(LIB_MINOR_VERSION).$(LIBSO).$(LIB_MICRO_VERSION).$(LIB_INTERFACE_AGE).$(LIB_BINARY_AGE)
+
+LIB_SHORT=$(LIB_NAME).$(LIBSO)
+LIB_MID=$(LIB_NAME).$(LIBSO).$(LIB_MAJOR_VERSION)
+
+LIB_STATIC=$(LIB_NAME).$(LIBA)
+LIB_SO=$(LIB_NAME).$(LIBSO).$(LIB_VERSION)
+
+#################################################################################
+
+# some default setting
+DNAME=__MGUTILS_LIB__
+
+ifndef PREFIX
+PREFIX = /usr/local
+endif
+
+ifndef OBJ
+OBJ=o
+endif
+
+ifndef ARFLAGS
+ARFLAGS=-rc
+endif
+
+ifndef SOFLAGS
+SOFLAGS=-fPIC -shared -o
+endif
+
+ifndef COFLAG
+COFLAG=-c
+endif
+
+# Directories used by "make install":
+EXEC_PREFIX = $(PREFIX)
+BINDIR = $(EXEC_PREFIX)/bin
+LIBDIR = $(EXEC_PREFIX)/lib
+PCDIR = $(LIBDIR)/pkgconfig
+INCLUDEDIR = $(PREFIX)/include
+INCLIBDIR = $(INCLUDEDIR)/$(NAME)
+DATADIR = $(PREFIX)/share
+LOCALEDIR = $(DATADIR)/locale
+MANDIR = $(DATADIR)/man
+DOCDIR = $(DATADIR)/doc/$(NAME)
+PC_LIBS = -l$(NAME)
+PC_CFLAGS =
+
+# Programs used by "make":
+CP = cp -fH
+CPR = cp -fHr
+LN = ln -s
+RM = rm -f
+RMR = rm -fr
+MKDIR = mkdir -p
+
+######################################################################
+
+# some deplibs flags
+DEPLIBINC = -I$(PREFIX)/include
+DEFS += -D$(DNAME) -D_REENTRANT
+LOCALFLAGS = $(DEFS) -I$(abs_top_srcdir)/include
+
+CFLAGS += $(LOCALFLAGS) $(DEPLIBINC) $(LOCAL_INC)
+CXXFLAGS += $(LOCALFLAGS) $(DEPLIBINC) $(LOCAL_INC)
+
+DEPLIBS = -L$(PREFIX)/lib 
+DEPLDFLAGS += `pkg-config --libs minigui`
+LOCALLIBS = 
+
+LDFLAGS += $(LOCALLIBS) $(DEPLIBS) $(LOCAL_LIBS) $(DEPLDFLAGS) 
+
+################################################################
+# specific targets and commands
+
+# compile source files
+%.$(OBJ): %.c
+	$(CC) $(CFLAGS) $(COFLAG) $< $(SOFLAGS) $@
+
+
+# create library
+$(LIB_STATIC) $(LIB_SO): $(obj_files)
+	@-echo "begin create library -->"
+ifdef LIBA
+	@-echo "begin create static library -->"
+	$(AR) $(ARFLAGS) $(ARFLAGS_OUT) $(LIB_STATIC) $(obj_files)
+	$(RANLIB) $@
+	@-echo "create static library done <--"
+endif
+ifdef LIBSO
+	@-echo "begin create shared library -->"
+	$(CC) $(LDFLAGS) $(SOFLAGS) $(LIB_SO) $(obj_files)
+	@-echo "create shared library done <--"
+endif
+	@-echo "create library done <--"
+
+
+# clean the compile files
+.PHONY: clean 
+clean:
+	-$(RM) $(obj_files)
+ifdef LIBA
+	-$(RM) $(LIB_STATIC)
+endif
+ifdef LIBSO
+	-$(RM) $(LIB_SO)
+endif
+	@-echo "clean complete."
+
+
+# install library
+.PHONY: install 
+install:
+	@-echo "prefix is: $(PREFIX)"
+	@-echo "exec_prefix is: $(EXEC_PREFIX)"
+	@-echo "libdir is: $(LIBDIR)"
+	@-echo "MGUTILS_VERSION is: $(LIB_VERSION)"
+	@-echo "PC_LIBS is: $(PC_LIBS)"
+	@-echo "PC_CFLAGS is: $(PC_CFLAGS)"
+	@-$(MKDIR) $(PREFIX)
+	@-$(MKDIR) $(INCLUDEDIR)
+	@-$(MKDIR) $(INCLIBDIR)
+	@-$(MKDIR) $(LIBDIR)
+	@-$(MKDIR) $(PCDIR)
+	@-$(CPR) include/*.h $(INCLIBDIR)/
+	@-$(CP) $(NAME).pc $(PCDIR)/
+ifdef LIBA
+	$(CP) $(LIB_STATIC) $(LIBDIR)/$(LIB_STATIC)
+endif
+ifdef LIBSO
+	$(CP) $(LIB_SO) $(LIBDIR)/
+	$(RM) $(LIBDIR)/$(LIB_SHORT)
+	$(RM) $(LIBDIR)/$(LIB_MID)
+	$(LN) $(LIBDIR)/$(LIB_SO) $(LIBDIR)/$(LIB_SHORT)
+	$(LN) $(LIBDIR)/$(LIB_SO) $(LIBDIR)/$(LIB_MID)
+endif
+	@-echo "install done."
+
+
+#uninstall library
+.PHONY: uninstall 
+uninstall:
+	@-$(RMR) $(INCLIBDIR)/*
+	@-$(RM) $(PCDIR)/$(NAME).pc
+ifdef LIBA
+	$(RM) $(LIBDIR)/$(LIB_STATIC) 
+endif
+ifdef LIBSO
+	$(RM) $(LIBDIR)/$(LIB_SHORT)
+	$(RM) $(LIBDIR)/$(LIB_MID)
+	$(RM) $(LIBDIR)/$(LIB_SO)
+endif
+	@-echo "uninstall done."
+
+
+force: 
+
+

@@ -1,39 +1,42 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ(2.52)
-AC_INIT([src/mywins/colordlg.c])
+MGUTILS_NAME="mgutils"
+MGUTILS_MAJOR_VERSION=1
+MGUTILS_MINOR_VERSION=0
+MGUTILS_MICRO_VERSION=5
+MGUTILS_INTERFACE_AGE=0
+MGUTILS_BINARY_AGE=0
 
-mGUtils_MAJOR_VERSION=1
-mGUtils_MINOR_VERSION=0
-mGUtils_MICRO_VERSION=3
-mGUtils_INTERFACE_AGE=0
-mGUtils_BINARY_AGE=0
-mGUtils_VERSION=$mGUtils_MAJOR_VERSION.$mGUtils_MINOR_VERSION.$mGUtils_MICRO_VERSION
+MGUTILS_VERSION=$MGUTILS_MAJOR_VERSION.$MGUTILS_MINOR_VERSION.$MGUTILS_MICRO_VERSION
 
-AC_SUBST(mGUtils_MAJOR_VERSION)
-AC_SUBST(mGUtils_MINOR_VERSION)
-AC_SUBST(mGUtils_MICRO_VERSION)
-AC_SUBST(mGUtils_INTERFACE_AGE)
-AC_SUBST(mGUtils_BINARY_AGE)
-AC_SUBST(mGUtils_VERSION)
+AC_PREREQ(2.60)
+AC_INIT(lib$MGUTILS_NAME, $MGUTILS_VERSION)
+AC_CONFIG_SRCDIR(src/mywins/colordlg.c)
+
+AC_SUBST(MGUTILS_MAJOR_VERSION)
+AC_SUBST(MGUTILS_MINOR_VERSION)
+AC_SUBST(MGUTILS_MICRO_VERSION)
+AC_SUBST(MGUTILS_INTERFACE_AGE)
+AC_SUBST(MGUTILS_BINARY_AGE)
+AC_SUBST(MGUTILS_VERSION)
 
 # libtool versioning
-LT_RELEASE=$mGUtils_MAJOR_VERSION.$mGUtils_MINOR_VERSION
-LT_CURRENT=`expr $mGUtils_MICRO_VERSION - $mGUtils_INTERFACE_AGE`
-LT_REVISION=$mGUtils_INTERFACE_AGE
-LT_AGE=`expr $mGUtils_BINARY_AGE - $mGUtils_INTERFACE_AGE`
-
+LT_RELEASE=$MGUTILS_MAJOR_VERSION.$MGUTILS_MINOR_VERSION
+LT_CURRENT=`expr $MGUTILS_MICRO_VERSION - $MGUTILS_INTERFACE_AGE`
+LT_REVISION=$MGUTILS_INTERFACE_AGE
+LT_AGE=`expr $MGUTILS_BINARY_AGE - $MGUTILS_INTERFACE_AGE`
 AC_SUBST(LT_RELEASE)
 AC_SUBST(LT_CURRENT)
 AC_SUBST(LT_REVISION)
 AC_SUBST(LT_AGE)
 
 AC_CANONICAL_SYSTEM
+AM_INIT_AUTOMAKE
 
 dnl ========================================================================
 # Checks for programs.
-dnl AC_PROG_CC
+AC_PROG_CC
 AC_PROG_LD
 AC_PROG_RANLIB
 AC_PROG_LIBTOOL
@@ -41,7 +44,6 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
-AM_INIT_AUTOMAKE(libmgutils,$mGUtils_VERSION,no-define)
 dnl ========================================================================
 dnl Put the name and version of the package here
 
@@ -77,60 +79,41 @@ else
   LIB_SUFFIX="_$with_libsuffix"
 fi
 
+MGUTILS_LIBNAME="${MGUTILS_NAME}${LIB_SUFFIX}"
+
 have_libminigui="no"
 AC_CHECK_HEADERS(minigui/common.h, have_libminigui=yes, foo=bar)
 
 dnl ========================================================================
 dnl check for run-time mode of MiniGUI
 dnl ========================================================================
-threads_version="no"
-AC_CHECK_DECLS(_MGRM_THREADS, threads_version="yes", foo=bar, [#include <minigui/common.h>])
-
 procs_version="no"
 AC_CHECK_DECLS(_MGRM_PROCESSES, procs_version="yes", foo=bar, [#include <minigui/common.h>])
 
-standalone_version="no"
-AC_CHECK_DECLS(_MGRM_STANDALONE, standalone_version="yes", foo=bar, [#include <minigui/common.h>])
-
-if test "x$threads_version" = "xyes"; then
-    CFLAGS="$CFLAGS -D_REENTRANT"
-    APP_LIBS="$APP_LIBS -lminigui_ths -lpthread"
-else
-    if test "x$standalone_version" = "xyes"; then
-        APP_LIBS="$APP_LIBS -lminigui_sa"
-    else
-        APP_LIBS="$APP_LIBS -lminigui_procs"
-    fi  
-
-    lib_pthread="yes"
-    AC_CHECK_DECLS(_MGGAL_SHADOW, APP_LIBS="$APP_LIBS -lpthread", lib_pthread="no", [#include <minigui/common.h>])
-    if test "x$lib_pthread" = "xno"; then
-        AC_CHECK_DECLS(_MGGAL_MLSHADOW, APP_LIBS="$APP_LIBS -lpthread", no_pthread="no", [#include <minigui/common.h>])
-    fi
-fi
-
 CFLAGS="$CFLAGS -D__MGUTILS_LIB__"
 
-AC_CHECK_DECLS(_HAVE_MATH_LIB, APP_LIBS="$APP_LIBS -lm", foo=bar, [#include <minigui/common.h>])
-AC_CHECK_DECLS(_MGIMAGE_PNG, APP_LIBS="$APP_LIBS -lpng", foo=bar, [#include <minigui/common.h>])
-AC_CHECK_DECLS(_MGIMAGE_JPG, APP_LIBS="$APP_LIBS -ljpeg", foo=bar, [#include <minigui/common.h>])
-AC_CHECK_DECLS(_MGFONT_TTF, APP_LIBS="$APP_LIBS -lttf", foo=bar, [#include <minigui/common.h>])
-AC_CHECK_DECLS(_MGFONT_FT2, APP_LIBS="$APP_LIBS -lfreetype", foo=bar, [#include <minigui/common.h>])
-
-AM_CONDITIONAL(MGRM_THREADS, test "x$threads_version" = "xyes")
 AM_CONDITIONAL(MGRM_PROCESSES, test "x$procs_version" = "xyes")
-AM_CONDITIONAL(MGRM_STANDALONE, test "x$standalone_version" = "xyes")
-AM_CONDITIONAL(MGRM_STANDALONE, test "x$standalone_version" = "xyes")
+AM_CONDITIONAL(MGUTILS_NOSUFFIX, test "x$with_libsuffix" = "x")
 
 if test "$ac_cv_prog_gcc" = "yes"; then
     CFLAGS="$CFLAGS -Wall -Wstrict-prototypes -pipe"
 fi
 
 AC_SUBST(LIB_SUFFIX)
+
+PKG_CHECK_MODULES([MINIGUI], [minigui >= 3.0.10])
+APP_LIBS="$APP_LIBS $MINIGUI_LIBS"
 AC_SUBST(APP_LIBS)
 
-AC_OUTPUT([Makefile
+PC_LIBS="-l${MGUTILS_LIBNAME}"
+PC_CFLAGS=""
+AC_SUBST(PC_LIBS)
+AC_SUBST(PC_CFLAGS)
+
+AC_OUTPUT([mgutils.pc
+         Makefile
          include/Makefile
+         cmake/Makefile
          src/Makefile
          src/mywins/Makefile
          src/vcongui/Makefile
