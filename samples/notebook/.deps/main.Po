@@ -1,78 +1,102 @@
-main.o main.o: main.c /usr/include/stdio.h /usr/include/features.h \
-  /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h \
-  /usr/include/gnu/stubs.h /usr/include/gnu/stubs-32.h \
-  /usr/lib/gcc/i486-linux-gnu/4.1.2/include/stddef.h \
-  /usr/include/bits/types.h /usr/include/bits/typesizes.h \
-  /usr/include/libio.h /usr/include/_G_config.h /usr/include/wchar.h \
-  /usr/include/bits/wchar.h /usr/include/gconv.h \
-  /usr/lib/gcc/i486-linux-gnu/4.1.2/include/stdarg.h \
-  /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
-  /usr/include/bits/stdio.h /usr/include/stdlib.h \
-  /usr/include/sys/types.h /usr/include/time.h /usr/include/endian.h \
-  /usr/include/bits/endian.h /usr/include/sys/select.h \
-  /usr/include/bits/select.h /usr/include/bits/sigset.h \
-  /usr/include/bits/time.h /usr/include/sys/sysmacros.h \
-  /usr/include/bits/pthreadtypes.h /usr/include/alloca.h \
-  /usr/include/string.h /usr/include/bits/string.h \
-  /usr/include/bits/string2.h /usr/include/sys/time.h \
-  /usr/include/sys/stat.h /usr/include/bits/stat.h /usr/include/fcntl.h \
-  /usr/include/bits/fcntl.h /usr/include/unistd.h \
-  /usr/include/bits/posix_opt.h /usr/include/bits/confname.h \
-  /usr/include/getopt.h /usr/local/include/minigui/common.h \
-  /usr/local/include/minigui/mgconfig.h \
-  /usr/lib/gcc/i486-linux-gnu/4.1.2/include/limits.h \
-  /usr/lib/gcc/i486-linux-gnu/4.1.2/include/syslimits.h \
-  /usr/include/limits.h /usr/include/bits/posix1_lim.h \
-  /usr/include/bits/local_lim.h /usr/include/linux/limits.h \
-  /usr/include/bits/posix2_lim.h /usr/include/pthread.h \
-  /usr/include/sched.h /usr/include/bits/sched.h /usr/include/signal.h \
-  /usr/include/bits/setjmp.h /usr/include/semaphore.h \
-  /usr/include/bits/semaphore.h /usr/local/include/minigui/minigui.h \
-  /usr/local/include/minigui/gdi.h /usr/local/include/minigui/endianrw.h \
-  /usr/local/include/minigui/window.h \
-  /usr/local/include/minigui/control.h \
-  /usr/local/include/minigui/ctrl/ctrlhelper.h \
-  /usr/local/include/minigui/ctrl/static.h \
-  /usr/local/include/minigui/ctrl/button.h \
-  /usr/local/include/minigui/ctrl/edit.h \
-  /usr/local/include/minigui/ctrl/progressbar.h \
-  /usr/local/include/minigui/ctrl/listbox.h \
-  /usr/local/include/minigui/ctrl/propsheet.h \
-  /usr/local/include/minigui/ctrl/combobox.h \
-  /usr/local/include/minigui/ctrl/newtoolbar.h \
-  /usr/local/include/minigui/ctrl/menubutton.h \
-  /usr/local/include/minigui/ctrl/trackbar.h \
-  /usr/local/include/minigui/ctrl/scrollview.h \
-  /usr/local/include/minigui/ctrl/scrollbar.h \
-  /usr/local/include/minigui/ctrl/textedit.h \
-  /usr/local/include/minigui/ctrl/spinbox.h \
-  /usr/local/include/minigui/ctrl/monthcal.h \
-  /usr/local/include/minigui/ctrl/coolbar.h \
-  /usr/local/include/minigui/ctrl/listview.h \
-  /usr/local/include/minigui/ctrl/treeview.h \
-  /usr/local/include/minigui/ctrl/iconview.h \
-  /usr/local/include/minigui/ctrl/animation.h \
-  /usr/local/include/minigui/mgutils.h /usr/include/dirent.h \
-  /usr/include/bits/dirent.h notebook.h notebook_res_en.h \
-  /usr/local/include/minigui/dti.c
+main.o: main.c /usr/include/stdc-predef.h /usr/include/stdio.h \
+ /usr/include/features.h /usr/include/i386-linux-gnu/sys/cdefs.h \
+ /usr/include/i386-linux-gnu/bits/wordsize.h \
+ /usr/include/i386-linux-gnu/gnu/stubs.h \
+ /usr/include/i386-linux-gnu/gnu/stubs-32.h \
+ /usr/lib/gcc/i686-linux-gnu/5/include/stddef.h \
+ /usr/include/i386-linux-gnu/bits/types.h \
+ /usr/include/i386-linux-gnu/bits/typesizes.h /usr/include/libio.h \
+ /usr/include/_G_config.h /usr/include/wchar.h \
+ /usr/lib/gcc/i686-linux-gnu/5/include/stdarg.h \
+ /usr/include/i386-linux-gnu/bits/stdio_lim.h \
+ /usr/include/i386-linux-gnu/bits/sys_errlist.h \
+ /usr/include/i386-linux-gnu/bits/stdio.h \
+ /usr/include/i386-linux-gnu/bits/stdio2.h /usr/include/stdlib.h \
+ /usr/include/i386-linux-gnu/bits/waitflags.h \
+ /usr/include/i386-linux-gnu/bits/waitstatus.h /usr/include/endian.h \
+ /usr/include/i386-linux-gnu/bits/endian.h \
+ /usr/include/i386-linux-gnu/bits/byteswap.h \
+ /usr/include/i386-linux-gnu/bits/byteswap-16.h \
+ /usr/include/i386-linux-gnu/sys/types.h /usr/include/time.h \
+ /usr/include/i386-linux-gnu/sys/select.h \
+ /usr/include/i386-linux-gnu/bits/select.h \
+ /usr/include/i386-linux-gnu/bits/sigset.h \
+ /usr/include/i386-linux-gnu/bits/time.h \
+ /usr/include/i386-linux-gnu/bits/select2.h \
+ /usr/include/i386-linux-gnu/sys/sysmacros.h \
+ /usr/include/i386-linux-gnu/bits/pthreadtypes.h /usr/include/alloca.h \
+ /usr/include/i386-linux-gnu/bits/stdlib-bsearch.h \
+ /usr/include/i386-linux-gnu/bits/stdlib-float.h \
+ /usr/include/i386-linux-gnu/bits/stdlib.h /usr/include/xlocale.h \
+ /usr/include/string.h /usr/include/i386-linux-gnu/bits/string.h \
+ /usr/include/i386-linux-gnu/bits/string2.h \
+ /usr/include/i386-linux-gnu/bits/string3.h \
+ /usr/include/i386-linux-gnu/sys/time.h \
+ /usr/include/i386-linux-gnu/sys/stat.h \
+ /usr/include/i386-linux-gnu/bits/stat.h /usr/include/fcntl.h \
+ /usr/include/i386-linux-gnu/bits/fcntl.h \
+ /usr/include/i386-linux-gnu/bits/fcntl-linux.h \
+ /usr/include/i386-linux-gnu/bits/fcntl2.h /usr/include/unistd.h \
+ /usr/include/i386-linux-gnu/bits/posix_opt.h \
+ /usr/include/i386-linux-gnu/bits/environments.h \
+ /usr/include/i386-linux-gnu/bits/confname.h /usr/include/getopt.h \
+ /usr/include/i386-linux-gnu/bits/unistd.h \
+ /usr/local/include/minigui/common.h \
+ /usr/local/include/minigui/mgconfig.h \
+ /usr/lib/gcc/i686-linux-gnu/5/include-fixed/limits.h \
+ /usr/lib/gcc/i686-linux-gnu/5/include-fixed/syslimits.h \
+ /usr/include/limits.h /usr/include/i386-linux-gnu/bits/posix1_lim.h \
+ /usr/include/i386-linux-gnu/bits/local_lim.h /usr/include/linux/limits.h \
+ /usr/include/i386-linux-gnu/bits/posix2_lim.h /usr/include/pthread.h \
+ /usr/include/sched.h /usr/include/i386-linux-gnu/bits/sched.h \
+ /usr/include/i386-linux-gnu/bits/setjmp.h /usr/include/semaphore.h \
+ /usr/include/i386-linux-gnu/bits/semaphore.h \
+ /usr/local/include/minigui/minigui.h /usr/local/include/minigui/gdi.h \
+ /usr/local/include/minigui/endianrw.h \
+ /usr/local/include/minigui/window.h /usr/local/include/minigui/control.h \
+ /usr/local/include/minigui/ctrl/ctrlhelper.h \
+ /usr/local/include/minigui/ctrl/static.h \
+ /usr/local/include/minigui/ctrl/button.h \
+ /usr/local/include/minigui/ctrl/edit.h \
+ /usr/local/include/minigui/ctrl/progressbar.h \
+ /usr/local/include/minigui/ctrl/listbox.h \
+ /usr/local/include/minigui/ctrl/propsheet.h \
+ /usr/local/include/minigui/ctrl/combobox.h \
+ /usr/local/include/minigui/ctrl/newtoolbar.h \
+ /usr/local/include/minigui/ctrl/menubutton.h \
+ /usr/local/include/minigui/ctrl/trackbar.h \
+ /usr/local/include/minigui/ctrl/scrollview.h \
+ /usr/local/include/minigui/ctrl/scrollbar.h \
+ /usr/local/include/minigui/ctrl/textedit.h \
+ /usr/local/include/minigui/ctrl/spinbox.h \
+ /usr/local/include/minigui/ctrl/monthcal.h \
+ /usr/local/include/minigui/ctrl/coolbar.h \
+ /usr/local/include/minigui/ctrl/listview.h \
+ /usr/local/include/minigui/ctrl/treeview.h \
+ /usr/local/include/minigui/ctrl/iconview.h \
+ /usr/local/include/minigui/ctrl/animation.h ../../include/mgutils.h \
+ /usr/include/dirent.h /usr/include/i386-linux-gnu/bits/dirent.h \
+ notebook.h notebook_res_en.h /usr/local/include/minigui/dti.c
+
+/usr/include/stdc-predef.h:
 
 /usr/include/stdio.h:
 
 /usr/include/features.h:
 
-/usr/include/sys/cdefs.h:
+/usr/include/i386-linux-gnu/sys/cdefs.h:
 
-/usr/include/bits/wordsize.h:
+/usr/include/i386-linux-gnu/bits/wordsize.h:
 
-/usr/include/gnu/stubs.h:
+/usr/include/i386-linux-gnu/gnu/stubs.h:
 
-/usr/include/gnu/stubs-32.h:
+/usr/include/i386-linux-gnu/gnu/stubs-32.h:
 
-/usr/lib/gcc/i486-linux-gnu/4.1.2/include/stddef.h:
+/usr/lib/gcc/i686-linux-gnu/5/include/stddef.h:
 
-/usr/include/bits/types.h:
+/usr/include/i386-linux-gnu/bits/types.h:
 
-/usr/include/bits/typesizes.h:
+/usr/include/i386-linux-gnu/bits/typesizes.h:
 
 /usr/include/libio.h:
 
@@ -80,97 +104,121 @@ main.o main.o: main.c /usr/include/stdio.h /usr/include/features.h \
 
 /usr/include/wchar.h:
 
-/usr/include/bits/wchar.h:
+/usr/lib/gcc/i686-linux-gnu/5/include/stdarg.h:
 
-/usr/include/gconv.h:
+/usr/include/i386-linux-gnu/bits/stdio_lim.h:
 
-/usr/lib/gcc/i486-linux-gnu/4.1.2/include/stdarg.h:
+/usr/include/i386-linux-gnu/bits/sys_errlist.h:
 
-/usr/include/bits/stdio_lim.h:
+/usr/include/i386-linux-gnu/bits/stdio.h:
 
-/usr/include/bits/sys_errlist.h:
-
-/usr/include/bits/stdio.h:
+/usr/include/i386-linux-gnu/bits/stdio2.h:
 
 /usr/include/stdlib.h:
 
-/usr/include/sys/types.h:
+/usr/include/i386-linux-gnu/bits/waitflags.h:
 
-/usr/include/time.h:
+/usr/include/i386-linux-gnu/bits/waitstatus.h:
 
 /usr/include/endian.h:
 
-/usr/include/bits/endian.h:
+/usr/include/i386-linux-gnu/bits/endian.h:
 
-/usr/include/sys/select.h:
+/usr/include/i386-linux-gnu/bits/byteswap.h:
 
-/usr/include/bits/select.h:
+/usr/include/i386-linux-gnu/bits/byteswap-16.h:
 
-/usr/include/bits/sigset.h:
+/usr/include/i386-linux-gnu/sys/types.h:
 
-/usr/include/bits/time.h:
+/usr/include/time.h:
 
-/usr/include/sys/sysmacros.h:
+/usr/include/i386-linux-gnu/sys/select.h:
 
-/usr/include/bits/pthreadtypes.h:
+/usr/include/i386-linux-gnu/bits/select.h:
+
+/usr/include/i386-linux-gnu/bits/sigset.h:
+
+/usr/include/i386-linux-gnu/bits/time.h:
+
+/usr/include/i386-linux-gnu/bits/select2.h:
+
+/usr/include/i386-linux-gnu/sys/sysmacros.h:
+
+/usr/include/i386-linux-gnu/bits/pthreadtypes.h:
 
 /usr/include/alloca.h:
 
+/usr/include/i386-linux-gnu/bits/stdlib-bsearch.h:
+
+/usr/include/i386-linux-gnu/bits/stdlib-float.h:
+
+/usr/include/i386-linux-gnu/bits/stdlib.h:
+
+/usr/include/xlocale.h:
+
 /usr/include/string.h:
 
-/usr/include/bits/string.h:
+/usr/include/i386-linux-gnu/bits/string.h:
 
-/usr/include/bits/string2.h:
+/usr/include/i386-linux-gnu/bits/string2.h:
 
-/usr/include/sys/time.h:
+/usr/include/i386-linux-gnu/bits/string3.h:
 
-/usr/include/sys/stat.h:
+/usr/include/i386-linux-gnu/sys/time.h:
 
-/usr/include/bits/stat.h:
+/usr/include/i386-linux-gnu/sys/stat.h:
+
+/usr/include/i386-linux-gnu/bits/stat.h:
 
 /usr/include/fcntl.h:
 
-/usr/include/bits/fcntl.h:
+/usr/include/i386-linux-gnu/bits/fcntl.h:
+
+/usr/include/i386-linux-gnu/bits/fcntl-linux.h:
+
+/usr/include/i386-linux-gnu/bits/fcntl2.h:
 
 /usr/include/unistd.h:
 
-/usr/include/bits/posix_opt.h:
+/usr/include/i386-linux-gnu/bits/posix_opt.h:
 
-/usr/include/bits/confname.h:
+/usr/include/i386-linux-gnu/bits/environments.h:
+
+/usr/include/i386-linux-gnu/bits/confname.h:
 
 /usr/include/getopt.h:
+
+/usr/include/i386-linux-gnu/bits/unistd.h:
 
 /usr/local/include/minigui/common.h:
 
 /usr/local/include/minigui/mgconfig.h:
 
-/usr/lib/gcc/i486-linux-gnu/4.1.2/include/limits.h:
+/usr/lib/gcc/i686-linux-gnu/5/include-fixed/limits.h:
 
-/usr/lib/gcc/i486-linux-gnu/4.1.2/include/syslimits.h:
+/usr/lib/gcc/i686-linux-gnu/5/include-fixed/syslimits.h:
 
 /usr/include/limits.h:
 
-/usr/include/bits/posix1_lim.h:
+/usr/include/i386-linux-gnu/bits/posix1_lim.h:
 
-/usr/include/bits/local_lim.h:
+/usr/include/i386-linux-gnu/bits/local_lim.h:
 
 /usr/include/linux/limits.h:
 
-/usr/include/bits/posix2_lim.h:
+/usr/include/i386-linux-gnu/bits/posix2_lim.h:
 
 /usr/include/pthread.h:
 
 /usr/include/sched.h:
 
-/usr/include/bits/sched.h:
+/usr/include/i386-linux-gnu/bits/sched.h:
 
-/usr/include/signal.h:
-
-/usr/include/bits/setjmp.h:
+/usr/include/i386-linux-gnu/bits/setjmp.h:
 
 /usr/include/semaphore.h:
 
-/usr/include/bits/semaphore.h:
+/usr/include/i386-linux-gnu/bits/semaphore.h:
 
 /usr/local/include/minigui/minigui.h:
 
@@ -224,11 +272,11 @@ main.o main.o: main.c /usr/include/stdio.h /usr/include/features.h \
 
 /usr/local/include/minigui/ctrl/animation.h:
 
-/usr/local/include/minigui/mgutils.h:
+../../include/mgutils.h:
 
 /usr/include/dirent.h:
 
-/usr/include/bits/dirent.h:
+/usr/include/i386-linux-gnu/bits/dirent.h:
 
 notebook.h:
 

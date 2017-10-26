@@ -2,7 +2,7 @@ SUBDIRS=res
 
 noinst_PROGRAMS=notebook
 
-CUSTOMMG_SRC=../mginit/custom_minigui.c
+CUSTOMMG_SRC=custom_minigui.c
 notebook_SOURCES=main.c notebook.h notebook_res_cn.h \
 				 notebook_res_en.h notebook_res_tw.h $(CUSTOMMG_SRC)
 

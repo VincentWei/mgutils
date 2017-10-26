@@ -1,5 +1,5 @@
 TOP_DIR=../..
-INCLUDES = -I./ -I../../include 
+AM_CPPFLAGS=-I./ -I../../include 
 
 noinst_LTLIBRARIES = libskin.la
 
