@@ -3,8 +3,8 @@
 **
 ** picview.c: A simple picture viewer.
 **
+** Copyright (C) 2003 ~ 2017 FMSoft
 ** Copyright (C) 2001 ~ 2002 Jiang Jun and others.
-** Copyright (C) 2003 ~ 2007 Feynman Software.
 */
 
 /*
@@ -65,35 +65,35 @@ static int MAINWINDOW_BY;
 #define TB_HEIGHT              16
 #define TB_WIDTH               22
 
-#define IDC_TB_SELF 		   100
+#define IDC_TB_SELF            100
 #define IDC_TB_OPEN            110
-#define IDC_TB_SAVE 		   120
-#define IDC_TB_PREVIOUS		   130
-#define IDC_TB_NEXT  		   140
-#define IDC_TB_SMALL		   150
-#define IDC_TB_BIG  		   160
-#define IDC_TB_FULL  		   170
+#define IDC_TB_SAVE            120
+#define IDC_TB_PREVIOUS           130
+#define IDC_TB_NEXT             140
+#define IDC_TB_SMALL           150
+#define IDC_TB_BIG             160
+#define IDC_TB_FULL             170
 
 typedef struct tagFILEITEM{
-	char                 name[NAME_MAX];
-	struct tagFILEITEM*  previous; 
-	struct tagFILEITEM*  next; 
+    char                 name[NAME_MAX];
+    struct tagFILEITEM*  previous; 
+    struct tagFILEITEM*  next; 
 }FILEITEM;
 
 static BOOL IsSupport (const char *filename)
 {
-	char *extend,*temp;
-	extend = rindex(filename,'.');
-	if (extend ==NULL)
-		return FALSE;
-	extend++;
-	temp = extend;
-	while (*temp) {
-		*temp = tolower(*temp);
-		temp++;
-	}
+    char *extend,*temp;
+    extend = rindex(filename,'.');
+    if (extend ==NULL)
+        return FALSE;
+    extend++;
+    temp = extend;
+    while (*temp) {
+        *temp = tolower(*temp);
+        temp++;
+    }
 
-	if(
+    if(
 #ifdef _MGIMAGE_JPG
         !strncmp(extend,"jpg",3) ||
 #endif
@@ -113,9 +113,9 @@ static BOOL IsSupport (const char *filename)
         !strncmp(extend,"png",3) ||
 #endif
         !strncmp(extend,"bmp",3) )
-		return TRUE;
+        return TRUE;
 
-	return FALSE;
+    return FALSE;
 }
 
 static FILEITEM* findmatchfile (NEWFILEDLGDATA *one, FILEITEM **cur)
@@ -157,9 +157,9 @@ static FILEITEM* findmatchfile (NEWFILEDLGDATA *one, FILEITEM **cur)
                 temp = temp->next;
                 strcpy ( temp->name, fullpath);
             }
-	    /*indicate current file pointer*/
-	    if ( !strcmp( pDir->d_name, one->filename ) )
-		*cur = temp;
+        /*indicate current file pointer*/
+        if ( !strcmp( pDir->d_name, one->filename ) )
+        *cur = temp;
         }
     }
     closedir(dir);
@@ -168,51 +168,37 @@ static FILEITEM* findmatchfile (NEWFILEDLGDATA *one, FILEITEM **cur)
 
 static void ReleaseList(FILEITEM *head)
 {
-	FILEITEM *temp;
-	while(head)
-	{
-		temp = head->next;
-		free (head);
-		head = temp;
-	}
+    FILEITEM *temp;
+    while(head)
+    {
+        temp = head->next;
+        free (head);
+        head = temp;
+    }
 }
 
 static int 
-ShowPicture (HWND hWnd, const char *path, BOOL allscreen, float newrate)
+show_picture (HWND hWnd, HDC hdc, const char *path, float newrate)
 {
-	BITMAP Bitmap1;
-	HDC hdc,truehdc;
-	int x,y;
+    BITMAP Bitmap1;
+    int x,y;
 
-	if (LoadBitmap(HDC_SCREEN, &Bitmap1, path) < 0)
-	{
-		fprintf(stderr,"Load Bitmap %s Error\n",path);
-		return -1;
-	}
-	hdc = GetClientDC(hWnd);
-	if(!allscreen)
-	{
-		x = (MAINWINDOW_RX - MAINWINDOW_LX)/2 - Bitmap1.bmWidth*newrate/2;
-		if (Bitmap1.bmHeight*newrate <= (MAINWINDOW_BY - MAINWINDOW_TY - TB_HEIGHT-4))
-			y = (MAINWINDOW_BY - MAINWINDOW_TY - TB_HEIGHT - 4 )/2 
-                - Bitmap1.bmHeight*newrate/2 + TB_HEIGHT+2;
-		else
-			y = TB_HEIGHT + 4; 
-		truehdc = hdc;
-	}
-	else
-	{
-		int max_x,max_y;
-		max_x = GetGDCapability(HDC_SCREEN,GDCAP_MAXX);
-		max_y = GetGDCapability(HDC_SCREEN,GDCAP_MAXY);
-		x = (max_x - Bitmap1.bmWidth*newrate)/2;
-		y = (max_y - Bitmap1.bmHeight*newrate)/2;
-		truehdc = HDC_SCREEN;
-	}
-	FillBoxWithBitmap(truehdc, x, y, 
+    if (LoadBitmap(HDC_SCREEN, &Bitmap1, path) < 0) {
+        fprintf(stderr,"Load Bitmap %s Error\n",path);
+        return -1;
+    }
+
+    x = (MAINWINDOW_RX - MAINWINDOW_LX)/2 - Bitmap1.bmWidth*newrate/2;
+    if (Bitmap1.bmHeight*newrate <= (MAINWINDOW_BY - MAINWINDOW_TY - TB_HEIGHT-4))
+        y = (MAINWINDOW_BY - MAINWINDOW_TY - TB_HEIGHT - 4 )/2 
+            - Bitmap1.bmHeight*newrate/2 + TB_HEIGHT+2;
+    else
+        y = TB_HEIGHT + 4; 
+
+    FillBoxWithBitmap (hdc, x, y,
             Bitmap1.bmWidth*newrate, Bitmap1.bmHeight*newrate, &Bitmap1);
-	UnloadBitmap(&Bitmap1);
-	ReleaseDC(hdc);
+    UnloadBitmap(&Bitmap1);
+
     return 0;
 }
 
@@ -238,7 +224,7 @@ static void InitNewToolBar (HWND hWnd)
     int         i;
     NTBINFO     ntb_info;
     NTBITEMINFO ntbii;
-	HWND        ntb;
+    HWND        ntb;
     gal_pixel   pixel;
 
     ntb_info.nr_cells = TABLESIZE (toolbar_items);
@@ -275,7 +261,6 @@ static int ViewWinProc(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
     static FILEITEM    *head        = NULL;
     static float       rate         = 1;
     static NEWFILEDLGDATA filepathdata;
-    static BOOL        IsFullScreen = FALSE;
     RECT               rect;
 
     GetClientRect (hWnd,&rect);
@@ -292,8 +277,7 @@ static int ViewWinProc(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
         case MSG_COMMAND:
         {
             int id   = HIWORD(wParam);
-            switch (id)
-            {  
+            switch (id) {  
                 case  IDC_TB_OPEN:
                 {
                     int choise=0;
@@ -313,7 +297,7 @@ static int ViewWinProc(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
                             ReleaseList(head);
                         }
                     head = findmatchfile (&filepathdata, &currentfile);
-                    InvalidateRect(hWnd,&rect,TRUE);
+                    InvalidateRect (hWnd, &rect, TRUE);
                    }
                }
                break;
@@ -331,7 +315,7 @@ static int ViewWinProc(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
                     rate = 1;
                     currentfile = currentfile->next;
                     InvalidateRect(hWnd,&rect,TRUE);
-                }					
+                }                    
                 break;
             
             case  IDC_TB_SMALL:
@@ -347,33 +331,24 @@ static int ViewWinProc(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
                     InvalidateRect(hWnd,&rect,TRUE);
                 }
                 break;
-
-#if 0
-            case  IDC_TB_FULL:
-            {
-            IsFullScreen = TRUE;
-            MoveWindow (hWnd,0,-24-TB_HEIGHT,
-                    GetGDCapability(HDC_SCREEN,GDCAP_MAXX),
-                    GetGDCapability(HDC_SCREEN,GDCAP_MAXY)+24+TB_HEIGHT,TRUE);
-            }
-            break;
-#endif
             }
         }
         break;
         
         case MSG_PAINT:
-            if ( currentfile != NULL ) {
+        {
+            HDC hdc = BeginPaint (hWnd);
+            if (currentfile) {
+                show_picture (hWnd, hdc, currentfile->name, rate);
                 char caption [300];
-                
-                // ShowPicture(hWnd,currentfile->name,IsFullScreen,rate);
-                ShowPicture(hWnd,currentfile->name,FALSE,rate);
                 sprintf (caption, "%s - %s", PV_ST_CAPTION, currentfile->name);
                 SetWindowCaption (hWnd, caption);
             }
             else 
-                SetWindowCaption(hWnd, PV_ST_CAPTION);
-            break;
+                SetWindowCaption (hWnd, PV_ST_CAPTION);
+            EndPaint (hWnd, hdc);
+            return 0;
+        }
         
         case MSG_KEYDOWN:
         {
@@ -383,84 +358,49 @@ static int ViewWinProc(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
                 return 0;
                 
             case SCANCODE_PAGEUP:
-                if ( currentfile != NULL && currentfile->previous != NULL )	{
-                rate = 1;
-                currentfile = currentfile->previous;
-                if( IsFullScreen == TRUE )
-                    SendMessage(HWND_DESKTOP,MSG_ERASEDESKTOP,0,0);	
-                InvalidateRect(hWnd,&rect,TRUE);
+                if (currentfile != NULL && currentfile->previous != NULL) {
+                    rate = 1;
+                    currentfile = currentfile->previous;
+                    InvalidateRect (hWnd, &rect, TRUE);
                 }
-                return 0;			
+                return 0;
+
             case SCANCODE_PAGEDOWN:
-                if ( currentfile != NULL && currentfile->next!= NULL ) {
-                rate = 1;
-                currentfile = currentfile->next;
-                if( IsFullScreen == TRUE )
-                    SendMessage(HWND_DESKTOP,MSG_ERASEDESKTOP,0,0);	
-                InvalidateRect(hWnd,&rect,TRUE);
-                }					
-                return 0;			
+                if (currentfile != NULL && currentfile->next!= NULL) {
+                    rate = 1;
+                    currentfile = currentfile->next;
+                    InvalidateRect(hWnd,&rect,TRUE);
+                }
+                return 0;            
+
             case SCANCODE_BACKSPACE:
-                if ( currentfile != NULL && currentfile->previous != NULL )	{
-                rate = 1;
-                currentfile = currentfile->previous;
-                if( IsFullScreen == TRUE )
-                    SendMessage(HWND_DESKTOP,MSG_ERASEDESKTOP,0,0);	
-                InvalidateRect(hWnd,&rect,TRUE);
+                if (currentfile != NULL && currentfile->previous != NULL)    {
+                    rate = 1;
+                    currentfile = currentfile->previous;
+                    InvalidateRect(hWnd,&rect,TRUE);
                 }
-                return 0;			
-            case SCANCODE_ESCAPE:
-            {
-                if (IsFullScreen == TRUE) {
-                IsFullScreen = FALSE;
-                MoveWindow(hWnd, MAINWINDOW_LX, MAINWINDOW_TY,
-                        MAINWINDOW_RX-MAINWINDOW_LX, 
-                        MAINWINDOW_BY-MAINWINDOW_TY,FALSE);
-                SendMessage(HWND_DESKTOP,MSG_ERASEDESKTOP,0,0);
-                InvalidateRect(hWnd,NULL,FALSE); //repaint background
-                }
-            }
-            return 0;			
+                return 0;            
+
             default:
                 break;
             }
             break;
         }
         
-        case MSG_LBUTTONDOWN:
-        {
-            if (IsFullScreen == TRUE) {
-                IsFullScreen = FALSE;
-                MoveWindow (hWnd,MAINWINDOW_LX, MAINWINDOW_TY,
-                        MAINWINDOW_RX-MAINWINDOW_LX,
-                        MAINWINDOW_BY-MAINWINDOW_TY,FALSE);
-                SendMessage(HWND_DESKTOP,MSG_ERASEDESKTOP,0,0);
-                InvalidateRect(hWnd,NULL,FALSE);
-            }
-        }
-        break;			
-        
         case MSG_CHAR:
-        {	
-            RECT        rect;
+        {
+            RECT  rect;
             GetClientRect(hWnd,&rect);
             rect.top +=TB_HEIGHT+4;
-            if( LOBYTE(wParam) == ' ' ) {
-                if ( currentfile != NULL && currentfile->next!= NULL )		 
-                {
+            if (LOBYTE(wParam) == ' ') {
+                if (currentfile != NULL && currentfile->next!= NULL) {
                     rate = 1;
                     currentfile = currentfile->next;
-                    if( IsFullScreen == TRUE )
-                    SendMessage(HWND_DESKTOP,MSG_ERASEDESKTOP,0,0);	
                     InvalidateRect(hWnd,&rect,TRUE);
-                }					
+                }
             }
         }
         return 0;
-        
-        case MSG_MAXIMIZE:
-        // OpenHelpWindow (HWND_DESKTOP, IDAPP_PIC, IDMSG_PIC);
-        break;
         
         case MSG_CLOSE:
         {
@@ -475,6 +415,7 @@ static int ViewWinProc(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
         }
         return 0;
     }
+
     return DefaultMainWinProc(hWnd, message, wParam, lParam);
 }
 
@@ -508,7 +449,7 @@ int MiniGUIMain (int args, const char* arg[])
     MAINWINDOW_TY = 0;
     MAINWINDOW_RX = g_rcScr.right;
     MAINWINDOW_BY = g_rcScr.bottom;
-	
+    
     CreateInfo.dwStyle = WS_VISIBLE | WS_BORDER | WS_CAPTION;
     CreateInfo.dwExStyle = WS_EX_NONE;
     CreateInfo.spCaption = PV_ST_CAPTION;
@@ -523,9 +464,9 @@ int MiniGUIMain (int args, const char* arg[])
     CreateInfo.iBkColor = COLOR_lightwhite;
     CreateInfo.dwAddData = 0;
     CreateInfo.hHosting = HWND_DESKTOP;
-	
+    
     hMainWnd = CreateMainWindow (&CreateInfo);
-	
+    
     if (hMainWnd == HWND_INVALID)
         return 3;
 
