@@ -5,6 +5,18 @@ AC_INIT(libmgutils, 1.0.5)
 AC_CONFIG_SRCDIR(src/mywins/colordlg.c)
 
 MGUTILS_NAME="mgutils"
+
+dnl Set various version strings
+#
+# Making releases:
+# Change the version, then:
+#   _MICRO_VERSION += 1;
+#   _INTERFACE_AGE += 1;
+#   _BINARY_AGE += 1;
+# if any functions have been added, set _INTERFACE_AGE to 0.
+# if backwards compatibility has been broken,
+# set _BINARY_AGE and _INTERFACE_AGE to 0.
+#
 MGUTILS_MAJOR_VERSION=1
 MGUTILS_MINOR_VERSION=0
 MGUTILS_MICRO_VERSION=5
