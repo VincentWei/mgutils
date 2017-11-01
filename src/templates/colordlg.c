@@ -98,7 +98,6 @@ CTRLDATA DefColorCtrl [] =
         0, WS_EX_TRANSPARENT
     },
 
-    //index:4
     { CTRL_STATIC, 
         WS_CHILD | WS_VISIBLE | SS_LEFT,
         210, 122, 15, 18,
@@ -125,7 +124,7 @@ CTRLDATA DefColorCtrl [] =
 
     { CTRL_STATIC, 
         WS_CHILD | WS_VISIBLE | SS_LEFT,
-        265, 122, 15, 18,
+        260, 122, 15, 18,
         IDC_CSD_NOTE_R, 
         "R",  
         0, WS_EX_TRANSPARENT
@@ -133,7 +132,7 @@ CTRLDATA DefColorCtrl [] =
 
     { CTRL_STATIC, 
         WS_CHILD | WS_VISIBLE | SS_LEFT,
-        265, 142, 15, 18,
+        260, 142, 15, 18,
         IDC_CSD_NOTE_G, 
         "G",  
         0, WS_EX_TRANSPARENT
@@ -141,13 +140,12 @@ CTRLDATA DefColorCtrl [] =
 
     { CTRL_STATIC, 
         WS_CHILD | WS_VISIBLE | SS_LEFT,
-        265, 162, 15, 18,
+        260, 162, 15, 18,
         IDC_CSD_NOTE_B, 
         "B",  
         0, WS_EX_TRANSPARENT
     },
 
-    //index:10
     { CTRL_SLEDIT, 
         WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP,
         225, 120, 27, 18,
@@ -969,11 +967,7 @@ BOOL ColorSelectDialog (PDLGTEMPLATE dlg_template,
         color_dlg = dlg_template;
     }
     else {
-        int i, width = GetSysCharWidth();
         color_dlg = &DefColorDlg;
-        width = width > 12 ? 12 : width;
-        for (i = 0; i < 6; i++)
-            DefColorCtrl[10 + i].w = 3*width;
     }
 
     if (proc) {

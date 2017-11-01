@@ -20,12 +20,12 @@
 #include <minigui/gdi.h>
 #include <minigui/window.h>
 #include <minigui/control.h>
+
+#ifdef __LINUX__
+#include <sys/stat.h>
+#include <sys/time.h>
 #include <sys/types.h>
 #include <time.h>
-#include <sys/stat.h>
-#include <dirent.h>
-#ifdef __LINUX__
-#include <sys/time.h>
 #include <unistd.h>
 #include <pwd.h>
 #elif defined(WIN32)
@@ -405,17 +405,15 @@ static void InsertToListView( HWND hWnd, PFILEINFO pfi)
     subdata.subItem = 3;
     ptm = (struct tm *)localtime (&(pfi->modifytime));
 
-	if(ptm )
-	{
+	if (ptm) {
 		sprintf (subdata.pszText, "%d-%.2d-%.2d",
 			ptm->tm_year + 1900, ptm->tm_mon + 1, ptm->tm_mday);
 
 		sprintf (subdata.pszText + 10, " %.2d:%.2d:%.2d",
 			ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
 	}
-	else
-	{
-		sprintf(subdata.pszText, "-------");
+	else {
+		sprintf (subdata.pszText, "-------");
 	}
 
     SendMessage (hListView, LVM_SETSUBITEM, 0, (LPARAM)&subdata);

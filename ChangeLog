@@ -1,5 +1,10 @@
 *******************************************************************************
 What's new in trunk:
+
+11/01 CLEANUP: merge differences from rel-3-0 mannually!
+	* src/templates/colordlg.c
+	* src/templates/filedlg.c
+
 10/26-2017 CLEANUP: merge from rel-3-0 branch.
 	* svn merge -r191:230 ^/branches/rel-3-0
 

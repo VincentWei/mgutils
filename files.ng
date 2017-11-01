@@ -3,4 +3,4 @@ project_name=mgutils
 lib_name=libmgutils
 lib_major_version=1
 lib_minor_version=0
-lib_micro_version=2
+lib_micro_version=5
