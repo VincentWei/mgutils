@@ -6,7 +6,7 @@ includedir=@includedir@
 Name: mGUtils
 Description: A MiniGUI component which contains miscellaneous utilities like ColorSelectionDialogBox, FileOpenDialogBox, and so on.
 Version: @MGUTILS_VERSION@
-Requires:
+Requires: minigui
 Libs: -L${libdir} @PC_LIBS@
 Libs.private:
 Cflags: -I${includedir} @PC_CFLAGS@

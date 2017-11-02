@@ -93,8 +93,7 @@ fi
 
 MGUTILS_LIBNAME="${MGUTILS_NAME}${LIB_SUFFIX}"
 
-have_libminigui="no"
-AC_CHECK_HEADERS(minigui/common.h, have_libminigui=yes, foo=bar)
+PKG_CHECK_MODULES([MINIGUI], [minigui >= 3.0.10])
 
 dnl ========================================================================
 dnl check for run-time mode of MiniGUI
@@ -102,18 +101,16 @@ dnl ========================================================================
 procs_version="no"
 AC_CHECK_DECLS(_MGRM_PROCESSES, procs_version="yes", foo=bar, [#include <minigui/common.h>])
 
-CFLAGS="$CFLAGS -D__MGUTILS_LIB__"
-
 AM_CONDITIONAL(MGRM_PROCESSES, test "x$procs_version" = "xyes")
 AM_CONDITIONAL(MGUTILS_NOSUFFIX, test "x$with_libsuffix" = "x")
 
+CFLAGS="$CFLAGS -D__MGUTILS_LIB__"
 if test "$ac_cv_prog_gcc" = "yes"; then
     CFLAGS="$CFLAGS -Wall -Wstrict-prototypes -pipe"
 fi
 
 AC_SUBST(LIB_SUFFIX)
 
-PKG_CHECK_MODULES([MINIGUI], [minigui >= 3.0.10])
 APP_LIBS="$APP_LIBS $MINIGUI_LIBS"
 AC_SUBST(APP_LIBS)
 
@@ -122,34 +119,27 @@ PC_CFLAGS=""
 AC_SUBST(PC_LIBS)
 AC_SUBST(PC_CFLAGS)
 
-AC_OUTPUT([mgutils.pc
-         Makefile
-         include/Makefile
-         cmake/Makefile
-         src/Makefile
-         src/mywins/Makefile
-         src/vcongui/Makefile
-         src/skin/Makefile
-         src/templates/Makefile
-         samples/Makefile
-         samples/mginit/Makefile
-         samples/mginit/res/Makefile
-         samples/templates/Makefile
-         samples/mywins/Makefile
-         samples/skin/Makefile
-         samples/notebook/Makefile
-         samples/notebook/res/Makefile
-         samples/painter/Makefile
-         samples/picview/Makefile
-         samples/picview/res/Makefile
-         samples/vcongui/Makefile
-         m4/Makefile])
-
-if test "x$have_libminigui" != "xyes"; then
-    AC_MSG_WARN([
-        MiniGUI is not properly installed on the system. You need 
-        MiniGUI Ver 3.0.x or later for building this package. 
-        Please configure and install MiniGUI Ver 3.0.x first.
-    ])
-fi
-
+AC_OUTPUT([
+        mgutils.pc
+        Makefile
+        include/Makefile
+        cmake/Makefile
+        src/Makefile
+        src/mywins/Makefile
+        src/vcongui/Makefile
+        src/skin/Makefile
+        src/templates/Makefile
+        samples/Makefile
+        samples/mginit/Makefile
+        samples/mginit/res/Makefile
+        samples/templates/Makefile
+        samples/mywins/Makefile
+        samples/skin/Makefile
+        samples/notebook/Makefile
+        samples/notebook/res/Makefile
+        samples/painter/Makefile
+        samples/picview/Makefile
+        samples/picview/res/Makefile
+        samples/vcongui/Makefile
+        m4/Makefile
+])
