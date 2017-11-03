@@ -76,8 +76,11 @@ link_directories (${MINIGUI_LIBRARY_DIRS})
 include_directories ("${PROJECT_BINARY_DIR}")
 include_directories ("${PROJECT_SOURCE_DIR}/include")
 
+LIST (APPEND APP_LIBS "${PROJECT_SOURCE_DIR}/src/libmgutils.so" ${MINIGUI_LIBRARIES})
+
 ###################### add sub directories #########################
 add_subdirectory (src)
+add_subdirectory (samples)
 
 # for makefile.ng to get source files
 #FILE(WRITE tmp_files "files=\" ${_source_list_}\"")
