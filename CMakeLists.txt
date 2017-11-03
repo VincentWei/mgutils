@@ -78,7 +78,6 @@ include_directories ("${PROJECT_SOURCE_DIR}/include")
 
 ###################### add sub directories #########################
 add_subdirectory (src)
-# add_subdirectory (samples)
 
 # for makefile.ng to get source files
 #FILE(WRITE tmp_files "files=\" ${_source_list_}\"")
@@ -88,7 +87,6 @@ lib_name=lib${MGUTILS_NAME}
 lib_major_version=${MGUTILS_MAJOR_VERSION}
 lib_minor_version=${MGUTILS_MINOR_VERSION}
 lib_micro_version=${MGUTILS_MICRO_VERSION}\n")
-
 
 ##################### files install #########################
 install (DIRECTORY "${PROJECT_SOURCE_DIR}/include/"
