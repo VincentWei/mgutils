@@ -82,8 +82,14 @@ AC_FUNC_STAT
 AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([bzero dup2 getcwd memmove memset putenv strchr strdup strerror strstr])
 
+devel_mode="no"
+
+AC_ARG_ENABLE(develmode,
+[  --enable-develmode       developer mode <default=no>],
+devel_mode=$enableval)
+
 AC_ARG_WITH(libsuffix,
-  [  --with-libsuffix=ARG    configure the suffix of the library name.])
+  [  --with-libsuffix=ARG   configure the suffix of the library name.])
 
 if test "x$with_libsuffix" = "x"; then
   LIB_SUFFIX=""
@@ -105,8 +111,10 @@ AM_CONDITIONAL(MGRM_PROCESSES, test "x$procs_version" = "xyes")
 AM_CONDITIONAL(MGUTILS_NOSUFFIX, test "x$with_libsuffix" = "x")
 
 CFLAGS="$CFLAGS -D__MGUTILS_LIB__"
-if test "$ac_cv_prog_gcc" = "yes"; then
-    CFLAGS="$CFLAGS -Wall -Wstrict-prototypes -pipe"
+if test "x$devel_mode" = "xyes"; then
+    if test "$ac_cv_prog_gcc" = "yes"; then
+        CFLAGS="$CFLAGS -Werror -Wall -Wstrict-prototypes -pipe"
+    fi
 fi
 
 AC_SUBST(LIB_SUFFIX)
