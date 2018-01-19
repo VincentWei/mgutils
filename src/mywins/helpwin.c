@@ -59,8 +59,7 @@ typedef struct tagHELPMSGINFO {
     RECT rc;
 } HELPMSGINFO;
 
-static int 
-_help_win_proc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT _help_win_proc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     HELPMSGINFO* info;
     SPININFO spinfo;

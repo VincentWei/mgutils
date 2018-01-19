@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 
 #include <minigui/common.h>
@@ -47,22 +48,22 @@ static si_bmplabel_t timer         = { "00:00", "0123456789:-" };
 /* 定义皮肤元素数组 */
 static skin_item_t skin_main_items [] =
 {
-{SIID_PLAY, SI_TYPE_CHKBUTTON       | SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE,
-    205, 106, {}, 1, "Play"},
-{SIID_PAUSE, SI_TYPE_CHKBUTTON   | SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE,
-    230, 106, {}, 2, "Pause"},    
-{SIID_STOP,  SI_TYPE_CHKBUTTON   | SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE,
-    254, 106, {}, 3, "Stop"},
-{SIID_PROGRESS, SI_TYPE_NRMSLIDER| SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE 
-    | SI_NRMSLIDER_HORZ, 8, 91, {}, 4, "Progress" , 0, &progress},
-{SIID_SYSMENU, SI_TYPE_CMDBUTTON | SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE,
-    9, 2, {}, 6},
-{SIID_CLOSE, SI_TYPE_CMDBUTTON      | SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE,
-    263, 2, {}, 7, "Close"},
-{SIID_VOLUME, SI_TYPE_NRMSLIDER  | SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE 
-    | SI_NRMSLIDER_HORZ, 102, 55, {}, 8, "Volume" , 0, &volume},
-{SIID_TIMER,   SI_TYPE_BMPLABEL  | SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE,
-    20, 67, {}, 10, "Time", 0, &timer}
+    {SIID_PLAY, SI_TYPE_CHKBUTTON       | SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE,
+        205, 106, {}, {1}, "Play"},
+    {SIID_PAUSE, SI_TYPE_CHKBUTTON   | SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE,
+        230, 106, {}, {2}, "Pause"},    
+    {SIID_STOP,  SI_TYPE_CHKBUTTON   | SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE,
+        254, 106, {}, {3}, "Stop"},
+    {SIID_PROGRESS, SI_TYPE_NRMSLIDER| SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE 
+        | SI_NRMSLIDER_HORZ, 8, 91, {}, {4}, "Progress" , 0, &progress},
+    {SIID_SYSMENU, SI_TYPE_CMDBUTTON | SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE,
+        9, 2, {}, {6}},
+    {SIID_CLOSE, SI_TYPE_CMDBUTTON      | SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE,
+        263, 2, {}, {7}, "Close"},
+    {SIID_VOLUME, SI_TYPE_NRMSLIDER  | SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE 
+        | SI_NRMSLIDER_HORZ, 102, 55, {}, {8}, "Volume" , 0, &volume},
+    {SIID_TIMER,   SI_TYPE_BMPLABEL  | SI_TEST_SHAPE_RECT | SI_STATUS_VISIBLE,
+        20, 67, {}, {10}, "Time", 0, &timer}
 };
 
 /* 定义皮肤 */
@@ -109,7 +110,6 @@ void load_skin_bmps (skin_head_t *skin, BOOL load)
 static int main_event_cb (HWND hwnd, skin_item_t* item, int event, void* data)
 {
     char buf[256];
-    static int click_num = 0;
     int minute = 0;
     int second = 0;
     int pos = 0;
@@ -117,7 +117,6 @@ static int main_event_cb (HWND hwnd, skin_item_t* item, int event, void* data)
     if (event == SIE_BUTTON_CLICKED) {
         switch (item->id) {
         case SIID_PLAY:        /* 皮肤元素SIID_PLAY的SIE_BUTTON_CLICKED事件在这里进行处理 */
-            click_num = 0;
             SetTimer (hwnd, ID_TIME, 100);
             skin_set_check_status (item->hostskin, SIID_PAUSE, FALSE);
             skin_set_check_status (item->hostskin, SIID_STOP, FALSE);
@@ -142,7 +141,7 @@ static int main_event_cb (HWND hwnd, skin_item_t* item, int event, void* data)
         }
     }
     else if (event == SIE_SLIDER_CHANGED && item->id != SIID_VOLUME) {
-        pos = (int)data;
+        pos = (int)(intptr_t)data;
         cur_pos = pos;
         minute = pos / 60;
         second = pos % 60;

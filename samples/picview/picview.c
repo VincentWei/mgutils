@@ -255,7 +255,7 @@ static void InitNewToolBar (HWND hWnd)
     }
 }
 
-static int ViewWinProc(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT ViewWinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     static FILEITEM    *currentfile;
     static FILEITEM    *head        = NULL;

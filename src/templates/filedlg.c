@@ -431,8 +431,8 @@ ListViewSortBySize( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
 
     hCtrlWnd = sortdata->hLV;
 
-    nIsDir1 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, nItem1);
-    nIsDir2 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, nItem2);
+    nIsDir1 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem1);
+    nIsDir2 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem2);
 
     if ( nIsDir1 >nIsDir2 )
         return 1;
@@ -483,8 +483,8 @@ ListViewSortByName( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
     
     hCtrlWnd = sortdata->hLV;
     
-    nIsDir1 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, nItem1);
-    nIsDir2 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, nItem2);
+    nIsDir1 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem1);
+    nIsDir2 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem2);
    
     if ( nIsDir1 >nIsDir2 ) 
         return 1;
@@ -530,8 +530,8 @@ ListViewSortByDate( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
     
     hCtrlWnd = sortdata->hLV;
 
-    nIsDir1 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, nItem1);
-    nIsDir2 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, nItem2);
+    nIsDir1 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem1);
+    nIsDir2 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem2);
     
     if ( nIsDir1 >nIsDir2 )
         return 1;
@@ -905,7 +905,7 @@ static void InitOpenDialog( HWND hWnd, PFILEDLGDATA pfdd)
     //SendMessage (hCtrlWnd, LVM_COLSORT, (WPARAM)1, 0);
 }
 
-int DefFileDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
+LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     HWND hCtrlWnd;
     int  nId, nNc;
@@ -924,8 +924,11 @@ int DefFileDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
                 
                 /* get current directory name */
                 if (strcmp (pfdd->filepath, ".") == 0 ||
-                        strcmp (pfdd->filepath, "./") == 0)
-                    getcwd (pfdd->filepath, MY_PATHMAX);
+                        strcmp (pfdd->filepath, "./") == 0) {
+                    if (getcwd (pfdd->filepath, MY_PATHMAX) == NULL) {
+                        return 0;
+                    }
+                }
 
                 SetWindowAdditionalData (hDlg, (DWORD)lParam);
 
@@ -1013,10 +1016,10 @@ int DefFileDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
                         }
                         else {
                             hCtrlWnd = GetDlgItem (hDlg, IDC_FOSD_FILELIST);
-                            nSelItem = SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
+                            nSelItem = (GHANDLE)SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
                             if (nSelItem != 0) {
                                 nIsDir = SendMessage (hCtrlWnd, 
-                                        LVM_GETITEMADDDATA, 0, nSelItem);
+                                        LVM_GETITEMADDDATA, 0, (LPARAM)nSelItem);
                                 memset (&subItem, 0, sizeof (subItem));
                                 //subItem.nItem = nSelItem;
                                 subItem.subItem = 0;
@@ -1066,9 +1069,9 @@ int DefFileDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
 
                     case IDC_FOSD_FILELIST:
                         if (nNc == LVN_ITEMDBCLK || nNc == LVN_ITEMCLK || nNc == LVN_CLICKED) {
-                            nSelItem = SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
+                            nSelItem = (GHANDLE)SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
                             if (nSelItem > 0 ) {
-                                nIsDir = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, nSelItem);    
+                                nIsDir = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nSelItem);    
                                 memset (&subItem, 0, sizeof (subItem));
                                 //subItem.nItem = nSelItem;
                                 subItem.subItem = 0;

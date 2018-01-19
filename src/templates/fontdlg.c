@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <string.h>
 
 #include <minigui/common.h>
@@ -314,7 +315,7 @@ static WNDPROC _oldColorStaticProc = NULL;
 //lPram = (DWORD)color
 #define CS_SETTEXTCOLOR MSG_USER + 100
 
-static int _colorStaticProc(HWND hwnd, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT _colorStaticProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch(message){
 	case CS_SETTEXTCOLOR:
@@ -450,7 +451,7 @@ static int * insertIntArray(int * tarr, int tn, int nin, int * newlen, int *inse
 	return tarr;
 }
 
-#define GetFontSize(font_ops)   ((int(*)(PLOGFONT,const DEVFONT*,int))(((int*)(font_ops))[4]))
+#define GetFontSize(font_ops)   ((intptr_t(*)(PLOGFONT,const DEVFONT*,int))(((intptr_t*)(font_ops))[4]))
 static void EnumSupportSize(MGU_PFONT pfont, const DEVFONT* dev_font)
 {
 	LOGFONT font;
@@ -755,7 +756,7 @@ static int SaveFontData (HWND hDlg, PLOGFONT font, int color)
     return 0;
 }
 
-int DefFontDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
+LRESULT DefFontDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     static PLOGFONT font = NULL;
     MGU_PFONTDIA    pfdia = NULL;

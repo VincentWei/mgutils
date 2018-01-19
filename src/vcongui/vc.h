@@ -179,6 +179,17 @@ void PollCursor (bool wakeup);
 
 void TextRepaintAll (CONINFO *con);
 
+static inline ssize_t my_write (int fd, const void *buf, size_t count)
+{
+    ssize_t size = write (fd, buf, count);
+
+    if (size < count) {
+        fprintf (stderr, "Error when calling write(), fd=%d.\n", fd);
+    }
+
+    return size;
+}
+
 #ifdef __cplusplus
 }
 #endif  /* __cplusplus */

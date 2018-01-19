@@ -37,11 +37,9 @@ static DWORD slider_get_pos (skin_item_t *item)
 
 static DWORD slider_set_pos (skin_item_t *item, DWORD pos) 
 {
-    DWORD old_pos;
     DECLARE (si_nrmslider_t, slider, 0);
 
     slider = (si_nrmslider_t*) item->type_data;
-    old_pos =  slider->slider_info.cur_pos;
 
     if ( pos < slider->slider_info.min_pos ) pos = slider->slider_info.min_pos;
     if ( pos > slider->slider_info.max_pos ) pos = slider->slider_info.max_pos;
@@ -147,7 +145,7 @@ static int slider_msg_proc (skin_item_t* item, int message, WPARAM wparam, LPARA
         /* default operation */
         if (skin_get_thumb_pos (item->hostskin, item->id) != pos) {
             skin_set_thumb_pos ( item->hostskin, item->id, pos);
-            RAISE_EVENT ( SIE_SLIDER_CHANGED, (void *)pos );
+            RAISE_EVENT ( SIE_SLIDER_CHANGED, (void *)(DWORD)pos );
         }
         break;
     case SKIN_MSG_SETFOCUS:

@@ -65,9 +65,10 @@ static void RunStartupCmd (const char* startupStr)
     str = strdup (startupStr);
     
     p = strtok (str, "\n");
-    while(p) {
-        system(p);
-        p = strtok(NULL, "\n");
+    while (p) {
+        int ret = system(p);
+        printf ("return value of system (%s) is: %d\n", p, ret);
+        p = strtok (NULL, "\n");
     }
 
     free (str);
@@ -80,8 +81,15 @@ void ChildStart (PCONINFO con, FILE *errfp, bool startupMessage,
     char *tail;
     char buff [80];
 
-    setgid (getgid ());
-    setuid (getuid ());
+    if (setgid (getgid ())) {
+        printf ("Error on calling setgid.\n");
+        return;
+    }
+
+    if (setuid (getuid ())) {
+        printf ("Error on calling setuid.\n");
+        return;
+    }
 
     RunStartupCmd (startupStr);
 

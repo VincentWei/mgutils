@@ -25,7 +25,7 @@
 
 static HWND hStaticInfo;
 
-static int OpenSaveHookProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT OpenSaveHookProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message) {
         case MSG_INITDIALOG:
@@ -89,7 +89,7 @@ static void button_callback (HWND hwnd, int id, int nc, DWORD add_data)
     }
 }
 
-static int MainWndProc (HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT MainWndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     HWND button;
 

@@ -418,7 +418,7 @@ static void SetTerminalWindowSize (PCONINFO pConInfo, WPARAM cmd_id)
                     col * GetCharWidth ()),
                 ClientHeightToWindowHeight (WS_CAPTION | WS_BORDER,
                     row * GetCharHeight (), 
-                    GetMenu (pConInfo->hWnd)), TRUE);
+                    GetMenu (pConInfo->hWnd) != 0), TRUE);
 
     // Set new terminal window size
     twinsz.ws_row = row;
@@ -476,7 +476,7 @@ static BOOL SetTerminalCharset (PCONINFO pConInfo, WPARAM cmd_id)
     return TRUE;
 }
 
-static int VCOnGUIMainWinProc (HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT VCOnGUIMainWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     PCONINFO pConInfo;
 

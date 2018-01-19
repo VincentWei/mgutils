@@ -13,7 +13,7 @@
 #include <mgutils/mgutils.h>
 #endif
 
-static int InfoHookProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT InfoHookProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message) {
         case MSG_INITDIALOG:

@@ -44,7 +44,7 @@ DLGTEMPLATE DefInfoDlg =
     DefInfoCtrl 
 };
 
-int DefInfoDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
+LRESULT DefInfoDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     PINFODLGDATA info;
     SPININFO spinfo;

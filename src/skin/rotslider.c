@@ -157,7 +157,7 @@ static int rotslider_msg_proc (skin_item_t* item, int message, WPARAM wparam, LP
     case SKIN_MSG_MOUSEDRAG:     /* ROTSLIDER_CHANGED event */
         /* calculate new degree [start_deg, end_deg] belong to [0,2*Pi) */
         pos = get_changed_pos (item, wparam, lparam);
-        RAISE_EVENT ( SIE_SLIDER_CHANGED, (void *)pos );
+        RAISE_EVENT ( SIE_SLIDER_CHANGED, (void *)(DWORD)pos );
         /* default operation */
         skin_set_thumb_pos (item->hostskin, item->id, pos);
         break;

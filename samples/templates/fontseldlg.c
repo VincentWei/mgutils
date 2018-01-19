@@ -22,15 +22,13 @@
 
 #define IDC_LABEL_INFO      100
 
-static int FontHookProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT FontHookProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message) {
         case MSG_INITDIALOG:
             {
-                HWND tmp;
-
                 /* Set Font Size ComboBox */
-                tmp = GetDlgItem(hDlg, IDC_FSD_SIZE);
+                GetDlgItem(hDlg, IDC_FSD_SIZE);
                 //SetWindowBkColor(tmp, PIXEL_red);
 
 
@@ -68,7 +66,7 @@ static void button_callback (HWND hwnd, int id, int nc, DWORD add_data)
 #endif
 }
 
-static int MainWndProc (HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT MainWndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     HWND button;
 

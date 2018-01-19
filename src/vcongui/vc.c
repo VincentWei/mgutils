@@ -542,16 +542,16 @@ void TextCopy (CONINFO *con, int fx, int fy, int tx, int ty)
                     break;
                 }
                 
-                write (fd, &ch, 1);
-                write (fd, &ch2, 1);
+                my_write (fd, &ch, 1);
+                my_write (fd, &ch2, 1);
             }
             else 
-                write (fd, &ch, 1);
+                my_write (fd, &ch, 1);
         }
 
         if (y < ty) {
             ch = '\n';
-            write(fd, &ch, 1);
+            my_write(fd, &ch, 1);
         }
         
         fx = 0;
@@ -574,7 +574,7 @@ void TextPaste (CONINFO *con)
         return;
         
     while (read (fd, &ch, 1) == 1)
-        write (con->masterPty, &ch, 1);
+        my_write (con->masterPty, &ch, 1);
     
     close(fd);
 }

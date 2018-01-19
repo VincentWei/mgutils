@@ -159,13 +159,12 @@ static void bmplabel_draw_attached (HDC hdc, skin_item_t* item)
     int x, y, w, h;
     char *p;
     int xx;
-    BITMAP *bmp;
 
     si_bmplabel_t *mylabel = (si_bmplabel_t *) item->type_data;
     if ( !mylabel ) return;
 
-    bmp = (BITMAP *)&ITEMBMP(item);
-       
+    //BITMAP *bmp;
+    //bmp = (BITMAP *)&ITEMBMP(item);
     //bmp->bmType = BMP_TYPE_COLORKEY;
     //bmp->bmColorKey = GetPixelInBitmap (&ITEMBMP(item), 10, 10);
 

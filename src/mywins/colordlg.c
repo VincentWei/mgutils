@@ -268,7 +268,7 @@ static void UpdateValue (HWND hDlg, int id, PSCOLORDIA scld)
     ReleaseDC (dc);
 }
 
-static int ColorDlgProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT ColorDlgProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     PSCOLORDIA scld;
 

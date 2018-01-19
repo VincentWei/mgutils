@@ -22,19 +22,17 @@
 
 #define IDC_LABEL_INFO      100
 
-static int ColorHookProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT ColorHookProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message) {
         case MSG_INITDIALOG:
             {
-                HWND tmp;
-
                 /* Set custom color 0 */
-                tmp = GetDlgItem(hDlg, IDC_CSD_CUSTOM_COLOR_0);
+                GetDlgItem(hDlg, IDC_CSD_CUSTOM_COLOR_0);
                 // SetWindowBkColor(tmp, PIXEL_red);
 
                 /* Set custom color 1 */
-                tmp = GetDlgItem(hDlg, IDC_CSD_CUSTOM_COLOR_1);
+                GetDlgItem(hDlg, IDC_CSD_CUSTOM_COLOR_1);
                 // SetWindowBkColor(tmp, PIXEL_blue);
 
                 /* to do other... */
@@ -76,7 +74,7 @@ static void button_callback (HWND hwnd, int id, int nc, DWORD add_data)
     }
 }
 
-static int MainWndProc (HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT MainWndProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     HWND button;
 

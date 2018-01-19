@@ -31,7 +31,7 @@ static int control_on_create (skin_item_t* item)
 {
     PCTRLDATA    pCtrlData = item->type_data;
 
-    item->bmp_index = 
+    item->hwnd = 
     CreateWindowEx (pCtrlData->class_name,
                     pCtrlData->caption,
                     pCtrlData->dwStyle | WS_CHILD,
@@ -48,13 +48,13 @@ static int control_on_create (skin_item_t* item)
 
 static int control_on_destroy (skin_item_t* item)
 {
-    DestroyWindow ((HWND)item->bmp_index);
+    DestroyWindow ((HWND)item->hwnd);
     return 1;                
 }
 
 static DWORD control_get_hwnd (skin_item_t *item)
 {
-    return (DWORD)item->bmp_index;
+    return (DWORD)item->hwnd;
 }
 
 static skin_item_ops_t control_ops = {

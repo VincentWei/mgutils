@@ -410,7 +410,7 @@ static void on_mousemove (HWND hwnd, skin_head_t* skin, int x, int y)
     }    \
 }    
 
-static int SkinWndProc (HWND hwnd, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT SkinWndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     int x, y, result = MSG_CB_GOON;
     skin_head_t *skin = NULL;
@@ -786,7 +786,7 @@ HWND skin_get_control_hwnd (skin_head_t* skin, int id)
     skin_item_t *item = skin_get_item (skin, id);
 
     if ( (item->style & SI_TYPE_MASK) == SI_TYPE_CONTROL )
-        return item->ops->get_value(item);
+        return (HWND)item->ops->get_value(item);
 
     return HWND_INVALID;
 }

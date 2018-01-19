@@ -247,7 +247,7 @@ static int cpSetFocus(PCOLORPANEL pcp, int row, int col);
 static int cpSetCells(PCOLORPANEL pcp, PRGBCELLINFO rgbCellInfo);
 static int cpGetCellByPos(PCOLORPANEL pcp, int x, int y, int* prow, int *pcol);
 
-static int ColorPanelProc(HWND hWnd, int message, WPARAM wParam, LPARAM lParam);
+static LRESULT ColorPanelProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 
 BOOL RegisterColorPanel(void)
@@ -262,7 +262,7 @@ BOOL RegisterColorPanel(void)
 	return RegisterWindowClass (&WndClass);
 }
 
-static int ColorPanelProc(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT ColorPanelProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	switch(message)
 	{
@@ -325,7 +325,7 @@ static int ColorPanelProc(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
 				col = 0;
 			else if(col >= pcp->cols)
 				col = pcp->cols - 1;
-			return (int)&pcp->rgbs[CELLIDX(pcp, col, row)];
+			return (LRESULT)&pcp->rgbs[CELLIDX(pcp, col, row)];
 		}
 	case CP_GETSELCOLOR:
 		{

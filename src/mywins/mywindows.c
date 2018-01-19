@@ -97,8 +97,7 @@ static CTRLDATA CtrlButtons [] =
         300, 110, 80, 24, IDC_THREE, NULL, 0 }
 };
 
-static int 
-ButtonsBoxProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT ButtonsBoxProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message) {
     case MSG_INITDIALOG:
@@ -146,9 +145,8 @@ int myWinMessage (HWND hwnd, const char* title, const char* button1,
     CtrlButtons [2].caption = button1;
     CtrlButtons [2].x       = 300;
     
-    CtrlButtons [0].dwAddData = GetLargeSystemIcon (IDI_INFORMATION);
-    rc = DialogBoxIndirectParam (&DlgButtons, hwnd,
-            ButtonsBoxProc, 0L);
+    CtrlButtons [0].dwAddData = (DWORD)GetLargeSystemIcon (IDI_INFORMATION);
+    rc = DialogBoxIndirectParam (&DlgButtons, hwnd, ButtonsBoxProc, 0L);
 
     if (buf)
         free (buf);
@@ -188,9 +186,8 @@ int myWinChoice (HWND hwnd, const char* title,
     CtrlButtons [2].x       = 200;
     CtrlButtons [3].x       = 300;
     
-    CtrlButtons [0].dwAddData = GetLargeSystemIcon (IDI_INFORMATION);
-    rc = DialogBoxIndirectParam (&DlgButtons, hwnd,
-            ButtonsBoxProc, 0L);
+    CtrlButtons [0].dwAddData = (DWORD)GetLargeSystemIcon (IDI_INFORMATION);
+    rc = DialogBoxIndirectParam (&DlgButtons, hwnd, ButtonsBoxProc, 0L);
 
     if (buf)
         free (buf);
@@ -232,9 +229,8 @@ int myWinTernary (HWND hwnd, const char* title,
     CtrlButtons [3].x       = 200;
     CtrlButtons [4].x       = 300;
     
-    CtrlButtons [0].dwAddData = GetLargeSystemIcon (IDI_INFORMATION);
-    rc = DialogBoxIndirectParam (&DlgButtons, hwnd,
-            ButtonsBoxProc, 0L);
+    CtrlButtons [0].dwAddData = (DWORD)GetLargeSystemIcon (IDI_INFORMATION);
+    rc = DialogBoxIndirectParam (&DlgButtons, hwnd, ButtonsBoxProc, 0L);
 
     if (buf)
         free (buf);
@@ -242,7 +238,7 @@ int myWinTernary (HWND hwnd, const char* title,
     return rc - IDC_BASE;
 }
 
-static int StatusWinProc (HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT StatusWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message) {
         case MSG_PAINT:
@@ -338,7 +334,6 @@ HWND createProgressWin (HWND hParentWnd, const char* title, const char* label,
     HWND hwnd;
     MAINWINCREATE CreateInfo;
     int ww, wh;
-    HWND hStatic, hProgBar;
 
     ww = ClientWidthToWindowWidth (WS_CAPTION | WS_BORDER, 400);
     wh = ClientHeightToWindowHeight (WS_CAPTION | WS_BORDER, 
@@ -363,7 +358,7 @@ HWND createProgressWin (HWND hParentWnd, const char* title, const char* label,
     if (hwnd == HWND_INVALID)
         return hwnd;
 
-    hStatic = CreateWindowEx ("static", 
+    CreateWindowEx ("static", 
                   label, 
                   WS_VISIBLE | SS_SIMPLE, 
                   WS_EX_USEPARENTCURSOR,
@@ -371,7 +366,7 @@ HWND createProgressWin (HWND hParentWnd, const char* title, const char* label,
                   10, 10, 380, 16, hwnd, 0);
     
     if (range > 0) {
-        hProgBar = CreateWindowEx ("progressbar", 
+        CreateWindowEx ("progressbar", 
                   NULL, 
                   WS_VISIBLE,
                   WS_EX_USEPARENTCURSOR,
@@ -379,8 +374,6 @@ HWND createProgressWin (HWND hParentWnd, const char* title, const char* label,
                   10, 30, 380, 30, hwnd, 0);
         SendDlgItemMessage (hwnd, id, PBM_SETRANGE, 0, range);
     }
-    else
-        hProgBar = HWND_INVALID;
 
     UpdateWindow (hwnd, TRUE);
 
@@ -410,8 +403,7 @@ void destroyProgressWin (HWND hwnd)
 #define MARGIN_LEFT         50
 #define MARGIN_RIGHT        10
 
-static int
-WinMenuBoxProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT WinMenuBoxProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
   switch (message) {
     case MSG_INITDIALOG:
@@ -532,7 +524,7 @@ int myWinMenu (HWND hParentWnd, const char* title, const char* label,
     pCtrlData->h        = 40;;
     pCtrlData->id       = IDC_STATIC;
     pCtrlData->caption  = GetSysText(IDS_MGST_LOGO);
-    pCtrlData->dwAddData = GetLargeSystemIcon (IDI_INFORMATION);
+    pCtrlData->dwAddData = (DWORD)GetLargeSystemIcon (IDI_INFORMATION);
     
     // label:
     (pCtrlData + 1)->class_name    = "static";
@@ -594,8 +586,7 @@ int myWinMenu (HWND hParentWnd, const char* title, const char* label,
     return rc;
 }
 
-static int
-WinEntryBoxProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT WinEntryBoxProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
   switch (message) {
     case MSG_INITDIALOG:
@@ -640,6 +631,7 @@ WinEntryBoxProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
 
     return DefaultDialogProc (hDlg, message, wParam, lParam);
 }
+
 int myWinEntries (HWND hParentWnd, const char* title, const char* label,
                 int width, int editboxwidth, BOOL fIME, myWINENTRY* items, 
                 myWINBUTTON* buttons)
@@ -730,7 +722,7 @@ int myWinEntries (HWND hParentWnd, const char* title, const char* label,
     pCtrlData->h        = 40;;
     pCtrlData->id       = IDC_STATIC;
     pCtrlData->caption  = GetSysText(IDS_MGST_LOGO);
-    pCtrlData->dwAddData = GetLargeSystemIcon (IDI_INFORMATION);
+    pCtrlData->dwAddData = (DWORD)GetLargeSystemIcon (IDI_INFORMATION);
     
     // label:
     (pCtrlData + 1)->class_name    = "static";

@@ -354,7 +354,7 @@ static inline int sleditGetSelStart(HWND hwnd){
     return selstart<selend?selstart:selend;
 }
 
-static int sleditNumberLimitProc(HWND hwnd, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT sleditNumberLimitProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     char szNumber[10];
     int value;
@@ -727,11 +727,10 @@ static int SaveColor (HWND hDlg, PSCOLORDIA scld)
     SendDlgItemMessage(hDlg, IDC_CSD_CUSTOM, CP_SETSELCELL,(WPARAM)-1, (LPARAM)-1); \
 }while(0)
 
-int DefColorDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
+LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     HDC         hdc, mdc;
     Uint8       r, g, b;
-    static int  sel_id;
     int         i, j, x, y;
     int         id, msg, scancode;
     PSCOLORDIA  scld;
@@ -769,7 +768,6 @@ int DefColorDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
                 {
                     scld->SpaceDC = HDC_INVALID; 
                 }
-                sel_id = IDC_CSD_BASIC_COLOR_0;
 
                 SetWindowAdditionalData (hDlg, (LPARAM)scld);
 
@@ -847,7 +845,6 @@ int DefColorDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
                         break;
                     case IDC_CSD_ADD:
                         {
-                            sel_id = IDC_CSD_COLOR;
                             hdc = GetClientDC (hDlg);
                             ReleaseDC (hdc);
                             HSV2RGB (scld->clrh, scld->clrs, scld->clrv, 
@@ -894,7 +891,6 @@ int DefColorDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
                 scld = (PSCOLORDIA)GetWindowAdditionalData (hDlg);
 
                 if (PtInRect (&scld->rcSpace, x, y)) {
-                    sel_id = IDC_CSD_COLOR;
                     hdc = GetClientDC (hDlg);
                     scld->clrh = (x-scld->rcSpace.left)*360/RECTW(scld->rcSpace);
                     scld->clrs = 100-(y-scld->rcSpace.top)*100/RECTH(scld->rcSpace);
@@ -905,7 +901,6 @@ int DefColorDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
                 }
 
                 if (PtInRect(&scld->rcYSpace, x,y)) {
-                    sel_id = IDC_CSD_COLOR;
                     hdc = GetClientDC (hDlg);
                     scld->clrv = (y-scld->rcYSpace.top)*100 / RECTH(scld->rcYSpace);
                     DrawAllSpace (hDlg, hdc, scld);

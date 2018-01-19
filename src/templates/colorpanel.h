@@ -96,12 +96,12 @@ typedef struct _RGBCELLINFO{
 #define CPN_CELLCOLORCHANGE CPN_NOTIFY + 3
 
 #define CPGetSelColor(hwnd, rgb) do { \
-	int clr = SendMessage(hwnd, CP_GETSELCOLOR, 0, 0); \
+	LRESULT clr = SendMessage(hwnd, CP_GETSELCOLOR, 0, 0); \
     (rgb) = *(RGB*)clr; \
 }while(0)
 
 #define CPGetCellColor(hwnd, row, col,rgb) do { \
-	int clr = SendMessage(hwnd, CP_GETCELLCOLOR, (WPARAM)(row),(LPARAM)(col)); \
+	LRESULT clr = SendMessage(hwnd, CP_GETCELLCOLOR, (WPARAM)(row),(LPARAM)(col)); \
     (rgb) = *(RGB*)clr; \
 }while(0)
 

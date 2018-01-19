@@ -36,6 +36,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <unistd.h>
 
 #include <minigui/common.h>
 #include <minigui/minigui.h>

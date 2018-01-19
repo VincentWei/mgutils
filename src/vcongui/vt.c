@@ -255,7 +255,7 @@ static void EscReport (CONINFO *con, u_char mode, u_short arg)
         break;
     }
 
-    write (con->masterPty, report, strlen (report));
+    my_write (con->masterPty, report, strlen (report));
 }
 
 /* ESC [ ..... */
@@ -1011,7 +1011,7 @@ bool VtStart (PCONINFO con)
     else if (strcmp (charset, FONT_CHARSET_BIG5) == 0)
         con->sysCoding = CODE_BIG5;
 
-    memset (con->varg, MAX_NARG, 0);
+    memset (con->varg, 0, MAX_NARG);
     con->narg = 0;
     con->question = 0;
 

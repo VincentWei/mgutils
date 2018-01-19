@@ -1057,16 +1057,16 @@ MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleFontDlg;
 MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleInfoDlg;
 
 /** The default File Open/Save Dialog callback procedure. */
-MGUTILS_EXPORT int DefFileDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam);
+MGUTILS_EXPORT LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 /** The default Color Selection Dialog callback procedure. */
-MGUTILS_EXPORT int DefColorDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam);
+MGUTILS_EXPORT LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 /** The default Font Selection Dialog callback procedure. */
-MGUTILS_EXPORT int DefFontDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam);
+MGUTILS_EXPORT LRESULT DefFontDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 /** The default Information Dialog callback procedure. */
-MGUTILS_EXPORT int DefInfoDialogProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam);
+MGUTILS_EXPORT LRESULT DefInfoDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
     /** @} end of templates_fns */
 
@@ -1392,7 +1392,10 @@ typedef struct skin_item_s
     RECT item_rc;
 
     /** The index of the item bitmap in the skin bitmap array. */
-    int bmp_index;
+    union {
+        int bmp_index;
+        HWND hwnd;
+    };
 
     /** The tip text. */
     char* tip;

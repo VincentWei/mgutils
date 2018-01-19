@@ -381,11 +381,11 @@ void HandleInputChar (PCONINFO con, WPARAM wParam, LPARAM lParam)
         u_char buff [2];
         buff [0] = LOBYTE (wParam);
         buff [1] = HIBYTE (wParam);
-        write (con->masterPty, buff, 2);
+        my_write (con->masterPty, buff, 2);
     }
     else {
         ch = LOBYTE (wParam);
-        write (con->masterPty, &ch, 1);
+        my_write (con->masterPty, &ch, 1);
     }
 }
 
@@ -400,7 +400,7 @@ void HandleInputKeyDown (PCONINFO con, WPARAM wParam, LPARAM lParam)
     handle_scancode_on_keydown (wParam, &con->kinfo);
 
     if (con->kinfo.pos != 0)
-        write (con->masterPty, buff, con->kinfo.pos);
+        my_write (con->masterPty, buff, con->kinfo.pos);
 }
 
 void HandleInputKeyUp (PCONINFO con, WPARAM wParam, LPARAM lParam)
@@ -414,7 +414,7 @@ void HandleInputKeyUp (PCONINFO con, WPARAM wParam, LPARAM lParam)
     handle_scancode_on_keyup (wParam, &con->kinfo);
 
     if (con->kinfo.pos != 0)
-        write (con->masterPty, buff, con->kinfo.pos);
+        my_write (con->masterPty, buff, con->kinfo.pos);
 
     con->kinfo.oldstate = con->kinfo.state;
 }

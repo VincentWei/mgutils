@@ -87,13 +87,18 @@ static BOOL MergeFileFullName(PNOTEINFO pNoteInfo)
     strcat (pNoteInfo->fileFullName,pNoteInfo->fileName);
     return TRUE;
 }
+
 BOOL DivideFileFullName(PNOTEINFO pNoteInfo)
 {
        char currentpath [PATH_MAX + 1];
     char *str;
     int temp ,i,j;
     temp = strlen(pNoteInfo->fileFullName);
-        getcwd(currentpath,PATH_MAX);
+
+    if (getcwd(currentpath,PATH_MAX) == NULL) {
+        return FALSE;
+    }
+
     if (temp <1) return FALSE;
     if (pNoteInfo->fileFullName[temp-1]=='/') return FALSE;
     if (strchr(pNoteInfo->fileFullName,'/')==NULL)
@@ -737,7 +742,7 @@ BOOL NBPrint(HWND hMLEditWnd)
     return TRUE;
 }
 
-int NoteBookWinProc(HWND hWnd, int message, WPARAM wParam, LPARAM lParam)
+LRESULT NoteBookWinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     HWND hMLEditWnd;
     RECT client;
@@ -913,7 +918,10 @@ void* NoteBook (void* data)
     char currentpath [PATH_MAX + 1];
     static int x = 0, y = 0;
 
-    getcwd(currentpath,PATH_MAX);
+    if (getcwd(currentpath,PATH_MAX) == NULL) {
+        return NULL;
+    }
+
     if (data == NULL)
     {
         if(!(pNoteInfo = malloc(sizeof(NOTEINFO)))) return NULL;//error!!

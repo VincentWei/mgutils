@@ -322,8 +322,8 @@ ListViewSortBySize( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
 
     hCtrlWnd = sortdata->hLV;
 
-    nIsDir1 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, nItem1);
-    nIsDir2 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, nItem2);
+    nIsDir1 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem1);
+    nIsDir2 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem2);
 
     if ( nIsDir1 >nIsDir2 )
         return 1;
@@ -374,8 +374,8 @@ ListViewSortByName( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
     
     hCtrlWnd = sortdata->hLV;
     
-    nIsDir1 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, nItem1);
-    nIsDir2 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, nItem2);
+    nIsDir1 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem1);
+    nIsDir2 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem2);
    
     if ( nIsDir1 >nIsDir2 ) 
         return 1;
@@ -421,8 +421,8 @@ ListViewSortByDate( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
     
     hCtrlWnd = sortdata->hLV;
 
-    nIsDir1 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, nItem1);
-    nIsDir2 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, nItem2);
+    nIsDir1 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem1);
+    nIsDir2 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem2);
     
     if ( nIsDir1 >nIsDir2 )
         return 1;
@@ -681,7 +681,7 @@ static void InitOpenDialog( HWND hWnd, PNEWFILEDLGDATA pnfdd)
     //SendMessage (hCtrlWnd, LVM_COLSORT, (WPARAM)1, 0);
 }
 
-static int WinFileProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
+static LRESULT WinFileProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     HWND hCtrlWnd;
     int  nId, nNc;
@@ -699,8 +699,11 @@ static int WinFileProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
         PNEWFILEDLGDATA pnfdd = (PNEWFILEDLGDATA)lParam;
         /* get current directory name */
         if (strcmp (pnfdd->filepath, ".") == 0 ||
-                strcmp (pnfdd->filepath, "./") == 0)
-            getcwd (pnfdd->filepath, MY_PATHMAX);
+                strcmp (pnfdd->filepath, "./") == 0) {
+            if (getcwd (pnfdd->filepath, MY_PATHMAX) == NULL) {
+                return 0;
+            }
+        }
 
         SetWindowAdditionalData (hDlg, (DWORD)lParam);
         
@@ -764,9 +767,9 @@ static int WinFileProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
         case IDC_OKAY:
             {
                 hCtrlWnd = GetDlgItem (hDlg, IDC_FILECHOISE);
-                hSelItem = SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
+                hSelItem = (HLVITEM)SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
                 if (hSelItem) {
-                    nIsDir = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, hSelItem);
+                    nIsDir = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)hSelItem);
                     if (nIsDir == 1 ) {
                         memset (&subItem, 0, sizeof (subItem));
                         subItem.subItem = 0;
@@ -814,9 +817,9 @@ static int WinFileProc (HWND hDlg, int message, WPARAM wParam, LPARAM lParam)
             break;
         case IDC_FILECHOISE:
             if (nNc == LVN_SELCHANGE || nNc == LVN_ITEMDBCLK || nNc == LVN_ITEMCLK || nNc == LVN_CLICKED) {
-                hSelItem = SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
+                hSelItem = (HLVITEM)SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
                 if (hSelItem) {
-                    nIsDir = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, hSelItem);    
+                    nIsDir = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)hSelItem);    
                     memset (&subItem, 0, sizeof (subItem));
                     subItem.subItem = 0;
                     subItem.pszText = (char *)calloc (MY_NAMEMAX + 1, 1);
