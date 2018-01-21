@@ -37,6 +37,8 @@
 #include "desktop_res_en.h"
 #endif
 
+static ICON_INFO icon_info;
+
 static void free_dsp_app (void)
 {
     int i;
@@ -325,9 +327,10 @@ static void this_mouse_handler(void* context, int message,
                 {
                     if (PtInRect(&item->hot_spot_rc, x, y)) 
                     {
-                        if(item->cdpath)
-                        {
-                            chdir(item->path);
+                        if(item->cdpath) {
+                            if (chdir(item->path)) {
+                                break;
+                            }
                         }
                         strcpy (buff, item->path);
                         strcat (buff, item->name);
@@ -444,9 +447,10 @@ static void this_desktop_menucmd_handler (void* context, int id)
         {
             if (i == icon_info.focus) 
             {
-                if(item->cdpath)
-                {
-                    chdir(item->path);
+                if(item->cdpath) {
+                    if (chdir(item->path)) {
+                        return;
+                    }
                 }
                 strcpy (buff, item->path);
                 strcat (buff, item->name);
