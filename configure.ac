@@ -113,8 +113,12 @@ AM_CONDITIONAL(MGUTILS_NOSUFFIX, test "x$with_libsuffix" = "x")
 CFLAGS="$CFLAGS -D__MGUTILS_LIB__"
 if test "x$devel_mode" = "xyes"; then
     if test "$ac_cv_prog_gcc" = "yes"; then
-        CFLAGS="$CFLAGS -Werror -Wall -Wstrict-prototypes -pipe"
+        CPPFLAGS="$CPPFLAGS -Wall -Werror"
     fi
+fi
+
+if test "$ac_cv_prog_gcc" = "yes"; then
+    CFLAGS="$CFLAGS -Wstrict-prototypes -pipe"
 fi
 
 AC_SUBST(LIB_SUFFIX)
