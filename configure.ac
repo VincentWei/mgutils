@@ -99,15 +99,12 @@ fi
 
 MGUTILS_LIBNAME="${MGUTILS_NAME}${LIB_SUFFIX}"
 
+dnl ========================================================================
+dnl check for installation of MiniGUI
+dnl ========================================================================
 PKG_CHECK_MODULES([MINIGUI], [minigui >= 3.2.0])
 
-dnl ========================================================================
-dnl check for run-time mode of MiniGUI
-dnl ========================================================================
-procs_version="no"
-AC_CHECK_DECLS(_MGRM_PROCESSES, procs_version="yes", foo=bar, [#include <minigui/common.h>])
-
-AM_CONDITIONAL(MGRM_PROCESSES, test "x$procs_version" = "xyes")
+AM_CONDITIONAL(MGRM_PROCESSES, test "x$MINIGUI_RUNMODE" = "xyes")
 AM_CONDITIONAL(MGUTILS_NOSUFFIX, test "x$with_libsuffix" = "x")
 
 CFLAGS="$CFLAGS -D__MGUTILS_LIB__"
