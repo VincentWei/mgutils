@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ(2.60)
-AC_INIT(libmgutils, 1.0.5)
+AC_INIT(libmgutils, 1.2.0)
 AC_CONFIG_SRCDIR(src/mywins/colordlg.c)
 
 MGUTILS_NAME="mgutils"
@@ -18,8 +18,8 @@ dnl Set various version strings
 # set _BINARY_AGE and _INTERFACE_AGE to 0.
 #
 MGUTILS_MAJOR_VERSION=1
-MGUTILS_MINOR_VERSION=0
-MGUTILS_MICRO_VERSION=5
+MGUTILS_MINOR_VERSION=2
+MGUTILS_MICRO_VERSION=0
 MGUTILS_INTERFACE_AGE=0
 MGUTILS_BINARY_AGE=0
 
@@ -99,7 +99,7 @@ fi
 
 MGUTILS_LIBNAME="${MGUTILS_NAME}${LIB_SUFFIX}"
 
-PKG_CHECK_MODULES([MINIGUI], [minigui >= 3.0.10])
+PKG_CHECK_MODULES([MINIGUI], [minigui >= 3.2.0])
 
 dnl ========================================================================
 dnl check for run-time mode of MiniGUI
