@@ -104,7 +104,8 @@ dnl check for installation of MiniGUI
 dnl ========================================================================
 PKG_CHECK_MODULES([MINIGUI], [minigui >= 3.2.0])
 
-AM_CONDITIONAL(MGRM_PROCESSES, test "x$MINIGUI_RUNMODE" = "xyes")
+AC_CHECK_DECLS(_MGRM_PROCESSES, minigui_runmode="procs", foo=bar, [#include <minigui/common.h>])
+AM_CONDITIONAL(MGRM_PROCESSES, test "x$minigui_runmode" = "xprocs")
 AM_CONDITIONAL(MGUTILS_NOSUFFIX, test "x$with_libsuffix" = "x")
 
 CFLAGS="$CFLAGS -D__MGUTILS_LIB__"
@@ -115,7 +116,7 @@ if test "x$devel_mode" = "xyes"; then
 fi
 
 if test "$ac_cv_prog_gcc" = "yes"; then
-    CFLAGS="$CFLAGS -Wstrict-prototypes -pipe"
+    CFLAGS="$CFLAGS -O2 -Wstrict-prototypes -pipe"
 fi
 
 AC_SUBST(LIB_SUFFIX)
