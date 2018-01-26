@@ -46,6 +46,8 @@ AC_SUBST(LT_AGE)
 AC_CANONICAL_SYSTEM
 AM_INIT_AUTOMAKE
 
+AC_CONFIG_HEADER(mgutilsconfig.h)
+
 dnl ========================================================================
 # Checks for programs.
 AC_PROG_CC
@@ -83,13 +85,85 @@ AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([bzero dup2 getcwd memmove memset putenv strchr strdup strerror strstr])
 
 devel_mode="no"
+build_vcongui="yes"
+build_skin="yes"
+build_mywins="yes"
+build_dlgopenfile="yes"
+build_dlgcolorsel="yes"
+build_dlgfontsel="yes"
+build_dlgshowinfo="yes"
+
+MGUTILS_SUBDIRS="templates"
+MGUTILS_MODULES="templates/libtemplates.la"
 
 AC_ARG_ENABLE(develmode,
 [  --enable-develmode       developer mode <default=no>],
 devel_mode=$enableval)
 
+AC_ARG_ENABLE(vcongui,
+[  --enable-vcongui         build VCOnGUI <default=yes>],
+build_vcongui=$enableval)
+
+if test "x$build_vcongui" = "xyes"; then
+  AC_DEFINE(_MGUTILS_VCONGUI, 1, [Define if include VCOnGUI])
+  MGUTILS_SUBDIRS="$MGUTILS_SUBDIRS vcongui"
+  MGUTILS_MODULES="$MGUTILS_MODULES vcongui/libvcongui.la"
+fi
+
+AC_ARG_ENABLE(skin,
+[  --enable-skin            build Skin <default=yes>],
+build_skin=$enableval)
+
+if test "x$build_skin" = "xyes"; then
+  AC_DEFINE(_MGUTILS_SKIN, 1, [Define if include Skin])
+  MGUTILS_SUBDIRS="$MGUTILS_SUBDIRS skin"
+  MGUTILS_MODULES="$MGUTILS_MODULES skin/libskin.la"
+fi
+
+AC_ARG_ENABLE(mywins,
+[  --enable-mywinds         build MyWins <default=yes>],
+build_mywins=$enableval)
+
+if test "x$build_mywins" = "xyes"; then
+  AC_DEFINE(_MGUTILS_MYWINS, 1, [Define if include MyWins])
+  MGUTILS_SUBDIRS="$MGUTILS_SUBDIRS mywins"
+  MGUTILS_MODULES="$MGUTILS_MODULES mywins/libmywins.la"
+fi
+
+AC_ARG_ENABLE(dlgopenfile,
+[  --enable-dlgopenfile     build Open File Dialog Box <default=yes>],
+build_dlgopenfile=$enableval)
+
+if test "x$build_dlgopenfile" = "xyes"; then
+  AC_DEFINE(_MGUTILS_DLGOPENFILE, 1, [Define if include Open File Dialog Box])
+fi
+
+AC_ARG_ENABLE(dlgcolorsel,
+[  --enable-dlgcolorsel     build Color Selection Dialog Box <default=yes>],
+build_dlgcolorsel=$enableval)
+
+if test "x$build_dlgcolorsel" = "xyes"; then
+  AC_DEFINE(_MGUTILS_DLGCOLORSEL, 1, [Define if include Color Selection Dialog Box])
+fi
+
+AC_ARG_ENABLE(dlgfontsel,
+[  --enable-dlgfontsel      build Font Selection Dialog Box <default=yes>],
+build_dlgfontsel=$enableval)
+
+if test "x$build_dlgfontsel" = "xyes"; then
+  AC_DEFINE(_MGUTILS_DLGFONTSEL, 1, [Define if include Font Selection Dialog Box])
+fi
+
+AC_ARG_ENABLE(dlgshowinfo,
+[  --enable-dlgshowinfo     build Show Info Dialog Box <default=yes>],
+build_dlgshowinfo=$enableval)
+
+if test "x$build_dlgshowinfo" = "xyes"; then
+  AC_DEFINE(_MGUTILS_DLGSHOWINFO, 1, [Define if include Show Info Dialog Box])
+fi
+
 AC_ARG_WITH(libsuffix,
-  [  --with-libsuffix=ARG   configure the suffix of the library name.])
+[  --with-libsuffix=ARG     configure the suffix of the library name.])
 
 if test "x$with_libsuffix" = "x"; then
   LIB_SUFFIX=""
@@ -119,13 +193,19 @@ if test "$ac_cv_prog_gcc" = "yes"; then
     CFLAGS="$CFLAGS -O2 -Wstrict-prototypes -pipe"
 fi
 
+AC_SUBST(MGUTILS_SUBDIRS)
+AC_SUBST(MGUTILS_MODULES)
 AC_SUBST(LIB_SUFFIX)
 
-APP_LIBS="$APP_LIBS $MINIGUI_LIBS"
+DEP_LIBS="$DEP_LIBS $MINIGUI_LIBS"
+APP_LIBS="$DEP_LIBS"
+
+AC_SUBST(DEP_LIBS)
 AC_SUBST(APP_LIBS)
 
-PC_LIBS="-l${MGUTILS_LIBNAME}"
+PC_LIBS="-l${MGUTILS_LIBNAME} $DEP_LIBS"
 PC_CFLAGS=""
+
 AC_SUBST(PC_LIBS)
 AC_SUBST(PC_CFLAGS)
 

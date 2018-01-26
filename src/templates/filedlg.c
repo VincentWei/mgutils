@@ -34,11 +34,13 @@
 #elif defined(__VXWORKS__)
 #include <time.h>
 #include <dirent.h>
-#include "sys/stat.h"
+#include <sys/stat.h>
 #endif
 #include <errno.h>
 
 #include "mgutils.h"
+
+#ifdef _MGUTILS_DLGOPENFILE
 
 #define MIN_WIDTH       490
 #define OTHERS_WIDTH    330
@@ -1140,3 +1142,4 @@ BOOL FileOpenSaveDialog  (PDLGTEMPLATE dlg_template,
 }
 
 
+#endif /* _MGUTILS_DLGOPENFILE */

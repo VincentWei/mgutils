@@ -85,9 +85,9 @@ and report any bugs and incompatibilities to:
 
 ### What's new in this version
 
-    * The autoconf/automake config scripts are cleaned up.
-    * Fix some bugs. 
+  * The autoconf/automake config scripts are cleaned up.
+  * Fix some bugs. 
 
 ### API changes
 
-    (none).
+(none).

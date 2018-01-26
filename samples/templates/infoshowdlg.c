@@ -13,6 +13,8 @@
 #include <mgutils/mgutils.h>
 #endif
 
+#ifdef _MGUTILS_DLGSHOWINFO
+
 static LRESULT InfoHookProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message) {
@@ -71,3 +73,13 @@ int MiniGUIMain(int argc, const char* argv[])
     InfoShowDialog (NULL, HWND_DESKTOP, NULL, &idd);
     return 0;
 }
+
+#else
+
+int MiniGUIMain (int argc, const char *argv[])
+{
+    fprintf (stderr, "Please enable the support for Show Info Dialog Box in mGUtils.\n");
+    return 0;
+}
+
+#endif /* _MGUTILS_DLGSHOWINFO */

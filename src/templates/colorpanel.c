@@ -10,6 +10,18 @@
 ** Create date: 2008/04/08
 */
 
+#include <string.h>
+
+#include <minigui/common.h>
+#include <minigui/minigui.h>
+#include <minigui/gdi.h>
+#include <minigui/window.h>
+#include <minigui/control.h>
+
+#include "mgutils.h"
+
+#ifdef _MGUTILS_DLGCOLORSEL
+
 #include "colorpanel.h"
 
 #define CELL_INTERVAL  5
@@ -625,3 +637,6 @@ static int cpGetCellByPos(PCOLORPANEL pcp, int x, int y, int* prow, int *pcol)
 	
 	return 1;
 }
+
+#endif /* _MGUTILS_DLGCOLORSEL */
+

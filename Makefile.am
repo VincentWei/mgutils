@@ -7,10 +7,10 @@ endif
 SUBDIRS = src include $(SAMPLES) m4 cmake
 
 # The directory where the include files will be installed
-libmgutilsincludedir =
+libmgutilsincludedir = $(includedir)/mgutils
 
 # Which header files to install
-libmgutilsinclude_HEADERS =
+libmgutilsinclude_HEADERS = mgutilsconfig.h
 
 EXTRA_DIST = INSTALL README
 

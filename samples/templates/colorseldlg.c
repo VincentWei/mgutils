@@ -14,6 +14,8 @@
 #include <mgutils/mgutils.h>
 #endif
 
+#ifdef _MGUTILS_DLGCOLORSEL
+
 #define DEFAULT_WIDTH       600
 #define DEFAULT_HEIGHT      400
 
@@ -163,3 +165,13 @@ int MiniGUIMain(int argc, const char* argv[])
 
     return 0;
 }
+
+#else
+
+int MiniGUIMain (int argc, const char *argv[])
+{
+    fprintf (stderr, "Please enable the support for Color Selection Dialog Box in mGUtils.\n");
+    return 0;
+}
+
+#endif /* _MGUTILS_DLGCOLORSEL */

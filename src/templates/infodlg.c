@@ -18,6 +18,8 @@
 
 #include "mgutils.h"
 
+#ifdef _MGUTILS_DLGSHOWINFO
+
 #define LEFT_MARGIN         12
 #define BOTTOM_MARGIN       6
 #define SPINBOX_RECTWH      27
@@ -174,4 +176,6 @@ BOOL InfoShowDialog  (PDLGTEMPLATE dlg_template,
 
     return ShowCommonDialog (info_dlg, hwnd, info_proc, pidd);
 }
+
+#endif /* _MGUTILS_DLGSHOWINFO */
 

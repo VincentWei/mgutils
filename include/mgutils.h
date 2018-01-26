@@ -41,6 +41,26 @@ extern "C" {
   #define MGUTILS_EXPORT       
 #endif
 
+#ifdef __MGUTILS_LIB__
+#   include "../mgutilsconfig.h"
+#else
+#   undef PACKAGE
+#   undef VERSION
+#   undef PACKAGE_BUGREPORT
+#   undef PACKAGE_NAME
+#   undef PACKAGE_STRING
+#   undef PACKAGE_TARNAME
+#   undef PACKAGE_VERSION
+#   include "mgutilsconfig.h"
+#   undef PACKAGE
+#   undef VERSION
+#   undef PACKAGE_BUGREPORT
+#   undef PACKAGE_NAME
+#   undef PACKAGE_STRING
+#   undef PACKAGE_TARNAME
+#   undef PACKAGE_VERSION
+#endif
+
 #define MGUTILS_MSG_BASE            MSG_USER + 0x40
 #define MSG_FILESELOK               (MGUTILS_MSG_BASE + 1)
 #define MSG_FILESELCANCEL           (MGUTILS_MSG_BASE + 2)
@@ -48,6 +68,8 @@ extern "C" {
 #define MSG_COLORSELCANCEL          (MGUTILS_MSG_BASE + 4)
 #define MSG_FONTSELOK               (MGUTILS_MSG_BASE + 5)
 #define MSG_FONTSELCANCEL           (MGUTILS_MSG_BASE + 6)
+
+#ifdef _MGUTILS_MYWINS
 
     /**
      * \addtogroup mywins_fns Interfaces of MyWins module of mGUtils library
@@ -693,6 +715,9 @@ MGUTILS_EXPORT int ShowOpenDialog (HWND hWnd, int lx, int ty,
 
     /** @} end of mywins_fns */
 
+#endif /* _MGUTILS_MYWINS */
+
+#ifdef _MGUTILS_VCONGUI
 
     /**
      * \addtogroup vcongui_fns Interfaces of mGUtils library (libmgutils)
@@ -768,6 +793,8 @@ void* NewVirtualConsole (PCHILDINFO pChildInfo);
 
     /** @} end of vcongui_fns */
 
+#endif /* _MGUTILS_VCONGUI */
+
     /**
      * \addtogroup templates_fns Interfaces of mGUtils library (libmgutils)
      *
@@ -778,7 +805,7 @@ void* NewVirtualConsole (PCHILDINFO pChildInfo);
 
 /**
 * \fn int ShowCommonDialog (PDLGTEMPLATE dlg_template, HWND hwnd, \
-WNDPROC proc, void* private_data)
+        WNDPROC proc, void* private_data)
 * \ brief Creates a modal common dialog box from a dialog box
 *          template in memory and other information.
 *
@@ -796,6 +823,7 @@ WNDPROC proc, void* private_data)
 MGUTILS_EXPORT BOOL ShowCommonDialog (PDLGTEMPLATE dlg_template, HWND hwnd, 
         WNDPROC proc, void* private_data);
 
+#ifdef _MGUTILS_DLGOPENFILE
 
 typedef struct _FILEDLGDATA
 {
@@ -858,6 +886,15 @@ WNDPROC proc, PFILEDLGDATA pfdd)
 MGUTILS_EXPORT BOOL FileOpenSaveDialog  (PDLGTEMPLATE dlg_template, HWND hwnd, 
         WNDPROC proc, PFILEDLGDATA pfdd);
 
+MGUTILS_EXPORT extern DLGTEMPLATE DefFileDlg;
+MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleFileDlg;
+
+/** The default File Open/Save Dialog callback procedure. */
+MGUTILS_EXPORT LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+#endif /* _MGUTILS_DLGOPENFILE */
+
+#ifdef _MGUTILS_DLGCOLORSEL
 
 typedef struct _COLORDLGDATA {
         /** The value of the color  returned. */
@@ -957,6 +994,15 @@ WNDPROC proc, PCOLORDLGDATA pcdd)
 MGUTILS_EXPORT BOOL ColorSelectDialog  (PDLGTEMPLATE dlg_template, HWND hwnd, 
         WNDPROC proc, PCOLORDLGDATA pcdd);
 
+MGUTILS_EXPORT extern DLGTEMPLATE DefColorDlg;
+MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleColorDlg;
+
+/** The default Color Selection Dialog callback procedure. */
+MGUTILS_EXPORT LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+#endif /* _MGUTILS_DLGCOLORSEL */
+
+#ifdef _MGUTILS_DLGFONTSEL
 
 typedef struct _FONTDLGDATA {
         /* The font minimize size. */
@@ -1014,6 +1060,15 @@ WNDPROC proc, PFONTDLGDATA pfsd)
 MGUTILS_EXPORT BOOL FontSelectDialog  (PDLGTEMPLATE dlg_template, HWND hwnd, 
         WNDPROC proc, PFONTDLGDATA pfsd);
 
+MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleFontDlg;
+MGUTILS_EXPORT extern DLGTEMPLATE DefFontDlg;
+
+/** The default Font Selection Dialog callback procedure. */
+MGUTILS_EXPORT LRESULT DefFontDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+#endif /* _MGUTILS_DLGFONTSEL */
+
+#ifdef _MGUTILS_DLGSHOWINFO
 
 typedef struct _INFODLGDATA {
         const char*     msg;
@@ -1046,29 +1101,17 @@ WNDPROC proc, PINFODLGDATA pidd)
 MGUTILS_EXPORT BOOL InfoShowDialog  (PDLGTEMPLATE dlg_template, HWND hwnd, 
         WNDPROC proc, PINFODLGDATA pidd);
 
-MGUTILS_EXPORT extern DLGTEMPLATE DefFileDlg;
-MGUTILS_EXPORT extern DLGTEMPLATE DefColorDlg;
-MGUTILS_EXPORT extern DLGTEMPLATE DefFontDlg;
 MGUTILS_EXPORT extern DLGTEMPLATE DefInfoDlg;
-
-MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleFileDlg;
-MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleColorDlg;
-MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleFontDlg;
 MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleInfoDlg;
-
-/** The default File Open/Save Dialog callback procedure. */
-MGUTILS_EXPORT LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-/** The default Color Selection Dialog callback procedure. */
-MGUTILS_EXPORT LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
-
-/** The default Font Selection Dialog callback procedure. */
-MGUTILS_EXPORT LRESULT DefFontDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
 /** The default Information Dialog callback procedure. */
 MGUTILS_EXPORT LRESULT DefInfoDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+#endif /* _MGUTILS_DLGSHOWINFO */
+
     /** @} end of templates_fns */
+
+#ifdef  _MGUTILS_SKIN
 
     /**
      * \defgroup skin_fns Skin related routines
@@ -2185,6 +2228,8 @@ MGUTILS_EXPORT int skin_scale_slider_pos (const sie_slider_t* org,
                 int new_min, int new_max);
 
     /** @} end of skin_fns */
+
+#endif /*  _MGUTILS_SKIN */
 
 #ifdef  __cplusplus
 }

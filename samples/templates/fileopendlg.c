@@ -13,6 +13,8 @@
 #include <mgutils/mgutils.h>
 #endif
 
+#ifdef _MGUTILS_DLGOPENFILE
+
 #define DEFAULT_WIDTH       600
 #define DEFAULT_HEIGHT      400
 
@@ -197,3 +199,13 @@ int MiniGUIMain(int argc, const char* argv[])
     MainWindowThreadCleanup (hMainWnd);
     return 0;
 }
+
+#else
+
+int MiniGUIMain (int argc, const char *argv[])
+{
+    fprintf (stderr, "Please enable the support for Open File Dialog Box in mGUtils.\n");
+    return 0;
+}
+
+#endif /* _MGUTILS_DLGOPENFILE */

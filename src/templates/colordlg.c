@@ -19,6 +19,9 @@
 #include <minigui/control.h>
 
 #include "mgutils.h"
+
+#ifdef _MGUTILS_DLGCOLORSEL
+
 #include "colorpanel.h"
 
 typedef struct hsv_struct 
@@ -974,3 +977,6 @@ BOOL ColorSelectDialog (PDLGTEMPLATE dlg_template,
         
     return ShowCommonDialog (color_dlg, hwnd, color_proc, pcdd);
 }
+
+#endif /* _MGUTILS_DLGCOLORSEL */
+

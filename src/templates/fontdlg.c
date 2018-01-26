@@ -23,6 +23,8 @@
 
 #include "mgutils.h"
 
+#ifdef _MGUTILS_DLGFONTSEL
+
 #define ARRAY_LEN(array) (sizeof(array)/sizeof(array[0]))
 
 static const char* style_str [] =
@@ -934,4 +936,5 @@ BOOL FontSelectDialog  (PDLGTEMPLATE dlg_template,
     return ShowCommonDialog (font_dlg, hwnd, font_proc, pfdd);
 }
 
+#endif /* _MGUTILS_DLGFONTSEL */
 
