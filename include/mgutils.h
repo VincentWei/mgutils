@@ -1391,9 +1391,11 @@ typedef struct skin_item_s
     /** The hit-test rectangle of the item. */
     RECT item_rc;
 
-    /** The index of the item bitmap in the skin bitmap array. */
     union {
+        /** The index of the item bitmap in the skin bitmap array. */
         int bmp_index;
+
+        /** The handle to the control if the type is SI_TYPE_CONTROL. */
         HWND hwnd;
     };
 
