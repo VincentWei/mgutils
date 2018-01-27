@@ -41,9 +41,7 @@ extern "C" {
   #define MGUTILS_EXPORT       
 #endif
 
-#ifdef __MGUTILS_LIB__
-#   include "../mgutilsconfig.h"
-#else
+#ifndef MGUTILS_MAJOR_VERSION
 #   undef PACKAGE
 #   undef VERSION
 #   undef PACKAGE_BUGREPORT
@@ -51,14 +49,11 @@ extern "C" {
 #   undef PACKAGE_STRING
 #   undef PACKAGE_TARNAME
 #   undef PACKAGE_VERSION
-#   include "mgutilsconfig.h"
-#   undef PACKAGE
-#   undef VERSION
-#   undef PACKAGE_BUGREPORT
-#   undef PACKAGE_NAME
-#   undef PACKAGE_STRING
-#   undef PACKAGE_TARNAME
-#   undef PACKAGE_VERSION
+#   ifdef __MGUTILS_LIB__
+#       include "../mgutilsconfig.h"
+#   else
+#       include "mgutilsconfig.h"
+#   endif
 #endif
 
 #define MGUTILS_MSG_BASE            MSG_USER + 0x40

@@ -85,7 +85,7 @@ AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([bzero dup2 getcwd memmove memset putenv strchr strdup strerror strstr])
 
 devel_mode="no"
-build_vcongui="yes"
+build_vcongui="no"
 build_skin="yes"
 build_mywins="yes"
 build_dlgopenfile="yes"
@@ -104,15 +104,39 @@ AC_ARG_ENABLE(vcongui,
 [  --enable-vcongui         build VCOnGUI <default=yes>],
 build_vcongui=$enableval)
 
+AC_ARG_ENABLE(skin,
+[  --enable-skin            build Skin <default=yes>],
+build_skin=$enableval)
+
+AC_ARG_ENABLE(mywins,
+[  --enable-mywinds         build MyWins <default=yes>],
+build_mywins=$enableval)
+
+AC_ARG_ENABLE(dlgopenfile,
+[  --enable-dlgopenfile     build Open File Dialog Box <default=yes>],
+build_dlgopenfile=$enableval)
+
+AC_ARG_ENABLE(dlgcolorsel,
+[  --enable-dlgcolorsel     build Color Selection Dialog Box <default=yes>],
+build_dlgcolorsel=$enableval)
+
+AC_ARG_ENABLE(dlgfontsel,
+[  --enable-dlgfontsel      build Font Selection Dialog Box <default=yes>],
+build_dlgfontsel=$enableval)
+
+AC_ARG_ENABLE(dlgshowinfo,
+[  --enable-dlgshowinfo     build Show Info Dialog Box <default=yes>],
+build_dlgshowinfo=$enableval)
+
+if test "x$devel_mode" = "xyes"; then
+    build_vcongui="yes"
+fi
+
 if test "x$build_vcongui" = "xyes"; then
   AC_DEFINE(_MGUTILS_VCONGUI, 1, [Define if include VCOnGUI])
   MGUTILS_SUBDIRS="$MGUTILS_SUBDIRS vcongui"
   MGUTILS_MODULES="$MGUTILS_MODULES vcongui/libvcongui.la"
 fi
-
-AC_ARG_ENABLE(skin,
-[  --enable-skin            build Skin <default=yes>],
-build_skin=$enableval)
 
 if test "x$build_skin" = "xyes"; then
   AC_DEFINE(_MGUTILS_SKIN, 1, [Define if include Skin])
@@ -120,47 +144,38 @@ if test "x$build_skin" = "xyes"; then
   MGUTILS_MODULES="$MGUTILS_MODULES skin/libskin.la"
 fi
 
-AC_ARG_ENABLE(mywins,
-[  --enable-mywinds         build MyWins <default=yes>],
-build_mywins=$enableval)
-
 if test "x$build_mywins" = "xyes"; then
   AC_DEFINE(_MGUTILS_MYWINS, 1, [Define if include MyWins])
   MGUTILS_SUBDIRS="$MGUTILS_SUBDIRS mywins"
   MGUTILS_MODULES="$MGUTILS_MODULES mywins/libmywins.la"
 fi
 
-AC_ARG_ENABLE(dlgopenfile,
-[  --enable-dlgopenfile     build Open File Dialog Box <default=yes>],
-build_dlgopenfile=$enableval)
-
 if test "x$build_dlgopenfile" = "xyes"; then
   AC_DEFINE(_MGUTILS_DLGOPENFILE, 1, [Define if include Open File Dialog Box])
 fi
-
-AC_ARG_ENABLE(dlgcolorsel,
-[  --enable-dlgcolorsel     build Color Selection Dialog Box <default=yes>],
-build_dlgcolorsel=$enableval)
 
 if test "x$build_dlgcolorsel" = "xyes"; then
   AC_DEFINE(_MGUTILS_DLGCOLORSEL, 1, [Define if include Color Selection Dialog Box])
 fi
 
-AC_ARG_ENABLE(dlgfontsel,
-[  --enable-dlgfontsel      build Font Selection Dialog Box <default=yes>],
-build_dlgfontsel=$enableval)
-
 if test "x$build_dlgfontsel" = "xyes"; then
   AC_DEFINE(_MGUTILS_DLGFONTSEL, 1, [Define if include Font Selection Dialog Box])
 fi
 
-AC_ARG_ENABLE(dlgshowinfo,
-[  --enable-dlgshowinfo     build Show Info Dialog Box <default=yes>],
-build_dlgshowinfo=$enableval)
-
 if test "x$build_dlgshowinfo" = "xyes"; then
   AC_DEFINE(_MGUTILS_DLGSHOWINFO, 1, [Define if include Show Info Dialog Box])
 fi
+
+AC_DEFINE_UNQUOTED(MGUTILS_MAJOR_VERSION, $MGUTILS_MAJOR_VERSION,
+            [Major version of mGUtils])
+AC_DEFINE_UNQUOTED(MGUTILS_MINOR_VERSION, $MGUTILS_MINOR_VERSION,
+            [Minor version of mGUtils])
+AC_DEFINE_UNQUOTED(MGUTILS_MICRO_VERSION, $MGUTILS_MICRO_VERSION,
+            [Micro version of mGUtils])
+AC_DEFINE_UNQUOTED(MGUTILS_INTERFACE_AGE, $MGUTILS_INTERFACE_AGE,
+            [Interface age of mGUtils])
+AC_DEFINE_UNQUOTED(MGUTILS_BINARY_AGE, $MGUTILS_BINARY_AGE,
+            [Binary age of mGUtils])
 
 AC_ARG_WITH(libsuffix,
 [  --with-libsuffix=ARG     configure the suffix of the library name.])
