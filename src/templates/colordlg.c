@@ -281,7 +281,7 @@ static inline void drawWindow3DFrame(HWND hwnd, HDC hdc, const RECT* rt)
         HDC hdct = hdc;
         if(hdct == HDC_INVALID)
             hdct = GetClientDC(hwnd);
-        color = GetWindowElementPixel(hwnd,WE_THREED_BODY);
+        color = GetWindowElementPixel(hwnd, WE_FGC_THREED_BODY);
         wrdr->draw_3dbox(hdc, rt, color, LFRDR_BTN_STATUS_PRESSED);
     }
 }
@@ -606,6 +606,7 @@ static void SetValue (HWND hDlg, PSCOLORDIA scld, int flag)
     if(flag & SVF_RGB){
         Uint8 r, g, b;
         HSV2RGB (scld->clrh, scld->clrs, scld->clrv, &r, &g, &b);
+        printf ("mGUtils>ColorDlgBox>SetValue: r %u, g %u, b %u\n", r, g, b);
         SetDlgEditInt(hDlg, IDC_CSD_VALUE_R, r);
         SetDlgEditInt(hDlg, IDC_CSD_VALUE_G, g);
         SetDlgEditInt(hDlg, IDC_CSD_VALUE_B, b);
