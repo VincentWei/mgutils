@@ -5,7 +5,7 @@ fileopendlg_SOURCES=fileopendlg.c
 fontseldlg_SOURCES=fontseldlg.c
 infoshowdlg_SOURCES=infoshowdlg.c
 
-colorseldlg_LDADD=../../src/.libs/libmgutils.a @APP_LIBS@
-fileopendlg_LDADD=../../src/.libs/libmgutils.a @APP_LIBS@
-fontseldlg_LDADD=../../src/.libs/libmgutils.a @APP_LIBS@
-infoshowdlg_LDADD=../../src/.libs/libmgutils.a @APP_LIBS@
+colorseldlg_LDADD=../../src/libmgutils.la @APP_LIBS@
+fileopendlg_LDADD=../../src/libmgutils.la @APP_LIBS@
+fontseldlg_LDADD=../../src/libmgutils.la @APP_LIBS@
+infoshowdlg_LDADD=../../src/libmgutils.la @APP_LIBS@
