@@ -26,6 +26,8 @@
 #include <mgutils/mgutils.h>
 #endif
 
+#ifdef  _MGUTILS_SKIN
+
 #define SIID_TITLE        1
 #define SIID_PLAY        2
 #define SIID_PAUSE        3
@@ -219,4 +221,14 @@ int MiniGUIMain (int argc, const char *argv[])
 
     return 0;
 }
+
+#else
+
+int MiniGUIMain (int argc, const char* argv[])
+{
+    fprintf (stderr, "Please enable the support for Skin module in mGUtils.\n");
+    return 0;
+}
+
+#endif /* _MGUTILS_SKIN */
 

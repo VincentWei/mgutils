@@ -47,6 +47,8 @@
 #include <mgutils/mgutils.h>
 #endif
 
+#ifdef _MGUTILS_DLGOPENFILE
+
 #ifdef _LANG_ZHCN
 #include "picview_res_cn.h"
 #elif defined _LANG_ZHTW
@@ -481,6 +483,16 @@ int MiniGUIMain (int args, const char* arg[])
 
     return 0;
 }
+
+#else
+
+int MiniGUIMain (int argc, const char* argv[])
+{
+    fprintf (stderr, "Please enable the support for Open File Dialog Box in mGUtils.\n");
+    return 0;
+}
+
+#endif /* _MGUTILS_DLGOPENFILE */
 
 #ifdef _MGRM_THREADS
 #include <minigui/dti.c>

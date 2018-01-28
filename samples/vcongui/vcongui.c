@@ -43,6 +43,8 @@
 #include <mgutils/mgutils.h>
 #endif
 
+#ifdef  _MGUTILS_VCONGUI
+
 int MiniGUIMain (int args, const char* arg[])
 {
     CHILDINFO ChildInfo = {0, NULL, NULL, NULL, NULL, 1, 0, 0, 0, 0};
@@ -59,6 +61,16 @@ int MiniGUIMain (int args, const char* arg[])
     VCOnMiniGUI (&ChildInfo);
     return 0;
 }
+
+#else
+
+int MiniGUIMain (int argc, const char* argv[])
+{
+    fprintf (stderr, "Please enable the support for VCOnGUI module in mGUtils.\n");
+    return 0;
+}
+
+#endif /* _MGUTILS_VCONGUI */
 
 #ifdef _MGRM_THREADS
 #include <minigui/dti.c>

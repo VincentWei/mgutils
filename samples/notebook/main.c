@@ -60,6 +60,8 @@
 #include <mgutils/mgutils.h>
 #endif
 
+#ifdef _MGUTILS_DLGOPENFILE
+
 #include "notebook.h"
 
 #ifdef _LANG_ZHCN
@@ -1013,3 +1015,12 @@ int MiniGUIMain (int args, const char* arg[])
 }
 #endif
 
+#else
+
+int MiniGUIMain (int argc, const char* argv[])
+{
+    fprintf (stderr, "Please enable the support for Open File Dialog Box in mGUtils.\n");
+    return 0;
+}
+
+#endif /* _MGUTILS_DLGOPENFILE */

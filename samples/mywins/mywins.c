@@ -29,6 +29,8 @@
 #include <mgutils/mgutils.h>
 #endif
 
+#ifdef  _MGUTILS_MYWINS
+
 #define IDC_MMB                 101
 #define IDC_MWM                 102
 #define IDC_TCB                 103
@@ -321,6 +323,16 @@ int MiniGUIMain (int argc, const char* argv[])
 
     return 0;
 }
+
+#else
+
+int MiniGUIMain (int argc, const char* argv[])
+{
+    fprintf (stderr, "Please enable the support for MyWins module in mGUtils.\n");
+    return 0;
+}
+
+#endif /* _MGUTILS_MYWINS */
 
 #ifdef _MGRM_THREADS
 #include <minigui/dti.c>
