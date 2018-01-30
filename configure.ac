@@ -199,7 +199,7 @@ AM_CONDITIONAL(MGUTILS_NOSUFFIX, test "x$with_libsuffix" = "x")
 
 CFLAGS="$CFLAGS -D__MGUTILS_LIB__"
 if test "x$devel_mode" = "xyes"; then
-    CPPFLAGS="$CPPFLAGS -D_DEBUG"
+    CPPFLAGS="$CPPFLAGS -DDEBUG -D_DEBUG"
     if test "$ac_cv_prog_gcc" = "yes"; then
         CPPFLAGS="$CPPFLAGS -Wall -Werror"
     fi
