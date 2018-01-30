@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ(2.60)
 AC_INIT(libmgutils, 1.2.0)
-AC_CONFIG_SRCDIR(src/mywins/colordlg.c)
+AC_CONFIG_SRCDIR(src/templates/colordlg.c)
 
 MGUTILS_NAME="mgutils"
 
