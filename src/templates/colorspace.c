@@ -18,7 +18,10 @@
 #include <minigui/minigui.h>
 #include <minigui/gdi.h>
 #include <minigui/window.h>
+
 #include "mgutils.h"
+
+#ifdef _MGUTILS_DLGCOLORSEL
 
 #define LIMIT(a, b, c ) do {a=((a<b)?b:a);a=(a>c)?c:a;} while (0)
 
@@ -328,3 +331,4 @@ void RGB2YUV (Uint8 r, Uint8 g, Uint8 b, int *y, int *u, int *v)
 #endif
 }
 
+#endif /* _MGUTILS_DLGCOLORSEL */

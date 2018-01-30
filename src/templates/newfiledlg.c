@@ -34,6 +34,8 @@
 
 #include "mgutils.h"
 
+#ifdef _MGUTILS_DLGOPENFILE
+
 static HICON icon_ft_dir, icon_ft_file;
 
 static BOOL InitNewOpenFileBox (void)
@@ -997,6 +999,8 @@ int ShowOpenDialog (HWND hWnd, int lx, int ty, int w, int h, PNEWFILEDLGDATA pnf
     NewOpenFileBoxCleanup ();
     return nRet;
 }
+
+#endif /* _MGUTILS_DLGOPENFILE */
 
 #endif /* !defined(__NOUNIX__) && defined(_MGCTRL_LISTVIEW) */
 

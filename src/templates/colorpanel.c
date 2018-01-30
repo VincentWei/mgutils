@@ -172,7 +172,6 @@ static void cpChangeSel(PCOLORPANEL pcp, int new_row, int new_col)
 	if(new_col == pcp->selCell.col && new_row == pcp->selCell.row)
 		return ;
 
-
 	old_row = pcp->selCell.row;
 	old_col = pcp->selCell.col;
 
@@ -304,7 +303,7 @@ static LRESULT ColorPanelProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 				pcp->is_active = FALSE;
 				cpGetFocusCellRect(pcp,pcp->focusCell.row, pcp->focusCell.col, &rt);
 				expandRect(&rt, 1);
-				InvalidateRect(hWnd, &rt, TRUE);
+				InvalidateRect(hWnd, &rt, FALSE);
 			}
 		}
 		break;
@@ -365,6 +364,8 @@ static LRESULT ColorPanelProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 				for(j=0;j<pcp->cols;j++)
 				{
 					cpDrawCell(hdc, x, y, pcp->cell_width, pcp->cell_height, pcp->rgbs[idx]);
+                    _MG_PRINTF ("Color of cell (%d, %d): %x, %x, %x\n", i, j, 
+                            pcp->rgbs[idx].r, pcp->rgbs[idx].g, pcp->rgbs[idx].b);
 					idx ++;
 					x += (pcp->cell_width + CELL_INTERVAL);
 				}

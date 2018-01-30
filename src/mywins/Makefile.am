@@ -3,7 +3,7 @@ AM_CPPFLAGS=-I$(TOP_DIR)/include
 
 noinst_LTLIBRARIES = libmywins.la
 
-SRC_FILES = mywindows.c helpwin.c colordlg.c colorspace.c newfiledlg.c
+SRC_FILES = mywindows.c helpwin.c
 
 EXTRA_DIST=
 

@@ -68,189 +68,6 @@ extern "C" {
 
     /**
      * \addtogroup mywins_fns Interfaces of MyWins module of mGUtils library
-     * @{
-     */
-
-    /**
-     * \defgroup mywins_colorseldlg Color Selection Dialog Box
-     * @{
-     */
-
-/**
- * The color data structure used by \a ColorSelDialog.
- * \sa ColorSelDialog.
- */
-typedef struct _COLORDATA {
-    /** Reserves, not used now. */
-    DWORD           style;
-    /** The value of the color  returned. */
-    gal_pixel       pixel;
-    /** The R, G, B value of the color returned. */
-    Uint8           r, g, b;
-    /** The H value of the color returned. */
-    Uint16          h;
-    /** The S, V value of the color returned. */
-    Uint8           s, v;
-    /** Indicates the controls is transparent or no?*/
-    BOOL            is_trans;
-} COLORDATA, *PCOLORDATA;
-
-/* Internal use */
-#define SELCOLOR_OK     IDOK
-/* Internal use */
-#define SELCOLOR_CANCEL IDCANCEL
-
-/**
- * \fn int ColorSelDialog (HWND hWnd, int x, int y, \
- *               int w, int h, PCOLORDATA pClrData)
- * \brief Creates a Color Selection Dialog Box.
- *
- * This function creates a Color Selection Dialog Box, and returns 
- * the values of the color selected by the user.
- *
- * \param hWnd The hosting main window.
- * \param x  x,y,w,h: The default position and size of the dialog box.
- * \param y  x,y,w,h: The default position and size of the dialog box.
- * \param w  x,y,w,h: The default position and size of the dialog box.
- * \param h  x,y,w,h: The default position and size of the dialog box.
- * \param pClrData The pointer to the COLORDATA structure.
- *
- * \retval IDOK     The user choosed a color and OK button clicked.
- * \retval IDCANCEL The user clicked the Cancel button.
- * 
- * \sa COLORDATA, ColorSelDialog
- */
-MGUTILS_EXPORT int ColorSelDialog (HWND hWnd, int x, int y, 
-                int w, int h, PCOLORDATA pClrData);
-
-    /** @} end of mywins_colorseldlg*/
-
-    /** @} end of mywins_fns */
-
-    /**
-     * \addtogroup mywins_fns Interfaces of MyWins module of mGUtils library
-     * @{
-     */
-
-    /**
-     * \defgroup mywins_colorspace Color Space Conversion Functions
-     *
-     * This module defines some color space conversion functions.
-     *
-     * @{
-     */
-
-/**
- * \fn void RGB2HSV (Uint8 r, Uint8 g, Uint8 b, \
- *               Uint16 *hout, Uint8 *sout, Uint8 *vout)
- * \brief Converts r/g/b values of a color in RGB color space to h/s/v of 
- *        the color in HSV color space.
- *
- * This function converts r/g/b values of a color in RGB color space to 
- * h/s/v values of the color in HSV color space. 
- *
- * \param r     The red value of the color in RGB space to be converted.
- * \param g     The green value of the color in RGB space to be converted.
- * \param b     The blue value of the color in RGB space to be converted.
- * \param hout  The pointer to Uint16, returns the h value of the color
- *              in HSV color space.
- * \param sout  The pointer to Uint8, returns the s value of the color 
- *              in HSV color space returned.
- * \param vout  The pointer to Uint8, returns the v value of the color
- *              in HSV color space returned.
- *
- * \sa HSV2RGB, YUV2RGB, RGB2YUV 
- */
-
-void RGB2HSV (Uint8 r, Uint8 g, Uint8 b, 
-                Uint16 *hout, Uint8 *sout, Uint8 *vout);
-
-/**
- * \fn void HSV2RGB (Uint16 hin, Uint8 sin, Uint8 vin, \
- *               Uint8 *rout, Uint8 *gout, Uint8 *bout)
- * \brief Converts h/s/v values of a color to r/g/b values of the color.
- *
- * This function converts h/s/v values of a color in HSV color space 
- * to r/g/b values of the color in RGB space. 
- *
- * \param hin   The h value of the HSV color space to be converted, 
- *              the range is between 0 to 359.
- * \param sin   The s value of the HSV color space to be converted, 
- *              the range is between 0 to 255.
- * \param vin   The v value of the HSV color space to be converted, 
- *              the range is between 0 to 255.
- * \param rout  The pointer to Uint8, returns the red value of the RGB 
- *              color space.
- * \param gout  The pointer to Uint8, returns the green value of the RGB 
- *              color space.
- * \param bout  The pointer to Uint8, returns the bout value of the RGB 
- *              color space.
- * 
- * \sa RGB2HSV, YUV2RGB, RGB2YUV 
- */
-
-void HSV2RGB (Uint16 hin, Uint8 sin, Uint8 vin, 
-                Uint8 *rout, Uint8 *gout, Uint8 *bout);
-
-/**
- * \fn void YUV2RGB (int y, int u, int v, Uint8 *r, Uint8 *g, Uint8 *b)
- * \brief Converts y/u/v values of a color in YUV color space to 
- *        to r/g/b values of the color in RGB color space.
- *
- * This function converts y/u/v values of YUV color space to r/g/b values 
- * of RGB color space. 
- *
- * \param y     The y value of the YUV color space to be converted.
- * \param u     The u value of the YUV color space to be converted.
- * \param v     The v value of the YUV color space to be converted.
- * \param r     The pointer to Uint8, returns the red value of the 
- *              RGB color space.
- * \param g     The pointer to Uint8, returns the green value of the 
- *              RGB color space.
- * \param b     The pointer to Uint8, returns the bout value of the 
- *              RGB color space.
- * 
- * \sa RGB2HSV, HSV2RGB, RGB2YUV 
- */
-
-void YUV2RGB (int y, int u, int v, Uint8 *r, Uint8 *g, Uint8 *b);
-
-/**
- * \fn void RGB2YUV (Uint8 r, Uint8 g, Uint8 b, int *y, int *u, int *v)
- * \brief Converts r/g/b values of a color in RGB color space 
- *        to y/u/v values of the color in YUV color space.
- *
- * The function converts r/g/b values of a color in RGB color space 
- *        to y/u/v values of the color in YUV color space.
- *
- * \param r  The red value of the RGB color space to be converted.
- * \param g  The green value of the RGB color space to be converted.
- * \param b  The blue value of the RGB color space to be converted.
- * \param y  The pointer to int, returns the y value of the YUV color space.
- * \param u  The pointer to int, returns the u value of the YUV color space.
- * \param v  The pointer to int, returns the v value of the YUV color space.
- * 
- * \sa RGB2HSV, HSV2RGB, YUV2RGB 
- */
-MG_EXPORT void RGB2YUV (Uint8 r, Uint8 g, Uint8 b, int *y, int *u, int *v);
-
-    /** @} end of mywins_colorspace*/
-
-    /** @} end of mywins_fns */
-
-    /**
-     * \addtogroup mgext_fns Interfaces of the MiniGUI extension 
-     *             library (libmgext)
-     * @{
-     */
-
-    /**
-     * \addtogroup mywins_fns Interfaces of MyWins module of mGUtils library
-     * @{
-     */
-
-    /**
-     * \defgroup mywins_helpers Useful helpers
      *
      * This module defines some useful helpers, such as tool-tip window,
      * progress window, and so on.
@@ -597,117 +414,6 @@ MGUTILS_EXPORT int myWinEntries (HWND hParentWnd, const char* title,
 MGUTILS_EXPORT int myWinHelpMessage (HWND hwnd, int width, int height,
                 const char* help_title, const char* help_msg);
 
-    /** @} end of mywins_helpers */
-
-    /** @} end of mywins_fns */
-
-    /** @} end of mgext_fns */
-
-    /**
-     * \addtogroup mywins_fns Interfaces of MyWins module of mGUtils library
-     * @{
-     */
-
-    /**
-     * \defgroup mywins_newfiledlg Open File Dialog Box
-     * @{
-     */
-
-#ifndef WIN32
-#include <sys/types.h>
-#include <dirent.h>
-#endif
-/**
- * \def FILE_ERROR_OK
- * \brief Open file success.
- */
-#define FILE_ERROR_OK           0
-
-/**
- * \def FILE_ERROR_PARAMERR
- * \brief Wrong parameters.
- */
-#define FILE_ERROR_PARAMERR     -1
-
-/**
- * \def FILE_ERROR_PARAMERR
- * \brief Path doesn't exist.
- */
-#define FILE_ERROR_PATHNOTEXIST -2
-
-/**
- * \def MAX_FILTER_LEN
- * \brief The maximum length of filter string.
- */
-#define MAX_FILTER_LEN          255
-
-/**
- * \def MY_NAMEMAX
- * \brief The maximum length of name.
- */
-#define MY_NAMEMAX      127
-
-/**
- * \def MY_PATHMAX
- * \brief The maximum length of path.
- */
-#define MY_PATHMAX      255
-/**
- * The file dialog box structure used by \a ShowOpenDialog.
- * \sa ShowOpenDialog.
- */
-typedef struct _NEWFILEDLGDATA
-{
-    /** Indicates to create a Save File or an Open File dialog box. */
-    BOOL    IsSave;
-    /** Indicates the controls is transparent or no?*/
-    BOOL    IsTrans;
-    /** The full path name of the file returned. */
-    char    filefullname[MY_NAMEMAX + MY_PATHMAX + 1];
-    /** The name of the file to be opened. */
-    char    filename[MY_NAMEMAX + 1];
-    /** The initial path of the dialog box. */
-    char    filepath[MY_PATHMAX + 1];
-    /**
-     * The filter string, for example: 
-     * All file (*.*)|Text file (*.txt;*.TXT)
-     */
-    char    filter[MAX_FILTER_LEN + 1];
-    /** The initial index of the filter*/
-    int     filterindex;
-} NEWFILEDLGDATA;
-/** Data type of pointer to a NEWFILEDLGDATA */
-typedef NEWFILEDLGDATA* PNEWFILEDLGDATA;
-
-/**
- * \fn int ShowOpenDialog (HWND hWnd, int lx, int ty,\
-                int w, int h, PNEWFILEDLGDATA pnfdd)
- * \brief Creates an Open File Dialog Box.
- *
- * This function creates an Open File Dialog Box, and returns 
- * the full path name of the file selected by user.
- *
- * \param hWnd The hosting main window.
- * \param lx lx,ty,w,h: The default position and size of the dialog box.
- * \param ty lx,ty,w,h: The default position and size of the dialog box.
- * \param w  lx,ty,w,h: The default position and size of the dialog box.
- * \param h  lx,ty,w,h: The default position and size of the dialog box.
- * \param pnfdd The pointer to the NEWFILEDLGDATA structure.
- *
- * \retval IDOK The user choosed a file and OK button clicked.
- * \retval IDCANCLE CANCEL button clicked.
- *
- * \attention pnfdd->filename is an input & output parameter, you can set
- * your default filename by it. So before use this function, you must init 
- * pnfdd->filename.
- * 
- * \sa NEWFILEDLGDATA, ShowOpenDialog
- */
-MGUTILS_EXPORT int ShowOpenDialog (HWND hWnd, int lx, int ty, 
-                int w, int h, PNEWFILEDLGDATA pnfdd);
-
-    /** @} end of mywins_newfiledlg */
-
     /** @} end of mywins_fns */
 
 #endif /* _MGUTILS_MYWINS */
@@ -820,6 +526,46 @@ MGUTILS_EXPORT BOOL ShowCommonDialog (PDLGTEMPLATE dlg_template, HWND hwnd,
 
 #ifdef _MGUTILS_DLGOPENFILE
 
+#ifndef WIN32
+#include <sys/types.h>
+#include <dirent.h>
+#endif
+
+/**
+ * \def FILE_ERROR_OK
+ * \brief Open file success.
+ */
+#define FILE_ERROR_OK           0
+
+/**
+ * \def FILE_ERROR_PARAMERR
+ * \brief Wrong parameters.
+ */
+#define FILE_ERROR_PARAMERR     -1
+
+/**
+ * \def FILE_ERROR_PARAMERR
+ * \brief Path doesn't exist.
+ */
+#define FILE_ERROR_PATHNOTEXIST -2
+
+/**
+ * \def MAX_FILTER_LEN
+ * \brief The maximum length of filter string.
+ */
+#define MAX_FILTER_LEN          255
+
+/**
+ * \def MY_NAMEMAX
+ * \brief The maximum length of name.
+ */
+#define MY_NAMEMAX      127
+
+/**
+ * \def MY_PATHMAX
+ * \brief The maximum length of path.
+ */
+#define MY_PATHMAX      255
 typedef struct _FILEDLGDATA
 {
         /** Indicates to create a Save File or an Open File dialog box. */
@@ -887,9 +633,157 @@ MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleFileDlg;
 /** The default File Open/Save Dialog callback procedure. */
 MGUTILS_EXPORT LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 
+/**
+ * The file dialog box structure used by \a ShowOpenDialog.
+ * \sa ShowOpenDialog.
+ */
+typedef struct _NEWFILEDLGDATA
+{
+    /** Indicates to create a Save File or an Open File dialog box. */
+    BOOL    IsSave;
+    /** Indicates the controls is transparent or no?*/
+    BOOL    IsTrans;
+    /** The full path name of the file returned. */
+    char    filefullname[MY_NAMEMAX + MY_PATHMAX + 1];
+    /** The name of the file to be opened. */
+    char    filename[MY_NAMEMAX + 1];
+    /** The initial path of the dialog box. */
+    char    filepath[MY_PATHMAX + 1];
+    /**
+     * The filter string, for example: 
+     * All file (*.*)|Text file (*.txt;*.TXT)
+     */
+    char    filter[MAX_FILTER_LEN + 1];
+    /** The initial index of the filter*/
+    int     filterindex;
+} NEWFILEDLGDATA;
+/** Data type of pointer to a NEWFILEDLGDATA */
+typedef NEWFILEDLGDATA* PNEWFILEDLGDATA;
+
+/**
+ * \fn int ShowOpenDialog (HWND hWnd, int lx, int ty,\
+                int w, int h, PNEWFILEDLGDATA pnfdd)
+ * \brief Creates an Open File Dialog Box.
+ *
+ * This function creates an Open File Dialog Box, and returns 
+ * the full path name of the file selected by user.
+ *
+ * \param hWnd The hosting main window.
+ * \param lx lx,ty,w,h: The default position and size of the dialog box.
+ * \param ty lx,ty,w,h: The default position and size of the dialog box.
+ * \param w  lx,ty,w,h: The default position and size of the dialog box.
+ * \param h  lx,ty,w,h: The default position and size of the dialog box.
+ * \param pnfdd The pointer to the NEWFILEDLGDATA structure.
+ *
+ * \retval IDOK The user choosed a file and OK button clicked.
+ * \retval IDCANCLE CANCEL button clicked.
+ *
+ * \attention pnfdd->filename is an input & output parameter, you can set
+ * your default filename by it. So before use this function, you must init 
+ * pnfdd->filename.
+ * 
+ * \sa NEWFILEDLGDATA, ShowOpenDialog
+ */
+MGUTILS_EXPORT int ShowOpenDialog (HWND hWnd, int lx, int ty, 
+                int w, int h, PNEWFILEDLGDATA pnfdd);
+
 #endif /* _MGUTILS_DLGOPENFILE */
 
 #ifdef _MGUTILS_DLGCOLORSEL
+
+/**
+ * \fn void RGB2HSV (Uint8 r, Uint8 g, Uint8 b, \
+ *               Uint16 *hout, Uint8 *sout, Uint8 *vout)
+ * \brief Converts r/g/b values of a color in RGB color space to h/s/v of 
+ *        the color in HSV color space.
+ *
+ * This function converts r/g/b values of a color in RGB color space to 
+ * h/s/v values of the color in HSV color space. 
+ *
+ * \param r     The red value of the color in RGB space to be converted.
+ * \param g     The green value of the color in RGB space to be converted.
+ * \param b     The blue value of the color in RGB space to be converted.
+ * \param hout  The pointer to Uint16, returns the h value of the color
+ *              in HSV color space.
+ * \param sout  The pointer to Uint8, returns the s value of the color 
+ *              in HSV color space returned.
+ * \param vout  The pointer to Uint8, returns the v value of the color
+ *              in HSV color space returned.
+ *
+ * \sa HSV2RGB, YUV2RGB, RGB2YUV 
+ */
+
+void RGB2HSV (Uint8 r, Uint8 g, Uint8 b, 
+                Uint16 *hout, Uint8 *sout, Uint8 *vout);
+
+/**
+ * \fn void HSV2RGB (Uint16 hin, Uint8 sin, Uint8 vin, \
+ *               Uint8 *rout, Uint8 *gout, Uint8 *bout)
+ * \brief Converts h/s/v values of a color to r/g/b values of the color.
+ *
+ * This function converts h/s/v values of a color in HSV color space 
+ * to r/g/b values of the color in RGB space. 
+ *
+ * \param hin   The h value of the HSV color space to be converted, 
+ *              the range is between 0 to 359.
+ * \param sin   The s value of the HSV color space to be converted, 
+ *              the range is between 0 to 255.
+ * \param vin   The v value of the HSV color space to be converted, 
+ *              the range is between 0 to 255.
+ * \param rout  The pointer to Uint8, returns the red value of the RGB 
+ *              color space.
+ * \param gout  The pointer to Uint8, returns the green value of the RGB 
+ *              color space.
+ * \param bout  The pointer to Uint8, returns the bout value of the RGB 
+ *              color space.
+ * 
+ * \sa RGB2HSV, YUV2RGB, RGB2YUV 
+ */
+
+void HSV2RGB (Uint16 hin, Uint8 sin, Uint8 vin, 
+                Uint8 *rout, Uint8 *gout, Uint8 *bout);
+
+/**
+ * \fn void YUV2RGB (int y, int u, int v, Uint8 *r, Uint8 *g, Uint8 *b)
+ * \brief Converts y/u/v values of a color in YUV color space to 
+ *        to r/g/b values of the color in RGB color space.
+ *
+ * This function converts y/u/v values of YUV color space to r/g/b values 
+ * of RGB color space. 
+ *
+ * \param y     The y value of the YUV color space to be converted.
+ * \param u     The u value of the YUV color space to be converted.
+ * \param v     The v value of the YUV color space to be converted.
+ * \param r     The pointer to Uint8, returns the red value of the 
+ *              RGB color space.
+ * \param g     The pointer to Uint8, returns the green value of the 
+ *              RGB color space.
+ * \param b     The pointer to Uint8, returns the bout value of the 
+ *              RGB color space.
+ * 
+ * \sa RGB2HSV, HSV2RGB, RGB2YUV 
+ */
+
+void YUV2RGB (int y, int u, int v, Uint8 *r, Uint8 *g, Uint8 *b);
+
+/**
+ * \fn void RGB2YUV (Uint8 r, Uint8 g, Uint8 b, int *y, int *u, int *v)
+ * \brief Converts r/g/b values of a color in RGB color space 
+ *        to y/u/v values of the color in YUV color space.
+ *
+ * The function converts r/g/b values of a color in RGB color space 
+ *        to y/u/v values of the color in YUV color space.
+ *
+ * \param r  The red value of the RGB color space to be converted.
+ * \param g  The green value of the RGB color space to be converted.
+ * \param b  The blue value of the RGB color space to be converted.
+ * \param y  The pointer to int, returns the y value of the YUV color space.
+ * \param u  The pointer to int, returns the u value of the YUV color space.
+ * \param v  The pointer to int, returns the v value of the YUV color space.
+ * 
+ * \sa RGB2HSV, HSV2RGB, YUV2RGB 
+ */
+MG_EXPORT void RGB2YUV (Uint8 r, Uint8 g, Uint8 b, int *y, int *u, int *v);
 
 typedef struct _COLORDLGDATA {
         /** The value of the color  returned. */
@@ -994,6 +888,53 @@ MGUTILS_EXPORT extern DLGTEMPLATE DefSimpleColorDlg;
 
 /** The default Color Selection Dialog callback procedure. */
 MGUTILS_EXPORT LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
+
+/**
+ * The color data structure used by \a ColorSelDialog.
+ * \sa ColorSelDialog.
+ */
+typedef struct _COLORDATA {
+    /** Reserves, not used now. */
+    DWORD           style;
+    /** The value of the color  returned. */
+    gal_pixel       pixel;
+    /** The R, G, B value of the color returned. */
+    Uint8           r, g, b;
+    /** The H value of the color returned. */
+    Uint16          h;
+    /** The S, V value of the color returned. */
+    Uint8           s, v;
+    /** Indicates the controls is transparent or no?*/
+    BOOL            is_trans;
+} COLORDATA, *PCOLORDATA;
+
+/* Internal use */
+#define SELCOLOR_OK     IDOK
+/* Internal use */
+#define SELCOLOR_CANCEL IDCANCEL
+
+/**
+ * \fn int ColorSelDialog (HWND hWnd, int x, int y, \
+ *               int w, int h, PCOLORDATA pClrData)
+ * \brief Creates a Color Selection Dialog Box.
+ *
+ * This function creates a Color Selection Dialog Box, and returns 
+ * the values of the color selected by the user.
+ *
+ * \param hWnd The hosting main window.
+ * \param x  x,y,w,h: The default position and size of the dialog box.
+ * \param y  x,y,w,h: The default position and size of the dialog box.
+ * \param w  x,y,w,h: The default position and size of the dialog box.
+ * \param h  x,y,w,h: The default position and size of the dialog box.
+ * \param pClrData The pointer to the COLORDATA structure.
+ *
+ * \retval IDOK     The user choosed a color and OK button clicked.
+ * \retval IDCANCEL The user clicked the Cancel button.
+ * 
+ * \sa COLORDATA, ColorSelDialog
+ */
+MGUTILS_EXPORT int ColorSelDialog (HWND hWnd, int x, int y, 
+                int w, int h, PCOLORDATA pClrData);
 
 #endif /* _MGUTILS_DLGCOLORSEL */
 

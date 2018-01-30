@@ -21,6 +21,8 @@
 
 #include "mgutils.h"
 
+#ifdef _MGUTILS_DLGCOLORSEL
+
 #define LIMIT(a, b, c ) do {a=((a<b)?b:a);a=(a>c)?c:a;} while (0)
 
 //#define IDC_STATIC  1000
@@ -598,3 +600,4 @@ int ColorSelDialog (HWND hWnd, int x, int y, int w, int h, PCOLORDATA pClrData)
                     (LPARAM)(&scldata));
 }
 
+#endif /* _MGUTILS_DLGCOLORSEL */
