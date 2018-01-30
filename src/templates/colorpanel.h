@@ -53,9 +53,9 @@ BOOL RegisterColorPanel(void);
 #define CP_GETSELCELL CP_MESSAGE + 6
 
 #define CPGetSelCell(hwnd, prow, pcol) do{ \
-	int sel = SendMessage(hwnd, CP_GETSELCELL, 0, 0); \
-	*(prow) = (int)(short)(LOWORD(sel)); \
-	*(pcol) = (int)(short)(HIWORD(sel)); \
+	LRESULT sel = SendMessage(hwnd, CP_GETSELCELL, 0, 0); \
+	*(prow) = (int)(LOWORD(sel)); \
+	*(pcol) = (int)(HIWORD(sel)); \
 }while(0)
 
 
