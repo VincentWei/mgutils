@@ -7,7 +7,7 @@ This is the mainline release of mGUtils for MiniGUI V3.2.x.
 
 ## Prerequisites
 
-    * MiniGUI: v3.2.0 or later;
+  * MiniGUI: v3.2.0 or later;
 
 ## Building
 
