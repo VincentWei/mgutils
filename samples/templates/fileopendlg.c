@@ -56,7 +56,7 @@ static LRESULT OpenSaveHookProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM 
     return 0;
 }
 
-static void button_callback (HWND hwnd, int id, int nc, DWORD add_data)
+static void button_callback (HWND hwnd, LINT id, int nc, DWORD add_data)
 {
     FILEDLGDATA pfdd = {0};
 

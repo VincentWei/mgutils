@@ -56,7 +56,7 @@ static LRESULT ColorHookProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPa
 }
 
 
-static void button_callback (HWND hwnd, int id, int nc, DWORD add_data)
+static void button_callback (HWND hwnd, LINT id, int nc, DWORD add_data)
 {
     COLORDLGDATA pcdd = {0};
     pcdd.hook = ColorHookProc;

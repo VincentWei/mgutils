@@ -52,7 +52,7 @@ static LRESULT FontHookProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
     return 0;
 }
 
-static void button_callback (HWND hwnd, int id, int nc, DWORD add_data)
+static void button_callback (HWND hwnd, LINT id, int nc, DWORD add_data)
 {
     FONTDLGDATA pfdd = {0};
     pfdd.hook = FontHookProc;

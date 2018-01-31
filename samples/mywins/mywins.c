@@ -175,7 +175,7 @@ static CTRLDATA CtrlYourTaste[] =
 
 static int pListItem = 0;
 
-static void my_notif_proc (HWND hwnd, int id, int nc, DWORD add_data)
+static void my_notif_proc (HWND hwnd, LINT id, int nc, DWORD add_data)
 {
     if (nc == BN_CLICKED) {
         switch (id)
