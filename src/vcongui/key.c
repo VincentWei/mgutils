@@ -188,7 +188,7 @@ void handle_scancode_on_keydown (int scancode, key_info* kinfo)
     key_map = __mg_key_maps [shift_final];
     if (key_map != NULL) {
         keysym = key_map [scancode];
-        type = HIBYTE (keysym);
+        type = HIBYTE_WORD16 (keysym);
 
         if (type >= 0xf0) {
             type -= 0xf0;
@@ -222,7 +222,7 @@ void handle_scancode_on_keyup (int scancode, key_info* kinfo)
     key_map = __mg_key_maps [shift_final];
     if (key_map != NULL) {
         keysym = key_map [scancode];
-        type = HIBYTE (keysym);
+        type = HIBYTE_WORD16 (keysym);
 
         if (type >= 0xf0) {
             type -= 0xf0;
