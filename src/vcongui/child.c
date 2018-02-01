@@ -104,9 +104,11 @@ void ChildStart (PCONINFO con, FILE *errfp, bool startupMessage,
            " running on VC No. %c\r\n"
            "%s\r\n"
            "%s\r\n"
+           "%s\r\n"
            "%s\r\n\r\n",
            *((char *)ttyname(fileno (errfp)) + 8),
-"Copyright (C) 1999-2001 Wei Yongming (ymwei@minigui.org).",
+"Copyright (C) 2003-2018 Beijing FMSoft Technologies Co., Ltd.",
+"Copyright (C) 1999-2002 WEI Yongming (vincent@minigui.org).",
 "Some idea comes from CCE by He Rui and others.",
 "    CCE: Copyright (C) 1998-1999 He Rui and others.");
    }

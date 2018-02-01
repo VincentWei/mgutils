@@ -459,7 +459,7 @@ typedef	enum {false, true} bool;
 #endif
 #endif
 
-#define VCONGUI_VERSION "Version 0.5 (Nov. 2001)"
+#define VCONGUI_VERSION "Version 0.8 (Feb. 2018)"
 
 #define MIN_COLS    10
 #define MAX_COLS    100

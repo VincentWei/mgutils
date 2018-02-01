@@ -47,7 +47,7 @@
 
 int MiniGUIMain (int args, const char* arg[])
 {
-    CHILDINFO ChildInfo = {0, NULL, NULL, NULL, NULL, 1, 0, 0, 0, 0};
+    CHILDINFO ChildInfo = {1, NULL, NULL, NULL, NULL, 1, 0, 0, 0, 0};
 
 #ifdef _MGRM_PROCESSES
     if (JoinLayer ("vcongui", "vcongui", 0, 0) == INV_LAYER_HANDLE) {

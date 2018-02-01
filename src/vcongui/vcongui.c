@@ -627,6 +627,7 @@ static LRESULT VCOnGUIMainWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARA
             case IDM_ABOUT_THIS:
                 MessageBox (hWnd, 
                     "VCOnGUI - Virtual Console On MiniGUI " VCONGUI_VERSION "\n"
+                    "Copyright (C) 2003-2018 Beijing FMSoft Technologies Co., Ltd.\n"
                     "Copyright (C) 1999-2001 Wei Yongming (ymwei@minigui.org).\n"
                     "Some idea comes from CCE by He Rui and others.\n"
                     "    CCE: Copyright (C) 1998-1999 He Rui and others.\n",
