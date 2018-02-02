@@ -85,6 +85,8 @@ AC_FUNC_VPRINTF
 AC_CHECK_FUNCS([bzero dup2 getcwd memmove memset putenv strchr strdup strerror strstr])
 
 devel_mode="no"
+detail_debug="no"
+
 build_vcongui="no"
 build_skin="yes"
 build_mywins="yes"
@@ -99,6 +101,10 @@ MGUTILS_MODULES="templates/libtemplates.la"
 AC_ARG_ENABLE(develmode,
 [  --enable-develmode       developer mode <default=no>],
 devel_mode=$enableval)
+
+AC_ARG_ENABLE(detaildebug,
+[  --enable-detaildebug     detailed debug info <default=no>],
+detail_debug=$enableval)
 
 AC_ARG_ENABLE(vcongui,
 [  --enable-vcongui         build VCOnGUI <default=yes>],
@@ -199,7 +205,11 @@ AM_CONDITIONAL(MGUTILS_NOSUFFIX, test "x$with_libsuffix" = "x")
 
 CFLAGS="$CFLAGS -D__MGUTILS_LIB__"
 if test "x$devel_mode" = "xyes"; then
-    CPPFLAGS="$CPPFLAGS -DDEBUG -D_DEBUG"
+    CPPFLAGS="$CPPFLAGS -D_DEBUG"
+    if test "x$detail_debug" = "xyes"; then
+        CPPFLAGS="$CPPFLAGS -DDEBUG"
+    fi
+
     if test "$ac_cv_prog_gcc" = "yes"; then
         CPPFLAGS="$CPPFLAGS -Wall -Werror"
     fi
