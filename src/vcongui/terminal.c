@@ -378,14 +378,14 @@ void HandleInputChar (PCONINFO con, WPARAM wParam, LPARAM lParam)
 {
     u_char ch;
     
-    if (HIBYTE (wParam)) {
+    if (HIBYTE_WORD16 (wParam)) {
         u_char buff [2];
-        buff [0] = LOBYTE (wParam);
-        buff [1] = HIBYTE (wParam);
+        buff [0] = LOBYTE_WORD16 (wParam);
+        buff [1] = HIBYTE_WORD16 (wParam);
         my_write (con->masterPty, buff, 2);
     }
     else {
-        ch = LOBYTE (wParam);
+        ch = LOBYTE_WORD16 (wParam);
         my_write (con->masterPty, &ch, 1);
     }
 }
