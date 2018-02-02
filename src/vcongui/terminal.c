@@ -376,18 +376,25 @@ void ReadMasterPty (PCONINFO con)
 
 void HandleInputChar (PCONINFO con, WPARAM wParam, LPARAM lParam)
 {
-    u_char ch;
+    u_char ch [4];
+    int chlen = 1;
     
-    if (HIBYTE_WORD16 (wParam)) {
-        u_char buff [2];
-        buff [0] = LOBYTE_WORD16 (wParam);
-        buff [1] = HIBYTE_WORD16 (wParam);
-        my_write (con->masterPty, buff, 2);
+    ch [0] = FIRSTBYTE (wParam);
+    ch [1] = SECONDBYTE (wParam);
+    ch [2] = THIRDBYTE (wParam);
+    ch [3] = FOURTHBYTE (wParam);
+
+    if (ch [3]) {
+        chlen = 4;
     }
-    else {
-        ch = LOBYTE_WORD16 (wParam);
-        my_write (con->masterPty, &ch, 1);
+    else if (ch [2]) {
+        chlen = 3;
     }
+    else if (ch [1]) {
+        chlen = 2;
+    }
+
+    my_write (con->masterPty, ch, chlen);
 }
 
 void HandleInputKeyDown (PCONINFO con, WPARAM wParam, LPARAM lParam)

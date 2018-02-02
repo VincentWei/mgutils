@@ -153,8 +153,8 @@ void WindowWput (PCONINFO con, WORD word, int fc, int bc, int pos)
     HDC hdc;
     int col, row;
 
-    szCharBuff [0] = HIBYTE_WORD16 (word);
-    szCharBuff [1] = LOBYTE_WORD16 (word);
+    szCharBuff [0] = HIBYTE (word);
+    szCharBuff [1] = LOBYTE (word);
     szCharBuff [2] = '\0';
    
     col = pos % con->cols;
