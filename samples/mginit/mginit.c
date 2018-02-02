@@ -1,30 +1,34 @@
 /*
-** $Id: mginit.c 1 2008-01-30 07:41:08Z wangjian $
-**
-** The mginit program of MiniGUI Demostration Envirionment.
-**
-** Copyright (C) 2001, 2002 Wei Yongming.
-** Copyright (C) 2003 ~ 2007 Feynman Software.
-**
-** Create date: 2001/09/05
-*/
-
-/*
-**  This source is free software; you can redistribute it and/or
-**  modify it under the terms of the GNU General Public
-**  License as published by the Free Software Foundation; either
-**  version 2 of the License, or (at your option) any later version.
-**
-**  This software is distributed in the hope that it will be useful,
-**  but WITHOUT ANY WARRANTY; without even the implied warranty of
-**  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-**  General Public License for more details.
-**
-**  You should have received a copy of the GNU General Public
-**  License along with this library; if not, write to the Free
-**  Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
-**  MA 02111-1307, USA
-*/
+ *   This file is part of mGUtils, a component for MiniGUI.
+ * 
+ *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
+ *   Copyright (C) 1998~2002, WEI Yongming
+ * 
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ * 
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ * 
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ *   Or,
+ * 
+ *   As this program is a library, any link to this program must follow
+ *   GNU General Public License version 3 (GPLv3). If you cannot accept
+ *   GPLv3, you need to be licensed from FMSoft.
+ * 
+ *   If you have got a commercial license of this program, please use it
+ *   under the terms and conditions of the commercial license.
+ * 
+ *   For more information about the commercial license, please refer to
+ *   <http://www.minigui.com/en/about/licensing-policy/>.
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -60,74 +64,6 @@
 #include "desktop.h"
 
 static HWND hTaskBar;
-
-/*
-static void AboutMiniGUI (void)
-{
-    char buff [1024];
-
-    sprintf (buff, 
-            "MiniGUI version %d.%d.%d.\n"
-            "Copyright (C) 2002 ~ 2006 Feynman Software.\n"
-            "Copyright (C) 1998 ~ 2002 Wei Yongming.\n"
-            "All right reserved.\n\n"
-            "MiniGUI is \"a cross-operating-system graphics user interface "
-            "support system for embedded devices\", and is \"an embedded "
-            "graphics middleware\". It aims to provide a compact, fast, "
-            "stable, lightweight, and cross-OS GUI support system, which "
-            "is especially fit for real-time embedded systems based-on "
-            "Linux/uClinux, eCos, uC/OS-II, and other traditional RTOSes, "
-            "such as VxWorks, ThreadX, and Nucleus.\n\n"
-            "Please visit\n\n"
-            "http://www.minigui.org\n"
-            "http://www.minigui.com\n\n"
-            "for more information.",
-            MINIGUI_MAJOR_VERSION, 
-            MINIGUI_MINOR_VERSION, 
-            MINIGUI_MICRO_VERSION);
-
-    MessageBox (HWND_DESKTOP, buff, 
-            "About MiniGUI!", MB_OK | MB_ICONINFORMATION);
-}
-
-static void AboutMDE (void)
-{
-    char buff [1024];
-
-    sprintf (buff, 
-            "MDE version %d.%d.%d.\n"
-            "Copyright (C) 2002 ~ 2006 Feynman Software.\n"
-            "Copyright (C) 2001 ~ 2002 Wei Yongming.\n\n"
-            "MDE (MiniGUI Demostration Envirionment) is a comprehensive "
-            "demo system for MiniGUI Ver %d.%d.%d. \n\n"
-            "It creates a task bar for you, and you can launch applications "
-            "from the bar, and switch among different layers by click "
-            "the layer-box on the bar.\n\n"
-            "MDE is free software, covered by the GNU General Public License, "
-            "and you are welcome to change it and/or distribute copies of it "
-            "under certain conditions. Please see the file COPYING to know "
-            "the details.\n\n"
-            "There is absolutely no warranty for MDE.",
-            MINIGUI_MAJOR_VERSION, 
-            MINIGUI_MINOR_VERSION, 
-            MINIGUI_MICRO_VERSION,
-            MINIGUI_MAJOR_VERSION, 
-            MINIGUI_MINOR_VERSION, 
-            MINIGUI_MICRO_VERSION);
-
-    MessageBox (HWND_DESKTOP, buff,
-            "About MDE!", MB_OK | MB_ICONINFORMATION);
-}
-static void Usage (void)
-{
-    MessageBox (HWND_DESKTOP, 
-            "Please start 'mginit' from the directory in which it located! "
-            "Do not change to other directory to run it.\n\n"
-            "Thanks a lot.",
-            "Usage of MDE!",
-            MB_OK | MB_ICONEXCLAMATION);
-}
-*/
 
 static const char* new_del_client_info [] =
 {
