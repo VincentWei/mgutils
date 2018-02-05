@@ -17,7 +17,7 @@ Run
 
     $ ./configure; make; sudo make install
 
-to configure, make, and install the headers and the libraries (libmgplus).
+to configure, make, and install the headers and the libraries (libmgutils).
 The commands above also make the samples in the subdirectories of `samples/`.
 
 mGUtils also provides some configuration options to customize the features.
