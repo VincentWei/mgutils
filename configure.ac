@@ -247,17 +247,5 @@ AC_OUTPUT([
         src/vcongui/Makefile
         src/skin/Makefile
         src/templates/Makefile
-        samples/Makefile
-        samples/mginit/Makefile
-        samples/mginit/res/Makefile
-        samples/templates/Makefile
-        samples/mywins/Makefile
-        samples/skin/Makefile
-        samples/notebook/Makefile
-        samples/notebook/res/Makefile
-        samples/painter/Makefile
-        samples/picview/Makefile
-        samples/picview/res/Makefile
-        samples/vcongui/Makefile
         m4/Makefile
 ])
