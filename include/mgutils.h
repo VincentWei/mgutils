@@ -1046,7 +1046,7 @@ typedef struct _INFODLGDATA {
 
 /**
 * \fn int InfoShowDialog (PDLGTEMPLATE dlg_template, HWND hwnd, \
-WNDPROC proc, PINFODLGDATA pidd)
+        WNDPROC proc, PINFODLGDATA pidd)
 * \ brief Creates a modal Information Dialog Box.
 *
 * This function creates a Information Dialog Box.
@@ -1054,7 +1054,7 @@ WNDPROC proc, PINFODLGDATA pidd)
 * \param dlg_template The pointer to a DLGTEMPLATE structure.
 * \param hwnd The handle to the hosting main window.
 * \param proc The window procedure of the information dialog box.
-* \param pfdd The pointer to the INFODLGDATA structure.
+* \param pidd The pointer to the INFODLGDATA structure.
 *
 * \return If the user clicks OK or CLOSE button of the dialog box, the
 *         return value is TRUE, otherwise return FALSE.
