@@ -990,16 +990,10 @@ bool VtStart (PCONINFO con)
 
     if (con->log_font == NULL) {
         PLOGFONT sys_font = GetSystemFont (SYSLOGFONT_WCHAR_DEF);
-        if (sys_font->mbc_devfont)
-            charset = sys_font->charset;
-        else 
-            charset = sys_font->charset;
+        charset = sys_font->charset;
     }
     else {
-        if (con->log_font->mbc_devfont)
-            charset = con->log_font->charset;
-        else 
-            charset = con->log_font->charset;
+        charset = con->log_font->charset;
     }
 
     con->sysCoding = CODE_GB;
