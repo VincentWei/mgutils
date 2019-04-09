@@ -1,13 +1,13 @@
 # mGUtils
 
-mGUtils - A MiniGUI component which contains miscellaneous utilities 
+mGUtils - A MiniGUI component which contains miscellaneous utilities
 like ColorSelectionDialogBox, FileOpenDialogBox, and so on.
 
-This is the mainline release of mGUtils for MiniGUI V3.2.x.
+This is the mainline release of mGUtils for MiniGUI V4.0.x or later
 
 ## Prerequisites
 
-  * MiniGUI: v3.2.0 or later;
+  * MiniGUI: v4.0.0 or later;
 
 ## Building
 
@@ -27,7 +27,7 @@ For more information, please run
 
 ## Copying
 
-    Copyright (C) 2002~2018, Beijing FMSoft Technologies Co., Ltd.
+    Copyright (C) 2002~2019, Beijing FMSoft Technologies Co., Ltd.
     Copyright (C) 1998~2002, WEI Yongming
 
     This program is free software: you can redistribute it and/or modify

@@ -197,7 +197,7 @@ MGUTILS_LIBNAME="${MGUTILS_NAME}${LIB_SUFFIX}"
 dnl ========================================================================
 dnl check for installation of MiniGUI
 dnl ========================================================================
-PKG_CHECK_MODULES([MINIGUI], [minigui >= 3.2.0])
+PKG_CHECK_MODULES([MINIGUI], [minigui >= 4.0.0])
 
 AC_CHECK_DECLS(_MGRM_PROCESSES, minigui_runmode="procs", foo=bar, [#include <minigui/common.h>])
 AM_CONDITIONAL(MGRM_PROCESSES, test "x$minigui_runmode" = "xprocs")
