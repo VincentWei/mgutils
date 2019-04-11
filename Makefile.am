@@ -11,3 +11,5 @@ EXTRA_DIST = INSTALL README
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = mgutils.pc
 
+docs:
+	doxygen Doxyfile
