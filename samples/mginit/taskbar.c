@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -100,10 +100,10 @@ static BOOL get_app_info (void)
         return FALSE;
 
     GetIntValueFromEtcFile (APP_INFO_FILE, "taskbar", "autostart", &app_info.autostart);
-    
+
     if (GetValueFromEtcFile (APP_INFO_FILE, "taskbar", "logo", app_info.logo_path, PATH_MAX + NAME_MAX) != ETC_OK)
         return FALSE;
-           
+
 
     if (app_info.autostart >= app_info.nr_apps || app_info.autostart < 0)
         app_info.autostart = 0;
@@ -186,7 +186,7 @@ static HWND create_app_coolbar (HWND hWnd)
 
 static void under_construction (HWND hwnd)
 {
-    MessageBox (hwnd, 
+    MessageBox (hwnd,
             "This function is under construction.",
             "MDE!",
             MB_OK | MB_ICONEXCLAMATION);
@@ -194,7 +194,7 @@ static void under_construction (HWND hwnd)
 
 static void ask_for_quit (HWND hwnd)
 {
-    if (MessageBox (hwnd, 
+    if (MessageBox (hwnd,
             "You are asking for quit. \n\nDo you want to quit really?",
             "Do you want to quit really?",
             MB_YESNO | MB_ICONQUESTION) == IDYES) {
@@ -215,14 +215,14 @@ static LRESULT TaskBarWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
         plogo = calloc (1 , sizeof(BITMAP));
         LoadBitmap (HDC_SCREEN , plogo , app_info.logo_path);
 /*
-        CreateWindow (CTRL_BUTTON, "Start", WS_CHILD | WS_VISIBLE, _ID_START_BUTTON, 
+        CreateWindow (CTRL_BUTTON, "Start", WS_CHILD | WS_VISIBLE, _ID_START_BUTTON,
                     _MARGIN, _MARGIN, _WIDTH_START, _HEIGHT_CTRL, hWnd, 0);
                     */
-        CreateWindow (CTRL_STATIC, "", SS_REALSIZEIMAGE | SS_CENTERIMAGE | SS_BITMAP | WS_CHILD | WS_VISIBLE, _ID_START_BUTTON, 
+        CreateWindow (CTRL_STATIC, "", SS_REALSIZEIMAGE | SS_CENTERIMAGE | SS_BITMAP | WS_CHILD | WS_VISIBLE, _ID_START_BUTTON,
                     _MARGIN, _MARGIN, _WIDTH_START, _HEIGHT_CTRL, hWnd, (DWORD)plogo);
 
-        CreateWindow (CTRL_STATIC, mk_time (buff), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER, 
-                    _ID_TIME_STATIC, g_rcScr.right - _WIDTH_TIME - _MARGIN, _MARGIN, 
+        CreateWindow (CTRL_STATIC, mk_time (buff), WS_CHILD | WS_BORDER | WS_VISIBLE | SS_CENTER,
+                    _ID_TIME_STATIC, g_rcScr.right - _WIDTH_TIME - _MARGIN, _MARGIN,
                     _WIDTH_TIME, _HEIGHT_CTRL, hWnd, 0);
 
         create_app_coolbar (hWnd);
@@ -269,7 +269,7 @@ static LRESULT TaskBarWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARAM lP
             PostMessage (hWnd, MSG_CLOSE, 0, 0);
         break;
     }
-        
+
     case MSG_CLOSE:
         KillTimer (hWnd, _ID_TIMER);
         free (plogo);
@@ -295,11 +295,11 @@ HWND create_task_bar (void)
     CreateInfo.hCursor = GetSystemCursor (0);
     CreateInfo.hIcon = 0;
     CreateInfo.MainWindowProc = TaskBarWinProc;
-    CreateInfo.lx = g_rcScr.left; 
+    CreateInfo.lx = g_rcScr.left;
     CreateInfo.ty = g_rcScr.bottom - HEIGHT_TASKBAR;
     CreateInfo.rx = g_rcScr.right;
     CreateInfo.by = g_rcScr.bottom;
-    CreateInfo.iBkColor = GetWindowElementColor (WE_MAINC_THREED_BODY); 
+    CreateInfo.iBkColor = GetWindowElementColor (WE_MAINC_THREED_BODY);
     CreateInfo.dwAddData = 0;
     CreateInfo.hHosting = HWND_DESKTOP;
 
@@ -326,7 +326,7 @@ pid_t exec_app (int app)
         strcat (buff, app_info.app_items [app].name);
 
         if (app_info.app_items [app].layer [0]) {
-            execl (buff, app_info.app_items [app].name, 
+            execl (buff, app_info.app_items [app].name,
                         "-layer", app_info.app_items [app].layer, NULL);
         }
         else {

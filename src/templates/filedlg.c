@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -72,10 +72,10 @@
 #   define access(x, y) _access(x, y)
 #endif
 #ifndef F_OK
-#   define	F_OK	0
-#   define	R_OK	4
-#   define	W_OK	2
-#   define	X_OK	1
+#   define    F_OK    0
+#   define    R_OK    4
+#   define    W_OK    2
+#   define    X_OK    1
 #endif /* F_OK */
 
 static HICON icon_ft_dir, icon_ft_file;
@@ -88,7 +88,7 @@ static CTRLDATA DefFileCtrl [] =
         7, 7, 70, 25,
         IDC_FOSD_PATH_NOTE, "Find in",  0, WS_EX_TRANSPARENT | WS_EX_USEPARENTRDR},
 
-    { "combobox", WS_VISIBLE | WS_TABSTOP | CBS_DROPDOWNLIST | CBS_NOTIFY 
+    { "combobox", WS_VISIBLE | WS_TABSTOP | CBS_DROPDOWNLIST | CBS_NOTIFY
         | CBS_READONLY | WS_BORDER | CBS_EDITNOBORDER,
         84, 5, 160, 25,
         IDC_FOSD_PATH, NULL, 120, 0 },
@@ -97,7 +97,7 @@ static CTRLDATA DefFileCtrl [] =
         252, 5, 58, 25,
         IDC_FOSD_UPPER, "Up", 0, WS_EX_USEPARENTRDR },
 
-    { "listview", WS_VISIBLE | WS_CHILD |WS_TABSTOP |WS_BORDER |WS_VSCROLL 
+    { "listview", WS_VISIBLE | WS_CHILD |WS_TABSTOP |WS_BORDER |WS_VSCROLL
         |WS_HSCROLL |LVS_SORT |LVS_NOTIFY,
         7, 35, 303, 85,
         IDC_FOSD_FILELIST, "File List", 0, 0 },
@@ -114,7 +114,7 @@ static CTRLDATA DefFileCtrl [] =
         7, 157, 70, 25,
         IDC_FOSD_FILETYPE_NOTE, "File Type",  0, WS_EX_TRANSPARENT | WS_EX_USEPARENTRDR },
 
-    { "combobox", WS_VISIBLE |WS_TABSTOP |CBS_DROPDOWNLIST |CBS_NOTIFY 
+    { "combobox", WS_VISIBLE |WS_TABSTOP |CBS_DROPDOWNLIST |CBS_NOTIFY
         |CBS_READONLY | WS_BORDER | CBS_EDITNOBORDER,
         84, 155, 226, 25,
         IDC_FOSD_FILETYPE, NULL, 120, 0 },
@@ -134,12 +134,12 @@ static CTRLDATA DefFileCtrl [] =
 
 static CTRLDATA DefSimpleFileCtrl [] =
 {
-    { "combobox", WS_VISIBLE |WS_TABSTOP |CBS_DROPDOWNLIST |CBS_NOTIFY 
+    { "combobox", WS_VISIBLE |WS_TABSTOP |CBS_DROPDOWNLIST |CBS_NOTIFY
         |CBS_READONLY | WS_BORDER | CBS_EDITNOBORDER,
         7, 5, 303, 25,
         IDC_FOSD_PATH, NULL, 120, WS_EX_USEPARENTRDR },
 
-    { "listview", WS_VISIBLE |WS_CHILD |WS_TABSTOP |WS_BORDER |WS_VSCROLL 
+    { "listview", WS_VISIBLE |WS_CHILD |WS_TABSTOP |WS_BORDER |WS_VSCROLL
         |WS_HSCROLL |LVS_SORT |LVS_NOTIFY,
         7, 35, 303, 115,
         IDC_FOSD_FILELIST, "File List", 0, WS_EX_USEPARENTRDR },
@@ -156,7 +156,7 @@ static CTRLDATA DefSimpleFileCtrl [] =
         160, 155, 70, 25,
         IDC_FOSD_FILETYPE_NOTE, "File Type",  0, WS_EX_TRANSPARENT | WS_EX_USEPARENTRDR },
 
-    { "combobox", WS_VISIBLE |WS_TABSTOP |CBS_DROPDOWNLIST |CBS_NOTIFY 
+    { "combobox", WS_VISIBLE |WS_TABSTOP |CBS_DROPDOWNLIST |CBS_NOTIFY
         |CBS_READONLY | WS_BORDER | CBS_EDITNOBORDER,
         235, 155, 75, 25,
         IDC_FOSD_FILETYPE, NULL, 120, WS_EX_USEPARENTRDR },
@@ -172,22 +172,22 @@ static CTRLDATA DefSimpleFileCtrl [] =
 
 DLGTEMPLATE DefFileDlg =
 {
-    WS_DLGFRAME | WS_BORDER | WS_CAPTION, 
+    WS_DLGFRAME | WS_BORDER | WS_CAPTION,
     WS_EX_USEPARENTRDR,
-    0, 0, 320, 240, 
-    "File", 0, 0, 
-    TABLESIZE (DefFileCtrl), 
-    DefFileCtrl 
+    0, 0, 320, 240,
+    "File", 0, 0,
+    TABLESIZE (DefFileCtrl),
+    DefFileCtrl
 };
 
 DLGTEMPLATE DefSimpleFileDlg=
 {
-    WS_DLGFRAME | WS_BORDER | WS_CAPTION, 
+    WS_DLGFRAME | WS_BORDER | WS_CAPTION,
     WS_EX_NONE,
-    0, 0, 320, 240, 
-    "File", 0, 0, 
-    TABLESIZE (DefSimpleFileCtrl), 
-    DefSimpleFileCtrl 
+    0, 0, 320, 240,
+    "File", 0, 0,
+    TABLESIZE (DefSimpleFileCtrl),
+    DefSimpleFileCtrl
 };
 
 typedef struct _FILEINFO
@@ -198,7 +198,7 @@ typedef struct _FILEINFO
     time_t modifytime;
     BOOL IsDir;
 
-} FILEINFO; 
+} FILEINFO;
 
 typedef FILEINFO* PFILEINFO;
 
@@ -219,14 +219,14 @@ static BOOL IsInFilter (char *filtstr, char *filename)
         return FALSE;
     if (filtstr == NULL)
         return TRUE;
-   
+
     strtrimall (filename);
     strtrimall (filtstr);
     if (filename [0] == '\0')
         return FALSE;
     if (strlen (filtstr) == 0)
         return TRUE;
-    
+
     p1 = strchr (filename, '.');
     p2 = NULL;
     while (p1 != NULL) {
@@ -238,24 +238,24 @@ static BOOL IsInFilter (char *filtstr, char *filename)
         strcpy (chFileExt, "*");
         strcpy (chFileExt + 1, p2);
     }
-    else 
+    else
         strcpy (chFileExt, "*.*");
-    
+
     p1 = strchr (filtstr, '(');
     p2 = strchr (filtstr, ')');
 
     if (p1 == NULL || p2 == NULL)
         return FALSE;
 
-    memset (chFilter, 0, sizeof (chFilter)); 
-    strncpy (chFilter, p1 + 1, p2 - p1 - 1); 
+    memset (chFilter, 0, sizeof (chFilter));
+    strncpy (chFilter, p1 + 1, p2 - p1 - 1);
 
     p1 = strchr (chFilter, ';');
     p2 = chFilter;
     while ( p1 != NULL ) {
         strncpy (chTemp, p2, p1 - p2);
         strtrimall (chTemp);
-        if ( strcmp (chTemp, "*.*") == 0 || strcmp (chTemp, chFileExt) == 0 ) 
+        if ( strcmp (chTemp, "*.*") == 0 || strcmp (chTemp, chFileExt) == 0 )
             return TRUE;
         p2 = p1 + 1;
         p1 = strchr (p2, ';');
@@ -273,36 +273,36 @@ static BOOL IsInFilter (char *filtstr, char *filename)
 static char* GetParentDir (char *dir)
 {
     int i, nParent = 0;
-    
+
     for (i = strlen(dir)-1; i >= 0; i--)
-	{
+    {
 #ifdef WIN32
-		if(dir [i] == '\\' || dir[i] == '/')
+        if(dir [i] == '\\' || dir[i] == '/')
 #else
-       if (dir [i] == '/') 
+       if (dir [i] == '/')
 #endif
-	   {
+       {
             nParent = i;
-			break;
-	   }
-	}
+            break;
+       }
+    }
 
     if (nParent == 0)
         dir [nParent + 1] = '\0';
-    else 
+    else
         dir [nParent] = '\0';
 
 #ifdef WIN32
-	if(dir[nParent-1] == ':'){
-		if(i == nParent){
-			dir[0] = '/';
-			dir[1] = 0;
-		}
-		else {
-			dir[nParent ++] = '\\';
-			dir[nParent ] = '\0';
-		}
-	}
+    if(dir[nParent-1] == ':'){
+        if(i == nParent){
+            dir[0] = '/';
+            dir[1] = 0;
+        }
+        else {
+            dir[nParent ++] = '\\';
+            dir[nParent ] = '\0';
+        }
+    }
 #endif
 
     return dir;
@@ -318,27 +318,27 @@ static int GetAccessMode (HWND hWnd, char * dir, BOOL IsSave, BOOL IsDisplay)
     if (access (dir, F_OK) == -1){
         sprintf (msg, GetSysText(IDS_MGST_SHOWHIDEFILE), dir);
         nResult = -1;
-    } 
+    }
     else {
         if ( access (dir, R_OK) == -1) {
             sprintf (msg, GetSysText(IDS_MGST_NR), dir);
             nResult = -2;
-        } 
+        }
         else  if ( IsSave == TRUE && access (dir, W_OK) == -1) {
             sprintf (msg, GetSysText(IDS_MGST_NW), dir);
             nResult = -3;
-        } 
+        }
     }
-     
+
     if (IsDisplay && nResult != 0)
-       MessageBox (hWnd, msg, GetSysText(IDS_MGST_INFO), 
+       MessageBox (hWnd, msg, GetSysText(IDS_MGST_INFO),
            MB_OK | MB_ICONSTOP| MB_BASEDONPARENT);
-    
+
     return nResult;
 }
 
 /*
- * If file has been exist or no write access, return non-zero. 
+ * If file has been exist or no write access, return non-zero.
  * Otherwise return zero.
  * */
 static int FileExistDlg (HWND hWnd, char *dir, char *filename)
@@ -348,25 +348,25 @@ static int FileExistDlg (HWND hWnd, char *dir, char *filename)
 
     if (access (dir, F_OK) == 0){
         sprintf (msg, GetSysText(IDS_MGST_FILEEXIST), filename);
-        if (MessageBox (hWnd, msg, GetSysText(IDS_MGST_INFO), 
+        if (MessageBox (hWnd, msg, GetSysText(IDS_MGST_INFO),
                 MB_OKCANCEL | MB_ICONSTOP| MB_BASEDONPARENT) == IDOK)
         {
             if (access (dir, W_OK) == -1) { /*no write access*/
                 sprintf (msg, GetSysText(IDS_MGST_NR), filename);
 
-                MessageBox (hWnd, msg, GetSysText(IDS_MGST_INFO), 
+                MessageBox (hWnd, msg, GetSysText(IDS_MGST_INFO),
                     MB_OK | MB_ICONSTOP| MB_BASEDONPARENT);
-                return -1; 
+                return -1;
             }
             else { /*want to replace*/
-                return 0; 
+                return 0;
             }
         }
         else /*no replace*/
-            return -2; 
+            return -2;
     }
     /*file doesn't exist*/
-    return 0; 
+    return 0;
 }
 
 static void InsertToListView( HWND hWnd, PFILEINFO pfi)
@@ -377,10 +377,10 @@ static void InsertToListView( HWND hWnd, PFILEINFO pfi)
     LVITEM    item;
     char      chTemp[255];
     struct tm *ptm;
-    
+
     hListView = GetDlgItem (hWnd, IDC_FOSD_FILELIST);
     nItemCount = SendMessage (hListView, LVM_GETITEMCOUNT, 0, 0);
-    
+
     item.nItem = nItemCount;
     item.itemData = (DWORD)pfi->IsDir;
     item.nItemHeight = 24;
@@ -389,7 +389,7 @@ static void InsertToListView( HWND hWnd, PFILEINFO pfi)
     subdata.nItem = nItemCount;
     subdata.nTextColor = 0;
     subdata.flags = LVFLAG_ICON;
-    
+
     if (pfi->IsDir)
         subdata.image = (DWORD)icon_ft_dir;
     else
@@ -397,7 +397,7 @@ static void InsertToListView( HWND hWnd, PFILEINFO pfi)
 
     subdata.subItem = 0;
     subdata.pszText = (char *)malloc (MY_NAMEMAX+1);
-    if ( subdata.pszText == NULL) 
+    if ( subdata.pszText == NULL)
         return ;
 
     strcpy (subdata.pszText, pfi->filename);
@@ -428,23 +428,23 @@ static void InsertToListView( HWND hWnd, PFILEINFO pfi)
     subdata.subItem = 3;
     ptm = (struct tm *)localtime (&(pfi->modifytime));
 
-	if (ptm) {
-		sprintf (subdata.pszText, "%d-%.2d-%.2d",
-			ptm->tm_year + 1900, ptm->tm_mon + 1, ptm->tm_mday);
+    if (ptm) {
+        sprintf (subdata.pszText, "%d-%.2d-%.2d",
+            ptm->tm_year + 1900, ptm->tm_mon + 1, ptm->tm_mday);
 
-		sprintf (subdata.pszText + 10, " %.2d:%.2d:%.2d",
-			ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
-	}
-	else {
-		sprintf (subdata.pszText, "-------");
-	}
+        sprintf (subdata.pszText + 10, " %.2d:%.2d:%.2d",
+            ptm->tm_hour, ptm->tm_min, ptm->tm_sec);
+    }
+    else {
+        sprintf (subdata.pszText, "-------");
+    }
 
     SendMessage (hListView, LVM_SETSUBITEM, 0, (LPARAM)&subdata);
 
     if (subdata.pszText != NULL) free (subdata.pszText);
 }
 
-static int 
+static int
 ListViewSortBySize( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
 {
     HWND       hCtrlWnd;
@@ -466,9 +466,9 @@ ListViewSortBySize( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
     //subItem1.nItem = nItem1;
     subItem1.subItem = 1;
     subItem1.pszText = (char *)malloc (MY_NAMEMAX+1);
-    if ( subItem1.pszText == NULL) 
+    if ( subItem1.pszText == NULL)
         return 0;
-    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT, 
+    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT,
             (WPARAM)nItem1, (LPARAM)&subItem1);
 
     //subItem2.nItem = nItem2;
@@ -479,7 +479,7 @@ ListViewSortBySize( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
         return 0;
     }
 
-    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT, 
+    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT,
             (WPARAM)nItem2, (LPARAM)&subItem2);
 
     nSize1 = atoi (subItem1.pszText);
@@ -487,7 +487,7 @@ ListViewSortBySize( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
 
     if (subItem1.pszText) free (subItem1.pszText);
     if (subItem2.pszText) free (subItem2.pszText);
-    
+
     if ( nSize1 >nSize2 )
         return 1;
     else if (nSize1 <nSize2)
@@ -496,32 +496,32 @@ ListViewSortBySize( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
     return 0;
 }
 
-static int 
+static int
 ListViewSortByName( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
 {
     HWND       hCtrlWnd;
     LVSUBITEM  subItem1, subItem2;
     int        nIsDir1, nIsDir2;
     int        nResult;
-    
+
     hCtrlWnd = sortdata->hLV;
-    
+
     nIsDir1 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem1);
     nIsDir2 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem2);
-   
-    if ( nIsDir1 >nIsDir2 ) 
+
+    if ( nIsDir1 >nIsDir2 )
         return 1;
-    
+
     if (nIsDir1 < nIsDir2)
         return -1;
-   
+
     //subItem1.nItem = nItem1;
     subItem1.subItem = 0;
     subItem1.pszText = (char *)malloc (MY_NAMEMAX+1);
-    if (subItem1.pszText == NULL) 
+    if (subItem1.pszText == NULL)
         return 0;
 
-    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT, 
+    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT,
             (WPARAM)nItem1, (LPARAM)&subItem1);
 
     //subItem2.nItem = nItem2;
@@ -532,7 +532,7 @@ ListViewSortByName( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
         return 0;
     }
 
-    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT, 
+    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT,
             (WPARAM)nItem2, (LPARAM)&subItem2);
 
     nResult =  strcmp (subItem1.pszText, subItem2.pszText);
@@ -543,22 +543,22 @@ ListViewSortByName( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
     return nResult;
 }
 
-static int 
+static int
 ListViewSortByDate( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
 {
     HWND       hCtrlWnd;
     LVSUBITEM  subItem1, subItem2;
     int        nIsDir1, nIsDir2;
     int        nResult;
-    
+
     hCtrlWnd = sortdata->hLV;
 
     nIsDir1 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem1);
     nIsDir2 = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nItem2);
-    
+
     if ( nIsDir1 >nIsDir2 )
         return 1;
-        
+
     if (nIsDir1 < nIsDir2)
         return -1;
 
@@ -567,7 +567,7 @@ ListViewSortByDate( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
     subItem1.pszText = (char *)malloc (MY_NAMEMAX+1);
     if (subItem1.pszText == NULL)
         return 0;
-    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT, 
+    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT,
             (WPARAM)nItem1, (LPARAM)&subItem1);
 
     //subItem2.nItem = nItem2;
@@ -577,7 +577,7 @@ ListViewSortByDate( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
         if (subItem1.pszText != NULL) free (subItem1.pszText);
         return 0;
     }
-    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT, 
+    SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT,
             (WPARAM)nItem2, (LPARAM)&subItem2);
 
     nResult =  strcmp (subItem1.pszText, subItem2.pszText);
@@ -596,16 +596,16 @@ ListViewSortByDate( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
 
 static inline BOOL is_dir(const char* path)
 {
-	if(path == NULL)
-		return FALSE;
+    if(path == NULL)
+        return FALSE;
 
 #ifdef __LINUX__
-	struct stat	s;
-	if(stat(path, &s) != 0)
-		return FALSE;
-	return S_ISDIR(s.st_mode);	
+    struct stat    s;
+    if(stat(path, &s) != 0)
+        return FALSE;
+    return S_ISDIR(s.st_mode);
 #elif defined(WIN32) //for windows or other system
-	return test_dir(path);
+    return test_dir(path);
 #endif
 }
 
@@ -613,23 +613,23 @@ static inline BOOL is_dir(const char* path)
 #include "windows-funcs.h"
 static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
 {
-	HWND     hCtrlWnd;
-	FILEINFO fileinfo;
-	int      nCheckState;
-	int len;
-	win_find_file_info find_file_info; 
+    HWND     hCtrlWnd;
+    FILEINFO fileinfo;
+    int      nCheckState;
+    int len;
+    win_find_file_info find_file_info;
 
-	if(!path)
-		return;
-	path = strtrimall (path);
-	if ((len = strlen (path)) == 0) return;
+    if(!path)
+        return;
+    path = strtrimall (path);
+    if ((len = strlen (path)) == 0) return;
 
-	hCtrlWnd = GetDlgItem (hWnd, IDC_FOSD_ISHIDE);
+    hCtrlWnd = GetDlgItem (hWnd, IDC_FOSD_ISHIDE);
 
-	SendMessage (hCtrlWnd, LVM_COLSORT, (WPARAM)0, 0);
+    SendMessage (hCtrlWnd, LVM_COLSORT, (WPARAM)0, 0);
     SendMessage (hCtrlWnd, MSG_FREEZECTRL, FALSE, 0);
 
-	if (hCtrlWnd)
+    if (hCtrlWnd)
         nCheckState = SendMessage (hCtrlWnd, BM_GETCHECK, 0, 0);
     else
         /*For DefSimpleFileCtrl*/
@@ -638,58 +638,58 @@ static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
     hCtrlWnd = GetDlgItem (hWnd, IDC_FOSD_FILELIST);
     SendMessage (hCtrlWnd, LVM_DELALLITEM, 0, 0);
 
-	if(strcmp(path, "/") == 0)
-	{
-		int i;
-		unsigned int drivers = getdrivers();
-		memset(&fileinfo, 0, sizeof(fileinfo));
-		fileinfo.IsDir = TRUE;
-		SendMessage (hCtrlWnd, MSG_FREEZECTRL, TRUE, 0);
-		for(i=0; i<32; i++){
-			if(0x1 & drivers){
-				sprintf(fileinfo.filename, "%c:\\", i+'A');
-				InsertToListView (hWnd, &fileinfo);
-			}
-			drivers >>= 1;
-		}
-		SendMessage (hCtrlWnd, LVM_COLSORT, (WPARAM)0, 0);
-		SendMessage (hCtrlWnd, MSG_FREEZECTRL, FALSE, 0);
-		return ;
-	}
+    if(strcmp(path, "/") == 0)
+    {
+        int i;
+        unsigned int drivers = getdrivers();
+        memset(&fileinfo, 0, sizeof(fileinfo));
+        fileinfo.IsDir = TRUE;
+        SendMessage (hCtrlWnd, MSG_FREEZECTRL, TRUE, 0);
+        for(i=0; i<32; i++){
+            if(0x1 & drivers){
+                sprintf(fileinfo.filename, "%c:\\", i+'A');
+                InsertToListView (hWnd, &fileinfo);
+            }
+            drivers >>= 1;
+        }
+        SendMessage (hCtrlWnd, LVM_COLSORT, (WPARAM)0, 0);
+        SendMessage (hCtrlWnd, MSG_FREEZECTRL, FALSE, 0);
+        return ;
+    }
 
 
-	if(!win_find_first_file(path, &find_file_info))
-		return ;
-	do{
-		if(find_file_info.file_attrs & WIN_FFI_DIR
-			&& (strcmp(find_file_info.file_name, ".") == 0
-			|| strcmp(find_file_info.file_name, "..") == 0))
-			continue;
+    if(!win_find_first_file(path, &find_file_info))
+        return ;
+    do{
+        if(find_file_info.file_attrs & WIN_FFI_DIR
+            && (strcmp(find_file_info.file_name, ".") == 0
+            || strcmp(find_file_info.file_name, "..") == 0))
+            continue;
 
-		if(nCheckState != BST_CHECKED && (find_file_info.file_attrs & WIN_FFI_HIDE))
-			continue;
+        if(nCheckState != BST_CHECKED && (find_file_info.file_attrs & WIN_FFI_HIDE))
+            continue;
 
-		if(find_file_info.file_attrs & WIN_FFI_DIR) {
-			fileinfo.IsDir = TRUE;
-		}
-		else if(find_file_info.file_attrs & WIN_FFI_NORMAL) {
-			if ( !IsInFilter (filtstr, find_file_info.file_name) )
+        if(find_file_info.file_attrs & WIN_FFI_DIR) {
+            fileinfo.IsDir = TRUE;
+        }
+        else if(find_file_info.file_attrs & WIN_FFI_NORMAL) {
+            if ( !IsInFilter (filtstr, find_file_info.file_name) )
                 continue;
-			fileinfo.IsDir = FALSE;
-		}
-		else
-			continue;
+            fileinfo.IsDir = FALSE;
+        }
+        else
+            continue;
 
-		strcpy(fileinfo.filename, find_file_info.file_name);
-		fileinfo.filesize = find_file_info.file_size;
-		fileinfo.accessmode = find_file_info.access_mode;
-		fileinfo.modifytime = find_file_info.last_access_time;
+        strcpy(fileinfo.filename, find_file_info.file_name);
+        fileinfo.filesize = find_file_info.file_size;
+        fileinfo.accessmode = find_file_info.access_mode;
+        fileinfo.modifytime = find_file_info.last_access_time;
 
-		InsertToListView (hWnd, &fileinfo);
+        InsertToListView (hWnd, &fileinfo);
 
-	}while(win_find_next_file(&find_file_info));
+    }while(win_find_next_file(&find_file_info));
 
-	win_end_find_file(&find_file_info);
+    win_end_find_file(&find_file_info);
 
 }
 
@@ -704,10 +704,10 @@ static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
     FILEINFO fileinfo;
     int      nRet;
     int      nCheckState;
-	struct   stat ftype;
+    struct   stat ftype;
 
-	if(!is_dir(path))
-		return ;
+    if(!is_dir(path))
+        return ;
 
     hCtrlWnd = GetDlgItem (hWnd, IDC_FOSD_ISHIDE);
 
@@ -719,7 +719,7 @@ static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
 
     hCtrlWnd = GetDlgItem (hWnd, IDC_FOSD_FILELIST);
     SendMessage (hCtrlWnd, LVM_DELALLITEM, 0, 0);
-   
+
     if (path == NULL) return;
     path = strtrimall (path);
     if (strlen (path) == 0) return;
@@ -728,31 +728,31 @@ static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
         path [strlen(path)-1]=0;
 
     SendMessage (hCtrlWnd, MSG_FREEZECTRL, TRUE, 0);
- 
+
     dir = opendir (path);
 
     while ((pDirEnt = readdir ( dir )) != NULL ) {
 
-        memset (&fileinfo, 0, sizeof (fileinfo));    
-        
-         
-        if ( strcmp (pDirEnt->d_name, ".") == 0 
-            || strcmp (pDirEnt->d_name, "..") == 0) 
+        memset (&fileinfo, 0, sizeof (fileinfo));
+
+
+        if ( strcmp (pDirEnt->d_name, ".") == 0
+            || strcmp (pDirEnt->d_name, "..") == 0)
             continue;
 
         if ( nCheckState != BST_CHECKED) {
-            if (pDirEnt->d_name [0] == '.') 
+            if (pDirEnt->d_name [0] == '.')
                 continue;
         }
-		strncpy (fullpath, path, MY_PATHMAX);
+        strncpy (fullpath, path, MY_PATHMAX);
         strcat (fullpath, "/");
         strcat (fullpath, pDirEnt->d_name);
 
-		memset(&ftype, 0, sizeof(ftype));
+        memset(&ftype, 0, sizeof(ftype));
         if (stat (fullpath, &ftype) < 0 ){
            continue;
         }
-        
+
         if (S_ISDIR (ftype.st_mode)){
             fileinfo.IsDir = TRUE;
             fileinfo.filesize = ftype.st_size;
@@ -760,15 +760,15 @@ static void GetFileAndDirList( HWND hWnd, char* path, char* filtstr)
         else if (S_ISREG (ftype.st_mode)) {
             if ( !IsInFilter (filtstr, pDirEnt->d_name) )
                 continue;
-            
+
             fileinfo.IsDir = FALSE;
             fileinfo.filesize = ftype.st_size;
         }
-        
+
         strcpy (fileinfo.filename, pDirEnt->d_name);
-        
-        sprintf (filefullname, "%s/%s", 
-            strcmp (path, "/") == 0 ? "" : path, pDirEnt->d_name);  
+
+        sprintf (filefullname, "%s/%s",
+            strcmp (path, "/") == 0 ? "" : path, pDirEnt->d_name);
 
         fileinfo.accessmode = 0;
         nRet = GetAccessMode (hWnd, filefullname, FALSE, FALSE);
@@ -799,7 +799,7 @@ static void InitListView( HWND hWnd)
     LVCOLUMN  lvcol;
     int       nWidth, nColWidth;
     RECT      rcLv;
- 
+
     hListView = GetDlgItem (hWnd, IDC_FOSD_FILELIST);
     GetWindowRect (hListView, &rcLv);
     nWidth = rcLv.right - rcLv.left;
@@ -814,7 +814,7 @@ static void InitListView( HWND hWnd)
         lvcol.width = ColWidth[i];
         /*lvcol.pfnCompare = ListViewSort;*/
         lvcol.pfnCompare = NULL;
-        if (i == 0){ 
+        if (i == 0){
             lvcol.width = nColWidth - 28;
             lvcol.pfnCompare = ListViewSortByName;
         }
@@ -848,10 +848,10 @@ static void InitPathCombo(HWND hWnd, char *path)
     hCtrlWnd = GetDlgItem (hWnd, IDC_FOSD_PATH);
     SendMessage (hCtrlWnd, CB_RESETCONTENT, 0, 0);
     SendMessage (hCtrlWnd, CB_SETITEMHEIGHT, 0, (LPARAM)GetSysCharHeight()+2);
-    
+
     strcpy(chSubPath, "/");
     SendMessage (hCtrlWnd, CB_ADDSTRING, 0,(LPARAM)chSubPath);
-    
+
     pStr = strchr(chPath + 1, '/');
     while (pStr != NULL){
         memset (chSubPath, 0, sizeof (chSubPath));
@@ -859,12 +859,12 @@ static void InitPathCombo(HWND hWnd, char *path)
         SendMessage (hCtrlWnd, CB_INSERTSTRING, 0,(LPARAM)chSubPath);
         pStr = strchr (chPath + (pStr -chPath +1), '/');
     }
-    
+
     if (strcmp (chPath, "/") != 0 ){
         SendMessage (hCtrlWnd, CB_INSERTSTRING, 0,(LPARAM)chPath);
     }
 
-    SetWindowText (hCtrlWnd, chPath);            
+    SetWindowText (hCtrlWnd, chPath);
 }
 
 static void InitFilterCombo( HWND hWnd, char * filtstr, int _index)
@@ -877,12 +877,12 @@ static void InitFilterCombo( HWND hWnd, char * filtstr, int _index)
     int  nCount;
 
     if ( filtstr ==NULL ) return;
-    
-    strcpy (chFilter, filtstr);    
+
+    strcpy (chFilter, filtstr);
     strtrimall (chFilter);
     if ( strlen(chFilter) == 0 ) return;
-     
-    
+
+
     hCtrlWnd = GetDlgItem (hWnd, IDC_FOSD_FILETYPE);
     SendMessage (hCtrlWnd, CB_RESETCONTENT, 0, 0);
     SendMessage (hCtrlWnd, CB_SETITEMHEIGHT, 0, (LPARAM)GetSysCharHeight()+2);
@@ -896,12 +896,12 @@ static void InitFilterCombo( HWND hWnd, char * filtstr, int _index)
         p2 = p1 + 1;
         p1 = strchr (p2, '|');
     }
-   
+
     memset (chTemp, 0, sizeof(chTemp));
     strcpy (chTemp, p2);
     SendMessage (hCtrlWnd, CB_ADDSTRING, 0,(LPARAM)chTemp);
     nCount = SendMessage (hCtrlWnd, CB_GETCOUNT, 0, 0);
-    
+
     if (_index >=nCount)
         SendMessage (hCtrlWnd, CB_SETCURSEL, nCount - 1, 0);
     else
@@ -915,12 +915,12 @@ static void InitOpenDialog( HWND hWnd, PFILEDLGDATA pfdd)
     char chFilter[MAX_FILTER_LEN+1];
 
     InitPathCombo (hWnd, pfdd->filepath);
-    InitFilterCombo (hWnd, pfdd->filter, pfdd->filterindex); 
+    InitFilterCombo (hWnd, pfdd->filter, pfdd->filterindex);
     InitListView (hWnd);
-    
+
     hCtrlWnd = GetDlgItem (hWnd, IDC_FOSD_FILETYPE);
     memset (chFilter, 0, sizeof(chFilter));
-    GetWindowText (hCtrlWnd, chFilter, MAX_FILTER_LEN);    
+    GetWindowText (hCtrlWnd, chFilter, MAX_FILTER_LEN);
     //if ( GetAccessMode (hWnd, pnfdd->filepath, pnfdd->IsSave, TRUE)==0)
     GetFileAndDirList (hWnd, pfdd->filepath, chFilter);
 
@@ -938,13 +938,13 @@ LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
     char chFullName[MY_PATHMAX+MY_NAMEMAX+1];
     GHANDLE  nSelItem;
     int  nIsDir;
-    LVSUBITEM subItem; 
+    LVSUBITEM subItem;
 
     switch (message){
         case MSG_INITDIALOG:
             {
                 PFILEDLGDATA pfdd = (PFILEDLGDATA)lParam;
-                
+
                 /* get current directory name */
                 if (strcmp (pfdd->filepath, ".") == 0 ||
                         strcmp (pfdd->filepath, "./") == 0) {
@@ -958,10 +958,10 @@ LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
                 InitOpenDialog (hDlg, pfdd);
 
                 if (pfdd->is_save) {
-                    hCtrlWnd = GetDlgItem (hDlg, IDC_FOSD_OK); 
+                    hCtrlWnd = GetDlgItem (hDlg, IDC_FOSD_OK);
                     SetWindowText (hCtrlWnd, "Save");
                 }
-                
+
                 if (pfdd->hook)
                     return pfdd->hook (hDlg, message, wParam, lParam);
 
@@ -999,12 +999,12 @@ LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
                         break;
                     case IDC_FOSD_UPPER:
                         if (nNc == BN_CLICKED) {
-							int _index;
+                            int _index;
                             GetParentDir (chPath);
                             hCtrlWnd = GetDlgItem (hDlg, IDC_FOSD_PATH);
-                            
+
                             _index = SendMessage (hCtrlWnd, CB_FINDSTRINGEXACT, 0,(LPARAM)chPath);
-                            
+
                             if (CB_ERR != _index){
                                SendMessage (hCtrlWnd, CB_SETCURSEL, _index, 0);
                             } else {
@@ -1013,15 +1013,15 @@ LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
                                 SendMessage (hCtrlWnd, CB_SETCURSEL, _index, 0);
                             }
                             GetFileAndDirList (hDlg, chPath, chFilter);
-                        } 
+                        }
                         break;
                     case IDC_FOSD_OK:
                         if (strlen (chFileName) != 0) {
                             memset (chFullName, 0, sizeof(chFullName));
-                            sprintf (chFullName, "%s/%s", 
+                            sprintf (chFullName, "%s/%s",
                                     strcmp (chPath, "/") == 0 ? "" : chPath, chFileName);
-                            if (!pfdd->is_save 
-                                    || (pfdd->is_save 
+                            if (!pfdd->is_save
+                                    || (pfdd->is_save
                                         && FileExistDlg (hDlg, chFullName, chFileName) == 0))
                             {
                                 strcpy (pfdd->filefullname, chFullName);
@@ -1041,30 +1041,30 @@ LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
                             hCtrlWnd = GetDlgItem (hDlg, IDC_FOSD_FILELIST);
                             nSelItem = (GHANDLE)SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
                             if (nSelItem != 0) {
-                                nIsDir = SendMessage (hCtrlWnd, 
+                                nIsDir = SendMessage (hCtrlWnd,
                                         LVM_GETITEMADDDATA, 0, (LPARAM)nSelItem);
                                 memset (&subItem, 0, sizeof (subItem));
                                 //subItem.nItem = nSelItem;
                                 subItem.subItem = 0;
                                 subItem.pszText = (char *)malloc (MY_NAMEMAX+1);
-                                if (subItem.pszText == NULL) 
+                                if (subItem.pszText == NULL)
                                     break;
-                                SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT, 
+                                SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT,
                                         (WPARAM)nSelItem, (LPARAM)&subItem);
                                 if (nIsDir == 1 ) {
 #ifdef WIN32
-									if(strcmp(chPath, "/") == 0)
-										strcpy(chPath,subItem.pszText);
-									else
-									{
-										int len = strlen(chPath);
-										if(chPath[len-1] == '\\')
-											sprintf(chPath, "%s%s",chPath,subItem.pszText);
-										else
-											sprintf(chPath,"%s\\%s",chPath,subItem.pszText);
-									}
+                                    if(strcmp(chPath, "/") == 0)
+                                        strcpy(chPath,subItem.pszText);
+                                    else
+                                    {
+                                        int len = strlen(chPath);
+                                        if(chPath[len-1] == '\\')
+                                            sprintf(chPath, "%s%s",chPath,subItem.pszText);
+                                        else
+                                            sprintf(chPath,"%s\\%s",chPath,subItem.pszText);
+                                    }
 #else
-                                    sprintf (chPath, "%s/%s", 
+                                    sprintf (chPath, "%s/%s",
                                             strcmp (chPath, "/") == 0 ? "" : chPath, subItem.pszText);
 #endif
                                     hCtrlWnd = GetDlgItem (hDlg, IDC_FOSD_PATH);
@@ -1072,7 +1072,7 @@ LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
                                         GetFileAndDirList (hDlg, chPath, chFilter);
                                         SetWindowText (hCtrlWnd, chPath);
                                         if (CB_ERR == SendMessage (hCtrlWnd, CB_FINDSTRINGEXACT, 0,(LPARAM)chPath)){
-                                            int _index = SendMessage (hCtrlWnd, 
+                                            int _index = SendMessage (hCtrlWnd,
                                                     CB_INSERTSTRING, 0,(LPARAM)chPath);
                                             SendMessage (hCtrlWnd, CB_SETCURSEL, _index, 0);
                                         }
@@ -1081,7 +1081,7 @@ LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
 
                                 if (subItem.pszText != NULL ) free (subItem.pszText);
                             }
-                        } 
+                        }
                         break;
 
                     case IDC_FOSD_CANCEL:
@@ -1094,12 +1094,12 @@ LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
                         if (nNc == LVN_ITEMDBCLK || nNc == LVN_ITEMCLK || nNc == LVN_CLICKED) {
                             nSelItem = (GHANDLE)SendMessage (hCtrlWnd, LVM_GETSELECTEDITEM, 0, 0);
                             if (nSelItem > 0 ) {
-                                nIsDir = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nSelItem);    
+                                nIsDir = SendMessage (hCtrlWnd, LVM_GETITEMADDDATA, 0, (LPARAM)nSelItem);
                                 memset (&subItem, 0, sizeof (subItem));
                                 //subItem.nItem = nSelItem;
                                 subItem.subItem = 0;
                                 subItem.pszText = (char *)calloc (MY_NAMEMAX + 1, 1);
-                                if (subItem.pszText == NULL) 
+                                if (subItem.pszText == NULL)
                                     break;
                                 SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT,  (WPARAM)nSelItem, (LPARAM)&subItem);
 
@@ -1107,22 +1107,22 @@ LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
                                 if (nIsDir == 0){
                                     SetWindowText (hCtrlWnd, subItem.pszText);
                                 }
-                                else 
+                                else
                                     SetWindowText (hCtrlWnd, "");
 
-                                if ((nIsDir ==0 && nNc == LVN_ITEMDBCLK) || (nIsDir == 1)) 
+                                if ((nIsDir ==0 && nNc == LVN_ITEMDBCLK) || (nIsDir == 1))
                                     SendNotifyMessage (hDlg, MSG_COMMAND, IDC_FOSD_OK, 0);
 
-                                if (subItem.pszText !=NULL ) free (subItem.pszText); 
-                            }          
+                                if (subItem.pszText !=NULL ) free (subItem.pszText);
+                            }
                         }
 
                         break;
                 } /*switch (nId) end */
-				break;
+                break;
             }
-			case MSG_CLOSE:
-				return SendMessage(hDlg, MSG_COMMAND, IDC_FOSD_CANCEL, 0);
+            case MSG_CLOSE:
+                return SendMessage(hDlg, MSG_COMMAND, IDC_FOSD_CANCEL, 0);
     }
     return DefaultDialogProc (hDlg, message, wParam, lParam);
 }
@@ -1131,7 +1131,7 @@ LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
 * If parameter dlg_template is null, it will use default dialog template.
 * If parameter proc is null, it will use default window procedure.
 */
-BOOL FileOpenSaveDialog  (PDLGTEMPLATE dlg_template, 
+BOOL FileOpenSaveDialog  (PDLGTEMPLATE dlg_template,
         HWND hwnd, WNDPROC proc, PFILEDLGDATA pfdd)
 {
     PDLGTEMPLATE file_dlg;

@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -159,14 +159,14 @@ static inline bool IsKanji2 (CONINFO *con, u_int x, u_int y)
 void TextDeleteChar (CONINFO *con, int n)
 {
     u_int addr, dx;
-    
+
     addr = TextAddress (con, con->x, con->y);
     dx = con->dispxmax - con->x - n;
-    
+
     memmove (con->textBuff + addr, con->textBuff + addr + n, dx);
     memmove (con->attrBuff + addr, con->attrBuff + addr + n, dx);
     blatch (con->flagBuff + addr, dx);
-    
+
     addr = TextAddress (con, con->dispxmax - n, con->y);
 
     bzero (con->textBuff + addr, n);
@@ -181,10 +181,10 @@ void TextInsertChar (CONINFO *con, int n)
 #if 0
     addr = TextAddress (con, con->dispxmax, con->y);
     dx = con->dispxmax - con->x - n;
-    
+
     brmove (con->textBuff + addr, con->textBuff + addr - n, dx + 1);
     brmove (con->attrBuff + addr, con->attrBuff + addr - n, dx + 1);
-    
+
     addr = TextAddress (con, con->x, con->y);
     blatch (con->flagBuff + addr + n, dx);
     bzero (con->textBuff + addr, n);
@@ -193,10 +193,10 @@ void TextInsertChar (CONINFO *con, int n)
 #else
     addr = TextAddress (con, con->x, con->y);
     dx = con->dispxmax - con->x - n;
-    
+
     memmove (con->textBuff + addr + n, con->textBuff + addr, dx);
     memmove (con->attrBuff + addr + n, con->attrBuff + addr, dx);
-    
+
     addr = TextAddress (con, con->x, con->y);
     blatch (con->flagBuff + addr + n, dx);
     bzero (con->textBuff + addr, n);
@@ -220,10 +220,10 @@ static void TextScrollUp (CONINFO *con, int line)
     con->textHead += line * con->dispxmax;
 
     if (con->textHead > con->textSize) {
-    
+
         con->textHead -= con->textSize;
         len = con->textSize - oldhead;
-        
+
         if (con->textHead) {
             lzero (con->textBuff, con->textHead);
             lzero (con->attrBuff, con->textHead);
@@ -271,7 +271,7 @@ void TextMoveUp (CONINFO *con, int top, int btm, int line)
         TextClearBand (con, top, btm);
         return;
     }
-    
+
     for (n = top; n <= btm - line; n ++) {
         dst = TextAddress (con, 0, n);
         src = TextAddress (con, 0, n + line);
@@ -280,7 +280,7 @@ void TextMoveUp (CONINFO *con, int top, int btm, int line)
         memmove (con->flagBuff + dst, con->flagBuff + src, con->dispxmax);
         llatch (con->flagBuff + dst, con->dispxmax);
     }
-    
+
     TextClearBand (con, btm - line + 1, btm);
 }
 
@@ -292,7 +292,7 @@ void TextMoveDown (CONINFO *con, int top, int btm, int line)
         TextClearBand (con, top, btm);
         return;
     }
-    
+
     for (n = btm; n >= top + line; n --) {
         dst = TextAddress (con, 0, n);
         src = TextAddress (con, 0, n - line);
@@ -358,7 +358,7 @@ void TextClearEol (CONINFO *con, u_char mode)
     case 1:
         len = con->x;
         break;
-        
+
     case 2:
         len = con->dispxmax;
         break;
@@ -368,7 +368,7 @@ void TextClearEol (CONINFO *con, u_char mode)
         len = con->dispxmax - con->x;
         break;
     }
-    
+
     addr = TextAddress (con, x, con->y);
     // bzero (con->textBuff + addr, len);
     // bzero (con->attrBuff + addr, len);
@@ -394,13 +394,13 @@ void TextClearEos (CONINFO *con, u_char mode)
             // lzero (con->textBuff + addr, con->dispxmax);
             // lzero (con->attrBuff + addr, con->dispxmax);
             memset (con->textBuff + addr, 0x20, con->dispxmax);
-            memset (con->attrBuff + addr, 
+            memset (con->attrBuff + addr,
                     (con->bcol << 4) | con->fcol, con->dispxmax);
 
             lzero (con->flagBuff + addr, con->dispxmax);
             /* needless to latch */
         }
-        
+
         addr = TextAddress (con, 0, con->y);
         // bzero (con->textBuff + addr, con->x);
         // bzero (con->attrBuff + addr, con->x);
@@ -408,20 +408,20 @@ void TextClearEos (CONINFO *con, u_char mode)
         memset (con->attrBuff + addr, (con->bcol << 4) | con->fcol, con->x);
         bzero (con->flagBuff + addr, con->x); /* needless to latch */
         break;
-        
+
     default:
         for (y = con->y + 1; y <= con->dispymax; y ++) {
             addr = TextAddress (con, 0, y);
             // lzero (con->textBuff + addr, con->dispxmax);
             // lzero (con->attrBuff + addr, con->dispxmax);
             memset (con->textBuff + addr, 0x20, con->dispxmax);
-            memset (con->attrBuff + addr, 
+            memset (con->attrBuff + addr,
                     (con->bcol << 4) | con->fcol, con->dispxmax);
 
             lzero (con->flagBuff + addr, con->dispxmax);
-            /* needless to latch */        
+            /* needless to latch */
         }
-        
+
         addr = TextAddress (con, con->x, con->y);
         len = con->dispxmax - con->x;
         // bzero (con->textBuff + addr, len);
@@ -442,7 +442,7 @@ static void TextClearBand (CONINFO *con, int top, int btm)
         // lzero (con->textBuff + addr, con->dispxmax);
         // lzero (con->attrBuff + addr, con->dispxmax);
         memset (con->textBuff + addr, 0x20, con->dispxmax);
-        memset (con->attrBuff + addr, 
+        memset (con->attrBuff + addr,
                 (con->bcol << 4) | con->fcol, con->dispxmax);
         lzero (con->flagBuff + addr, con->dispxmax);/* needless to latch */
     }
@@ -458,7 +458,7 @@ static void TextClearBand (CONINFO *con, int top, int btm)
 void TextClearChars (CONINFO* con, int len)
 {
      int addr;
-     
+
      // Must be in one line
      if ( con->x + len > con->dispxmax )
         len = con->dispxmax - con->x;
@@ -497,7 +497,7 @@ void TextCopy (CONINFO *con, int fx, int fy, int tx, int ty)
 
     KanjiAdjust (con, &fx, &fy);
     KanjiAdjust (con, &tx, &ty);
-    
+
     if (fy > ty) {
         swp = fy; fy = ty; ty = swp;
         swp = fx; fx = tx; tx = swp;
@@ -507,17 +507,17 @@ void TextCopy (CONINFO *con, int fx, int fy, int tx, int ty)
     }
 
     for (xx = con->dispxmax - 1, y = fy; y <= ty; y ++) {
-    
+
         if (y == ty)
             xx = tx;
-            
+
         from = TextAddress (con, fx, y);
-        
+
         if (con->flagBuff[from] & CODEIS_2)
             /* 2nd byte of kanji */
             from--;
         to = TextAddress (con, xx, y);
-        
+
         for (x = to; x >= from; x --)
             if (con->textBuff[x] > ' ')
                 break;
@@ -532,7 +532,7 @@ void TextCopy (CONINFO *con, int fx, int fy, int tx, int ty)
             if (con->flagBuff[x] & CODEIS_1) {
                 x ++;
                 ch2 = con->textBuff[x];
-                
+
                 switch (con->sysCoding) {
                 case CODE_EUC:
                     ch2 |= 0x80;
@@ -542,11 +542,11 @@ void TextCopy (CONINFO *con, int fx, int fy, int tx, int ty)
                     jistosjis(ch2, ch);
                     break;
                 }
-                
+
                 my_write (fd, &ch, 1);
                 my_write (fd, &ch2, 1);
             }
-            else 
+            else
                 my_write (fd, &ch, 1);
         }
 
@@ -554,10 +554,10 @@ void TextCopy (CONINFO *con, int fx, int fy, int tx, int ty)
             ch = '\n';
             my_write(fd, &ch, 1);
         }
-        
+
         fx = 0;
     }
-    
+
     close(fd);
 }
 
@@ -573,10 +573,10 @@ void TextPaste (CONINFO *con)
 
     if ((fd = open(szTmpFileName, O_RDONLY)) < 0)
         return;
-        
+
     while (read (fd, &ch, 1) == 1)
         my_write (con->masterPty, &ch, 1);
-    
+
     close(fd);
 }
 
@@ -603,10 +603,10 @@ void TextReverse (CONINFO *con, int* ofx, int* ofy, int* otx, int* oty)
     for (xx = con->dispxmax - 1, y = fy; y <= ty; y ++) {
         if (y == ty)
             xx = tx;
-            
+
         from = TextAddress (con, fx, y);
         to = TextAddress (con, xx, y);
-        
+
         if (con->flagBuff[from] & CODEIS_2)
             /* 2nd byte of kanji */
             from--;
@@ -682,7 +682,7 @@ void TextSput (CONINFO *con, u_char ch)
 void HardScroll (CONINFO *con)
 {
     int scroll, color;
-     
+
     scroll = con->currentScroll + con->scrollLine;
     color = ((con->attr & ATTR_REVERSE) ? con->fcol : con->bcol) & 7;
 
@@ -700,15 +700,16 @@ void HardScroll (CONINFO *con)
         if (scroll > 0)
             WindowScrollDown (con, con->currentScroll, color);
         else if (scroll < 0) {
-            if (con->currentScroll > 0)
+            if (con->currentScroll > 0) {
                 WindowScrollDown (con, con->currentScroll, color);
-                llatch (con->flagBuff, con->textSize); /* force to redraw */
-                scroll = 0;
-           }
-      }
+            }
+            llatch (con->flagBuff, con->textSize); /* force to redraw */
+            scroll = 0;
+       }
+  }
 
-      con->currentScroll = scroll;
-      con->scrollLine = 0;
+  con->currentScroll = scroll;
+  con->scrollLine = 0;
 }
 
 #define OUTPUTCHAR                                  \
@@ -739,14 +740,14 @@ void TextRefresh (CONINFO *con, bool bHideCaret)
     char  line [MAX_COLS + 1];
     int     count, startx;
 
-    color = ((con->attr & ATTR_REVERSE) ? con->fcol : con->bcol) & 7; 
+    color = ((con->attr & ATTR_REVERSE) ? con->fcol : con->bcol) & 7;
 
     if (bHideCaret)
         WindowHideCaret (con->hWnd);
 
     if (con->textClear)
         WindowClearAll (con, color);
-        
+
     if (bHideCaret)
         HardScroll (con);
 
@@ -760,14 +761,14 @@ void TextRefresh (CONINFO *con, bool bHideCaret)
         startx = 0;
         for (x = 0; x < con->dispxmax; x ++) {
             u_char newfc, newbc;
-                
+
             i = (con->textHead + j ) % con->textSize;
 
             newfc = *(con->attrBuff + i);
             newbc = *(con->attrBuff + i) >> 4;
             ch    = *(con->textBuff + i);
             flag  = *(con->flagBuff + i);
-            
+
             if (flag & CLEAN_S) {
                 if (count != 0) {
                     line [count] = '\0';
@@ -789,7 +790,7 @@ void TextRefresh (CONINFO *con, bool bHideCaret)
 
                     count = 0; startx = x;
                     fc = newfc; bc = newbc;
-                    
+
                     OUTPUTCHAR
                 }
                 else {
@@ -799,7 +800,7 @@ void TextRefresh (CONINFO *con, bool bHideCaret)
 
             j ++;
         }
-        
+
         if (count != 0) {
             line [count] = '\0';
             WindowStringPut (con, line, fc, bc, startx, y);

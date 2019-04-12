@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -70,7 +70,7 @@ typedef struct _CONINFO
 
     int     termCharset;
     PLOGFONT log_font;
-    
+
     short   cols, rows;
     short   x, y;
     short   xmax;
@@ -88,13 +88,13 @@ typedef struct _CONINFO
     u_char* textBuff;
     u_char* attrBuff;
     u_char* flagBuff;
-    
+
     bool    textClear;
     int     textHead, scrollLine;
     int     currentScroll;
     int     scroll;
-    int     textSize; 
-    
+    int     textSize;
+
     u_char  fcol;       /* foreground color */
     u_char  bcol;       /* background color */
     u_char  attr;       /* attribute */
@@ -106,13 +106,13 @@ typedef struct _CONINFO
     short   knj1x, knj1y; /* position of first half of the double-byte char */
     short   knj2x, knj2y; /* position of second half of the double-byte char */
 #endif
-    
+
     bool    cursorsw;
     bool    soft;
 
     void (*esc)(struct _CONINFO* con, u_char);
 
-    enum {CS_LEFT, CS_RIGHT, CS_GRAPH, CS_DBCS} trans, g[2]; 
+    enum {CS_LEFT, CS_RIGHT, CS_GRAPH, CS_DBCS} trans, g[2];
 
     bool    ins, wrap;
 
@@ -173,7 +173,7 @@ void TextReverse (CONINFO *con, int* ofx, int* ofy, int* otx, int* oty);
 void TextRefresh (CONINFO *con, bool bHideCaret);
 void TextCopy (CONINFO *con, int fx, int fy, int tx, int ty);
 void TextPaste (CONINFO *con);
-void PollCursor (bool wakeup); 
+void PollCursor (bool wakeup);
 
 void TextRepaintAll (CONINFO *con);
 
@@ -192,5 +192,5 @@ static inline ssize_t my_write (int fd, const void *buf, size_t count)
 }
 #endif  /* __cplusplus */
 
-#endif // VC_VCONGUI_H 
+#endif // VC_VCONGUI_H
 

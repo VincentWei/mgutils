@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -51,7 +51,7 @@
 static float maxrgb (float r, float g, float b)
 {
     float max;
-  
+
     if (r > g)
         max = r;
     else
@@ -67,7 +67,7 @@ static float maxrgb (float r, float g, float b)
 static float minrgb (float r, float g, float b)
 {
     float min;
-  
+
     if (r < g)
         min = r;
     else
@@ -78,7 +78,7 @@ static float minrgb (float r, float g, float b)
     return min;
 }
 
-/* 
+/*
    Assumes (r,g,b) range from 0.0 to 1.0
    Sets h in degrees: 0.0 to 360. s,v in [0.,1.]
 */
@@ -103,7 +103,7 @@ static void rgb2hsva (float r, float g, float b, float *hout, float *sout, float
         r_dist = (max_v - r)/diff;
         g_dist = (max_v - g)/diff;
         b_dist = (max_v - b)/diff;
-        if (r == max_v) 
+        if (r == max_v)
             h = b_dist - g_dist;
         else
         if (g == max_v)
@@ -125,7 +125,7 @@ static void rgb2hsva (float r, float g, float b, float *hout, float *sout, float
     *vout = v;
 }
 
-/* 
+/*
    Assumes (r,g,b) range from 0 to 255
    Sets h in degrees: 0 to 360. s,v in [0,255]
 */
@@ -216,60 +216,60 @@ void HSV2RGB (Uint16 hin, Uint8 sin, Uint8 vin, Uint8 *rout, Uint8 *gout, Uint8 
 
 static void _RGB2HSV(int r, int g, int b, int *hout, int *sout, int *vout)
 {
-	int max;
-	int min;
-	int delta;
-	int h = 0, s, v;
+    int max;
+    int min;
+    int delta;
+    int h = 0, s, v;
 
-	max = MAX3(r, g, b);
-	min = MIN3(r, g, b);
-	delta = max - min;
-	
+    max = MAX3(r, g, b);
+    min = MIN3(r, g, b);
+    delta = max - min;
+
     v = (max<<16)/255 * 100 >> 16;
-	//v = ((max*100)<<16)/255 >> 16;
-		
-	if(delta == 0){
-		h = 0;
-		s = 0;
-	}else {
-		int del_r, del_g, del_b, d;
-		s = (((delta<<16) / max) * 100 ) >> 16 ;
+    //v = ((max*100)<<16)/255 >> 16;
 
-		max <<= 16;
-		r <<= 16;
-		g <<= 16;
-		b <<= 16;
-		d = delta << 16;
-		
-		del_r = ((max - r) / 6 + d / 2) / delta;
-		del_g = ((max - g) / 6 + d / 2) / delta;
-		del_b = ((max - b) / 6 + d / 2) / delta;
+    if(delta == 0){
+        h = 0;
+        s = 0;
+    }else {
+        int del_r, del_g, del_b, d;
+        s = (((delta<<16) / max) * 100 ) >> 16 ;
 
-		if( r == max)
-			h = ((del_b - del_g) ) * 360 >> 16;
-		else if( g== max)
-			h = ((del_r - del_b + (1<<16) / 3 ) ) * 360 >> 16;
-		else if( b == max)
-			h = ((del_g - del_r + (2<<16) / 3 ) ) * 360 >> 16;
+        max <<= 16;
+        r <<= 16;
+        g <<= 16;
+        b <<= 16;
+        d = delta << 16;
 
-		if(h < 0) 
-			h += 360;
-		else if(h > 360)
-			h -= 360;
-	}
-	
-	*hout = h;
-	*sout = s;
-	*vout = v;
+        del_r = ((max - r) / 6 + d / 2) / delta;
+        del_g = ((max - g) / 6 + d / 2) / delta;
+        del_b = ((max - b) / 6 + d / 2) / delta;
+
+        if( r == max)
+            h = ((del_b - del_g) ) * 360 >> 16;
+        else if( g== max)
+            h = ((del_r - del_b + (1<<16) / 3 ) ) * 360 >> 16;
+        else if( b == max)
+            h = ((del_g - del_r + (2<<16) / 3 ) ) * 360 >> 16;
+
+        if(h < 0)
+            h += 360;
+        else if(h > 360)
+            h -= 360;
+    }
+
+    *hout = h;
+    *sout = s;
+    *vout = v;
 
 }
 
-void RGB2HSV (Uint8 r, Uint8 g, Uint8 b, 
+void RGB2HSV (Uint8 r, Uint8 g, Uint8 b,
                 Uint16 *hout, Uint8 *sout, Uint8 *vout)
 {
     int h, s, v;
 
-	_RGB2HSV(r, g, b, &h, &s, &v);
+    _RGB2HSV(r, g, b, &h, &s, &v);
 
     *hout = (Uint16)h;
     *sout = (Uint8)s;
@@ -280,60 +280,60 @@ void RGB2HSV (Uint8 r, Uint8 g, Uint8 b,
 //#define SetRGB(r, g, b) do { (*rout)=((r)*256>>16); (*gout)=((g)*256)>>16; (*bout)=((b)*256)>>16; }while(0)
 static void _HSV2RGB(int h, int s, int v, int *rout, int *gout, int *bout)
 {
-	if( s == 0){
-		*rout = (((v*255)<<16 ) / 100 ) >> 16;
-		//*rout = (((v*256)<<16 ) / 100 ) >> 16;
-		*gout = *bout = *rout;
-	}else {
-		int i;
-		int m,n;
-		int hr;
+    if( s == 0){
+        *rout = (((v*255)<<16 ) / 100 ) >> 16;
+        //*rout = (((v*256)<<16 ) / 100 ) >> 16;
+        *gout = *bout = *rout;
+    }else {
+        int i;
+        int m,n;
+        int hr;
 
-		i = h / 60;
-		hr = h % 60;
+        i = h / 60;
+        hr = h % 60;
 
-		if(!(i&1)) 
-			hr = 60 - hr;
+        if(!(i&1))
+            hr = 60 - hr;
 
-		m = ((v*(100-s))<<16) / 10000;
-		n = ((v*(6000-s*hr)/60)<<16) / 10000;
-		v = (v<<16)/100;
+        m = ((v*(100-s))<<16) / 10000;
+        n = ((v*(6000-s*hr)/60)<<16) / 10000;
+        v = (v<<16)/100;
 
-		switch(i){
-			case 6:
-			case 0:
-				SetRGB(v, n, m); break;
-			case 1: SetRGB(n, v, m); break;
-			case 2: SetRGB(m, v, n); break;
-			case 3: SetRGB(m, n, v); break;
-			case 4: SetRGB(n, m, v); break;
-			case 5: SetRGB(v, m, n); break;
-		}
-	}
+        switch(i){
+            case 6:
+            case 0:
+                SetRGB(v, n, m); break;
+            case 1: SetRGB(n, v, m); break;
+            case 2: SetRGB(m, v, n); break;
+            case 3: SetRGB(m, n, v); break;
+            case 4: SetRGB(n, m, v); break;
+            case 5: SetRGB(v, m, n); break;
+        }
+    }
 
 }
 
-void HSV2RGB (Uint16 hin, Uint8 sin, Uint8 vin, 
+void HSV2RGB (Uint16 hin, Uint8 sin, Uint8 vin,
                 Uint8 *rout, Uint8 *gout, Uint8 *bout)
 {
-	int r = 0, g = 0, b = 0;
-	_HSV2RGB(hin, sin, vin, &r, &g, &b);
-	*rout = (Uint8)r;
-	*gout = (Uint8)g;
-	*bout = (Uint8)b;
+    int r = 0, g = 0, b = 0;
+    _HSV2RGB(hin, sin, vin, &r, &g, &b);
+    *rout = (Uint8)r;
+    *gout = (Uint8)g;
+    *bout = (Uint8)b;
 }
 
 void YUV2RGB (int y, int u, int v, Uint8 *r, Uint8 *g, Uint8 *b)
 {
     double rr, gg ,bb;
-    
+
     y = y - 16;
     u = u - 128;
     v = v - 128;
     rr = 0.00456621 * y + 0.00625893 * v;
     gg = 0.00456621 * y - 0.00153632 * u - 0.00318811 * v;
     bb = 0.00456621 * y + .00791071 * u;
-    
+
     *r = 255 * rr;
     *g = 255 * gg;
     *b = 255 * bb;

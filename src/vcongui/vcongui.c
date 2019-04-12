@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -61,7 +61,7 @@
 ** LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 ** OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 ** SUCH DAMAGE.
-** 
+**
 */
 
 #include <stdio.h>
@@ -98,7 +98,7 @@ static HMENU createpmenuabout (void)
     mii.id          = 0;
     mii.typedata    = (DWORD)"About...";
     hmnu = CreatePopupMenu (&mii);
-    
+
     memset (&mii, 0, sizeof(MENUITEMINFO));
     mii.type        = MFT_STRING ;
     mii.state       = 0;
@@ -125,26 +125,26 @@ static HMENU createpmenufile (void)
     mii.id          = 0;
     mii.typedata    = (DWORD)"File";
     hmnu = CreatePopupMenu (&mii);
-    
+
     memset (&mii, 0, sizeof(MENUITEMINFO));
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_NEW;
     mii.typedata    = (DWORD)"New";
     InsertMenuItem(hmnu, 0, TRUE, &mii);
-    
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_OPEN;
     mii.typedata    = (DWORD)"Open...";
     InsertMenuItem(hmnu, 1, TRUE, &mii);
-    
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_SAVE;
     mii.typedata    = (DWORD)"Save";
     InsertMenuItem(hmnu, 2, TRUE, &mii);
-    
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_SAVEAS;
@@ -156,7 +156,7 @@ static HMENU createpmenufile (void)
     mii.id          = IDM_CLOSE;
     mii.typedata    = (DWORD)"Close";
     InsertMenuItem(hmnu, 4, TRUE, &mii);
-    
+
     mii.type        = MFT_SEPARATOR;
     mii.state       = 0;
     mii.id          = 0;
@@ -181,19 +181,19 @@ static HMENU createpmenuedit (void)
     mii.id          = 0;
     mii.typedata    = (DWORD)"Edit";
     hmnu = CreatePopupMenu (&mii);
-    
+
     mii.type        = MFT_STRING ;
     mii.state       = 0;
     mii.id          = IDM_COPY;
     mii.typedata    = (DWORD)"Copy Screen";
     InsertMenuItem(hmnu, 0, TRUE, &mii);
-     
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_PASTE;
     mii.typedata    = (DWORD)"Paste";
-    InsertMenuItem(hmnu, 1, TRUE, &mii);  
-    
+    InsertMenuItem(hmnu, 1, TRUE, &mii);
+
     return hmnu;
 }
 
@@ -206,31 +206,31 @@ static HMENU createpmenuterminal (void)
     mii.id          = 0;
     mii.typedata    = (DWORD)"Terminal";
     hmnu = CreatePopupMenu (&mii);
-    
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_40X15;
     mii.typedata    = (DWORD)"40x15 (small)";
     InsertMenuItem(hmnu, 0, TRUE, &mii);
-     
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_80X24;
     mii.typedata    = (DWORD)"80x24 (vt100)";
     InsertMenuItem(hmnu, 1, TRUE, &mii);
-     
+
     mii.type        = MFT_STRING;
     mii.state       = MF_CHECKED;
     mii.id          = IDM_80X25;
     mii.typedata    = (DWORD)"80x25 (ibmpc)";
     InsertMenuItem(hmnu, 2, TRUE, &mii);
-     
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_80X40;
     mii.typedata    = (DWORD)"80x40 (xterm)";
     InsertMenuItem(hmnu, 3, TRUE, &mii);
-     
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_80X52;
@@ -260,7 +260,7 @@ static HMENU createpmenuterminal (void)
     mii.id          = IDM_CUSTOMIZE;
     mii.typedata    = (DWORD)"Customize...";
     InsertMenuItem(hmnu, 8, TRUE, &mii);
-    
+
     mii.type        = MFT_SEPARATOR;
     mii.state       = 0;
     mii.id          = 0;
@@ -314,19 +314,19 @@ static HMENU createmenu (void)
     mii.typedata    = (DWORD)"Edit";
     mii.hsubmenu    = createpmenuedit ();
     InsertMenuItem(hmnu, 1, TRUE, &mii);
-    
+
     mii.type        = MFT_STRING;
     mii.id          = 120;
     mii.typedata    = (DWORD)"Terminal";
     mii.hsubmenu    = createpmenuterminal ();
     InsertMenuItem(hmnu, 2, TRUE, &mii);
-    
+
     mii.type        = MFT_STRING;
     mii.id          = 130;
     mii.typedata    = (DWORD)"About";
     mii.hsubmenu    = createpmenuabout ();
     InsertMenuItem(hmnu, 3, TRUE, &mii);
-                   
+
     return hmnu;
 }
 
@@ -335,7 +335,7 @@ static void SetTerminalWindowSize (PCONINFO pConInfo, WPARAM cmd_id)
     int col, row;
     RECT new_win_rc;
     struct winsize twinsz;
-    
+
     switch (cmd_id) {
     case IDM_40X15:
         col = 40;
@@ -399,9 +399,9 @@ static void SetTerminalWindowSize (PCONINFO pConInfo, WPARAM cmd_id)
         free (newcols);
         free (newrows);
 
-        if (col < MIN_COLS || col > MAX_COLS 
+        if (col < MIN_COLS || col > MAX_COLS
                 || row < MIN_ROWS || row > MAX_ROWS) {
-            MessageBox (pConInfo->hWnd, 
+            MessageBox (pConInfo->hWnd,
                     "Please specify a valid terminal window size.",
                     "Virtual Console on MiniGUI",
                     MB_OK | MB_ICONINFORMATION | MB_BASEDONPARENT);
@@ -420,10 +420,10 @@ static void SetTerminalWindowSize (PCONINFO pConInfo, WPARAM cmd_id)
 
     GetWindowRect (pConInfo->hWnd, &new_win_rc);
     MoveWindow (pConInfo->hWnd, new_win_rc.left, new_win_rc.top,
-                ClientWidthToWindowWidth (WS_CAPTION | WS_BORDER, 
+                ClientWidthToWindowWidth (WS_CAPTION | WS_BORDER,
                     col * GetCharWidth ()),
                 ClientHeightToWindowHeight (WS_CAPTION | WS_BORDER,
-                    row * GetCharHeight (), 
+                    row * GetCharHeight (),
                     GetMenu (pConInfo->hWnd) != 0), TRUE);
 
     // Set new terminal window size
@@ -500,7 +500,7 @@ static LRESULT VCOnGUIMainWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARA
 
             init_key_info (&pConInfo->kinfo);
         break;
-        
+
         case MSG_DOESNEEDIME:
             return TRUE;
 
@@ -525,7 +525,7 @@ static LRESULT VCOnGUIMainWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARA
         case MSG_PAINT:
         {
             HDC hdc;
-            
+
             hdc = BeginPaint (hWnd);
             SelectFont (hdc, pConInfo->log_font);
             TextRepaintAll (pConInfo);
@@ -535,11 +535,11 @@ static LRESULT VCOnGUIMainWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARA
 
         case MSG_LBUTTONDOWN:
             if (GetShiftKeyStatus() & KS_RIGHTBUTTON)
-                HandleMouseBothDown (pConInfo, 
+                HandleMouseBothDown (pConInfo,
                     LOWORD (lParam), HIWORD (lParam), wParam);
             else {
                 SetCapture (hWnd);
-                HandleMouseLeftDownWhenCaptured (pConInfo, 
+                HandleMouseLeftDownWhenCaptured (pConInfo,
                         LOWORD (lParam), HIWORD (lParam), wParam);
                 pConInfo->m_captured = true;
            }
@@ -549,7 +549,7 @@ static LRESULT VCOnGUIMainWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARA
             if (pConInfo->m_captured == true) {
                 int x = LOWORD (lParam);
                 int y = HIWORD (lParam);
-                
+
                 if (wParam & KS_CAPTURED)
                     ScreenToClient (hWnd, &x, &y);
                 HandleMouseMoveWhenCaptured (pConInfo, x, y, wParam);
@@ -561,7 +561,7 @@ static LRESULT VCOnGUIMainWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARA
             if (pConInfo->m_captured == true) {
                 int x = LOWORD (lParam);
                 int y = HIWORD (lParam);
-                
+
                 if (wParam & KS_CAPTURED)
                     ScreenToClient (hWnd, &x, &y);
                 HandleMouseLeftUpWhenCaptured (pConInfo, x, y, wParam);
@@ -572,28 +572,28 @@ static LRESULT VCOnGUIMainWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARA
 
         case MSG_RBUTTONDOWN:
             if (GetShiftKeyStatus() & KS_LEFTBUTTON)
-                HandleMouseBothDown (pConInfo, 
+                HandleMouseBothDown (pConInfo,
                     LOWORD (lParam), HIWORD (lParam), wParam);
         break;
-        
+
         case MSG_RBUTTONUP:
-            HandleMouseRightUp (pConInfo, 
+            HandleMouseRightUp (pConInfo,
                     LOWORD (lParam), HIWORD (lParam), wParam);
         break;
 
         case MSG_ACTIVEMENU:
             if (wParam == 2) {
-                CheckMenuRadioItem ((HMENU)lParam, 
-                    IDM_40X15, IDM_CUSTOMIZE, 
+                CheckMenuRadioItem ((HMENU)lParam,
+                    IDM_40X15, IDM_CUSTOMIZE,
                     pConInfo->termType, MF_BYCOMMAND);
-                CheckMenuRadioItem ((HMENU)lParam, 
-                    IDM_DEFAULT, IDM_BIG5, 
+                CheckMenuRadioItem ((HMENU)lParam,
+                    IDM_DEFAULT, IDM_BIG5,
                     pConInfo->termCharset, MF_BYCOMMAND);
             }
         break;
-        
+
         case MSG_COMMAND:
-        switch (wParam) 
+        switch (wParam)
         {
             case IDM_NEW:
             case IDM_OPEN:
@@ -603,14 +603,14 @@ static LRESULT VCOnGUIMainWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARA
             break;
 
             case IDM_COPY:
-                TextCopy (pConInfo, 0, 0, pConInfo->dispxmax - 1, 
+                TextCopy (pConInfo, 0, 0, pConInfo->dispxmax - 1,
                                           pConInfo->dispymax - 1);
             break;
 
             case IDM_PASTE:
                 TextPaste (pConInfo);
             break;
-            
+
             case IDM_EXIT:
                 SendMessage (hWnd, MSG_CLOSE, 0, 0L);
             break;
@@ -618,14 +618,14 @@ static LRESULT VCOnGUIMainWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARA
             case IDM_40X15 ... IDM_CUSTOMIZE:
                 SetTerminalWindowSize (pConInfo, wParam);
             break;
-            
+
             case IDM_DEFAULT ... IDM_BIG5:
                 if (SetTerminalCharset (pConInfo, wParam))
                     InvalidateRect (hWnd, NULL, FALSE);
             break;
-            
+
             case IDM_ABOUT_THIS:
-                MessageBox (hWnd, 
+                MessageBox (hWnd,
                     "VCOnGUI - Virtual Console On MiniGUI " VCONGUI_VERSION "\n"
                     "Copyright (C) 2003-2018 Beijing FMSoft Technologies Co., Ltd.\n"
                     "Copyright (C) 1999-2001 Wei Yongming (ymwei@minigui.org).\n"
@@ -634,7 +634,7 @@ static LRESULT VCOnGUIMainWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARA
                     "About VC On MiniGUI",
                     MB_OK | MB_ICONINFORMATION | MB_BASEDONPARENT);
             break;
-            
+
             case IDM_ABOUT:
 #ifdef _MGMISC_ABOUTDLG
 #ifndef _MGRM_THREADS
@@ -648,11 +648,11 @@ static LRESULT VCOnGUIMainWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARA
         break;
 
         case MSG_CLOSE:
-            if (MessageBox (hWnd, 
+            if (MessageBox (hWnd,
                     "Please type \"exit\" at shell prompt "
                     "or terminate the current program to quit if possible.\n\n"
                     "Or you can choose \"Cancel\" to try kill the process.",
-                    "Virtual Console on MiniGUI", 
+                    "Virtual Console on MiniGUI",
                     MB_OKCANCEL | MB_ICONQUESTION | MB_BASEDONPARENT) == IDCANCEL)
                 kill (pConInfo->childPid, SIGKILL);
         return 0;
@@ -660,14 +660,14 @@ static LRESULT VCOnGUIMainWinProc (HWND hWnd, UINT message, WPARAM wParam, LPARA
         case MSG_DESTROY:
         return 0;
     }
-    
+
     if (pConInfo->DefWinProc)
         return (*pConInfo->DefWinProc)(hWnd, message, wParam, lParam);
     else
         return DefaultMainWinProc (hWnd, message, wParam, lParam);
 }
 
-static void InitCreateInfo (PMAINWINCREATE pCreateInfo, 
+static void InitCreateInfo (PMAINWINCREATE pCreateInfo,
                 PCONINFO pConInfo, int x, int y, bool fMenu)
 {
     pCreateInfo->dwStyle = WS_CAPTION | WS_BORDER;
@@ -677,10 +677,10 @@ static void InitCreateInfo (PMAINWINCREATE pCreateInfo,
     pCreateInfo->hCursor = GetSystemCursor (IDC_IBEAM);
     pCreateInfo->hIcon = 0;
     pCreateInfo->MainWindowProc = VCOnGUIMainWinProc;
-    pCreateInfo->lx = x; 
+    pCreateInfo->lx = x;
     pCreateInfo->ty = y;
-    pCreateInfo->rx 
-        = x + ClientWidthToWindowWidth (WS_CAPTION | WS_BORDER, 
+    pCreateInfo->rx
+        = x + ClientWidthToWindowWidth (WS_CAPTION | WS_BORDER,
                 pConInfo->cols * GetCharWidth ());
     pCreateInfo->by
         = y + ClientHeightToWindowHeight (WS_CAPTION | WS_BORDER,
@@ -702,7 +702,7 @@ void* VCOnMiniGUI (void* data)
         ChildInfo.startupMessage = true;
         ChildInfo.startupStr = NULL;
         ChildInfo.execProg = NULL;
-        
+
         ChildInfo.DefWinProc = NULL;
         ChildInfo.fMenu = true;
         ChildInfo.left = 0;
@@ -714,7 +714,7 @@ void* VCOnMiniGUI (void* data)
         ChildInfo = *((PCHILDINFO)data);
 
     if ( !(pConInfo = AllocConInfo ()) ) {
-        MessageBox (HWND_DESKTOP, "Init Virtual Console information error!", 
+        MessageBox (HWND_DESKTOP, "Init Virtual Console information error!",
                                   "Error", MB_OK | MB_ICONSTOP);
         return NULL;
     }
@@ -731,15 +731,15 @@ void* VCOnMiniGUI (void* data)
     pConInfo->log_font = NULL;
 
     init_key_info (&pConInfo->kinfo);
-    
-    InitCreateInfo (&CreateInfo, pConInfo, 
+
+    InitCreateInfo (&CreateInfo, pConInfo,
         ChildInfo.left, ChildInfo.top, ChildInfo.fMenu);
     pConInfo->DefWinProc = ChildInfo.DefWinProc;
-    
+
     hMainWnd = CreateMainWindow (&CreateInfo);
     if (hMainWnd == HWND_INVALID) {
         FreeConInfo (pConInfo);
-        MessageBox (HWND_DESKTOP, "Create Virtual Console window error!", 
+        MessageBox (HWND_DESKTOP, "Create Virtual Console window error!",
                                   "Error", MB_OK | MB_ICONSTOP);
         return NULL;
     }
@@ -747,13 +747,13 @@ void* VCOnMiniGUI (void* data)
     SetWindowFont (hMainWnd, GetSystemFont (SYSLOGFONT_FIXED));
     if (!CreateCaret (hMainWnd, NULL, GetCCharWidth (), GetCharHeight ()))
         fprintf (stderr, "Create caret error!\n");
-    
+
     ShowWindow (hMainWnd, SW_SHOWNORMAL);
     ShowCaret (hMainWnd);
 
     pConInfo->hWnd = hMainWnd;
     if (!TerminalStart (pConInfo, &ChildInfo)) {
-        MessageBox (hMainWnd, "Create Terminal error!", 
+        MessageBox (hMainWnd, "Create Terminal error!",
                                   "Error", MB_OK | MB_ICONSTOP);
         goto error;
     }
@@ -800,7 +800,7 @@ error:
 void* NewVirtualConsole (PCHILDINFO pChildInfo)
 {
     pthread_t th;
-    
+
     CreateThreadForMainWindow (&th, NULL, VCOnMiniGUI, pChildInfo);
 
     return NULL;

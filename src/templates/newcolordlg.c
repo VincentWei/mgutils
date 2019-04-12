@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -58,7 +58,7 @@
 #define IDC_VALUE_G 1009
 #define IDC_VALUE_B 1010
 #define IDC_OK      1011
-#define IDC_CANCEL  1012    
+#define IDC_CANCEL  1012
 
 #define SP_X        10
 #define SP_Y        10
@@ -118,8 +118,8 @@ typedef struct scd_struct {
     RECT rcYSpace;
 
     PALLETTE pal;
-    YUV yuv;     
-    SCALE scale;  
+    YUV yuv;
+    SCALE scale;
 } SCOLORDIA, *PSCOLORDIA;
 
 #define px          indicat.px
@@ -181,7 +181,7 @@ static int DrawYSpace ( HDC hdc, int x, int y, int w, int h, PSCOLORDIA scld)
     int i;
     Uint8 r, g, b;
     HDC mdc;
-    
+
     mdc = CreateCompatibleDCEx (hdc, scld->ysp_w, 256);
     for (i = 0; i < 256; i ++) {
         HSV2RGB (scld->clrh, scld->clrs, i, &r, &g, &b );
@@ -206,7 +206,7 @@ static int DrawSelSpace (HDC hdc, int x, int y, int w, int h, PSCOLORDIA scld)
 {
     Uint8 r, g, b;
     HDC mdc;
-    
+
     mdc = CreateCompatibleDCEx (hdc, w, h);
     HSV2RGB (scld->clrh, scld->clrs, scld->clrv, &r, &g, &b);
     SetBrushColor (mdc, RGB2Pixel(mdc, r, g, b));
@@ -250,38 +250,38 @@ static void UpdateValue (HWND hDlg, int id, PSCOLORDIA scld)
     char str[8];
     HDC dc = GetClientDC (hDlg);
     Uint8 r, g, b;
-    
+
     HSV2RGB (scld->clrh, scld->clrs, scld->clrv, &r, &g, &b);
     switch (id) {
-    case IDC_VALUE_Y:  
+    case IDC_VALUE_Y:
         GetDlgItemText (hDlg, id, str, 8);
         scld->clrh = atoi (str);
         scld->clrh = MIN (359, scld->clrh);
         SetValue (hDlg, scld);
         break;
-    case IDC_VALUE_U:  
+    case IDC_VALUE_U:
         GetDlgItemText (hDlg, id, str, 8);
         scld->clrs = atoi (str);
         SetValue (hDlg, scld);
         break;
-    case IDC_VALUE_V:  
+    case IDC_VALUE_V:
         GetDlgItemText (hDlg, id, str, 8);
         scld->clrv = atoi (str);
         SetValue (hDlg, scld);
         break;
-    case IDC_VALUE_R:  
+    case IDC_VALUE_R:
         GetDlgItemText (hDlg, id, str, 8);
         r = atoi (str);
         RGB2HSV (r, g, b, &scld->clrh, &scld->clrs, &scld->clrv);
         SetValue (hDlg, scld);
         break;
-    case IDC_VALUE_G:  
+    case IDC_VALUE_G:
         GetDlgItemText (hDlg, id, str, 8);
         g = atoi (str);
         RGB2HSV (r, g, b, &scld->clrh, &scld->clrs, &scld->clrv);
         SetValue (hDlg, scld);
         break;
-    case IDC_VALUE_B:  
+    case IDC_VALUE_B:
         GetDlgItemText (hDlg, id, str, 8);
         b = atoi (str);
         RGB2HSV (r, g, b, &scld->clrh, &scld->clrs, &scld->clrv);
@@ -302,7 +302,7 @@ static LRESULT ColorDlgProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
             int i, j;
             Uint8 r, g, b;
             HDC hdc, mdc;
-            
+
             scld = (PSCOLORDIA)lParam;
             SetWindowAdditionalData (hDlg, (LPARAM)scld);
 
@@ -315,11 +315,11 @@ static LRESULT ColorDlgProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
                     SetPixelRGB(mdc, i, 256-j, r, g, b);
                 }
             }
-            
+
             StretchBlt(mdc, 0, 0, 360, 256, scld->SpaceDC, 0, 0, scld->sp_w, scld->sp_h, 0);
             DeleteMemDC(mdc);
             ReleaseDC(hdc);
-        }        
+        }
         break;
 
     case MSG_CLOSE:
@@ -406,7 +406,7 @@ static void InitColorCtrl (PCTRLDATA ctrl, int x, int y, int w, int h, PSCOLORDI
         w = 180;
     if(h < 180)
         h = 180;
-        
+
     value_w = 25;
     scale_w = scld->SCALE_W = (float)w/300;
     scale_h = scld->SCALE_H = (float)h/350;
@@ -414,10 +414,10 @@ static void InitColorCtrl (PCTRLDATA ctrl, int x, int y, int w, int h, PSCOLORDI
 
     if(h - scale_h*240 < 80) {
         rc_scale_h = scld->RC_SCALE_H = (h - 80)/(scale_h*240) * scale_h;
-        scale_h = scld->SCALE_H = 0.8;  
+        scale_h = scld->SCALE_H = 0.8;
         value_w = 22;
-    } 
- 
+    }
+
     ctrl[0].x = 10 * scale_w;
     ctrl[0].y = 10 * rc_scale_h;
     ctrl[0].w = 240 * scale_w;
@@ -426,7 +426,7 @@ static void InitColorCtrl (PCTRLDATA ctrl, int x, int y, int w, int h, PSCOLORDI
     ctrl[1].x = 255 * scale_w;
     ctrl[1].y = 10 * rc_scale_h;
     ctrl[1].w = 30 * scale_w;
-    ctrl[1].h = 240 * rc_scale_h; 
+    ctrl[1].h = 240 * rc_scale_h;
 
     ctrl[2].x = 10 * scale_w;
     ctrl[2].y = ctrl[1].y + ctrl[1].h + 5 * scale_h;
@@ -451,7 +451,7 @@ static void InitColorCtrl (PCTRLDATA ctrl, int x, int y, int w, int h, PSCOLORDI
     ctrl[6].x = 120 * scale_w;
     ctrl[6].y = ctrl[3].y;
     ctrl[6].w = 20 * scale_w;
-    ctrl[6].h = 15 * scale_h; 
+    ctrl[6].h = 15 * scale_h;
 
     ctrl[7].x = 120 * scale_w;
     ctrl[7].y = ctrl[4].y;
@@ -476,7 +476,7 @@ static void InitColorCtrl (PCTRLDATA ctrl, int x, int y, int w, int h, PSCOLORDI
     ctrl[11].x = 80 * scale_w;
     ctrl[11].y = ctrl[5].y;
     ctrl[11].w = value_w;
-    ctrl[11].h = 15 * scale_h; 
+    ctrl[11].h = 15 * scale_h;
 
     ctrl[12].x = 150 * scale_w;
     ctrl[12].y = ctrl[3].y;
@@ -499,9 +499,9 @@ static void InitColorCtrl (PCTRLDATA ctrl, int x, int y, int w, int h, PSCOLORDI
     ctrl[15].h = 30 * scale_h;
 
     ctrl[16].x = 200 * scale_w;
-    ctrl[16].y = ctrl[15].y + ctrl[15].h; 
+    ctrl[16].y = ctrl[15].y + ctrl[15].h;
     ctrl[16].w = 80 * scale_w;
-    ctrl[16].h = 30 * scale_h; 
+    ctrl[16].h = 30 * scale_h;
 
     scld->rcSpace.left = SP_X * scale_w;
     scld->rcSpace.top = SP_Y * rc_scale_h;
@@ -535,23 +535,23 @@ static void InitColorCtrl (PCTRLDATA ctrl, int x, int y, int w, int h, PSCOLORDI
     scld->clrh = CLRH;
     scld->clrs = CLRS;
     scld->clrv = CLRV;
-} 
+}
 
 int ColorSelDialog (HWND hWnd, int x, int y, int w, int h, PCOLORDATA pClrData)
 {
     SCOLORDIA scldata;
 
-    CTRLDATA ColorCtrl [] = { 
-        { "static", WS_CHILD | WS_VISIBLE | SS_GRAYFRAME, 
-            10, 10, 240, 240, 
+    CTRLDATA ColorCtrl [] = {
+        { "static", WS_CHILD | WS_VISIBLE | SS_GRAYFRAME,
+            10, 10, 240, 240,
            IDC_SPACE, "", 0},
-        { "static", WS_CHILD | WS_VISIBLE | SS_GRAYFRAME, 
+        { "static", WS_CHILD | WS_VISIBLE | SS_GRAYFRAME,
             255, 10, 30, 240,
             IDC_YSPACE, "", 0},
         { "static", WS_CHILD | WS_VISIBLE | SS_GRAYFRAME,
            10, 255, 35, 40,
            IDC_COLOR, "", 0},
-        
+
         { "static", WS_CHILD | WS_VISIBLE | SS_SIMPLE,
            35, 255, 20, 15,
            IDC_STATIC , "Y :", 0},
@@ -561,7 +561,7 @@ int ColorSelDialog (HWND hWnd, int x, int y, int w, int h, PCOLORDATA pClrData)
         { "static", WS_CHILD | WS_VISIBLE | SS_SIMPLE,
            35, 295, 20, 15,
            IDC_STATIC , "V :", 0},
-           
+
         { "static", WS_CHILD | WS_VISIBLE | SS_SIMPLE,
            105, 255, 20, 15,
            IDC_STATIC , "R :", 0},
@@ -571,7 +571,7 @@ int ColorSelDialog (HWND hWnd, int x, int y, int w, int h, PCOLORDATA pClrData)
         { "static", WS_CHILD | WS_VISIBLE | SS_SIMPLE,
            105, 295, 20, 15,
            IDC_STATIC , "B :", 0},
-           
+
         { "sledit", WS_CHILD | WS_VISIBLE,
            95, 255, 25, 15,
            IDC_VALUE_Y , "180", 0},
@@ -581,7 +581,7 @@ int ColorSelDialog (HWND hWnd, int x, int y, int w, int h, PCOLORDATA pClrData)
         { "sledit", WS_CHILD | WS_VISIBLE,
            95, 295, 25, 15,
            IDC_VALUE_V , "128", 0},
-           
+
         { "sledit", WS_CHILD | WS_VISIBLE,
            165, 255, 25, 15,
            IDC_VALUE_R , "64", 0},
@@ -600,11 +600,11 @@ int ColorSelDialog (HWND hWnd, int x, int y, int w, int h, PCOLORDATA pClrData)
            IDC_CANCEL, NULL, 0 ,WS_EX_TRANSPARENT}
     };
 
-    
+
     DLGTEMPLATE ColorDlg = {
         WS_BORDER | WS_CAPTION, WS_EX_NONE,
         0, 0, 0, 0, NULL, 0, 0, TABLESIZE(ColorCtrl), NULL };
-        
+
     ColorDlg.x = x;
     ColorDlg.y = y;
     ColorDlg.w = w;
@@ -618,7 +618,7 @@ int ColorSelDialog (HWND hWnd, int x, int y, int w, int h, PCOLORDATA pClrData)
     ColorDlg.caption = GetSysText(IDS_MGST_COLORSEL);
     ColorDlg.controls = ColorCtrl;
 
-    return DialogBoxIndirectParam (&ColorDlg, hWnd, ColorDlgProc, 
+    return DialogBoxIndirectParam (&ColorDlg, hWnd, ColorDlgProc,
                     (LPARAM)(&scldata));
 }
 

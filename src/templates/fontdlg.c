@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -57,7 +57,7 @@ static const char* style_str [] =
     "Subpixel",
 };
 
-static const char style_arg [] = 
+static const char style_arg [] =
 {
     FONT_WEIGHT_REGULAR,
     FONT_WEIGHT_BOLD,
@@ -75,7 +75,7 @@ static const char* flip_str [] =
     "Horzvert",
 };
 
-static const char flip_arg [] = 
+static const char flip_arg [] =
 {
     FONT_FLIP_NIL,
     FONT_FLIP_HORZ,
@@ -85,25 +85,25 @@ static const char flip_arg [] =
 
 static const char *color_str[] =
 {
-    "Black      ",  
-    "White      ",  
-    "Gray       ",  
-    "Blue       ",  
-    "Green      ",  
-    "Cyan       ",  
-    "Red        ",  
-    "Magenta    ",  
-    "Yellow     ",  
-    "DarkBlue   ",  
-    "DarkGreen  ",  
-    "DarkCyan   ",  
-    "DarkRed    ",  
-    "DarkMagenta",  
-    "DarkYellow ",  
-    "DarkGray   ",  
+    "Black      ",
+    "White      ",
+    "Gray       ",
+    "Blue       ",
+    "Green      ",
+    "Cyan       ",
+    "Red        ",
+    "Magenta    ",
+    "Yellow     ",
+    "DarkBlue   ",
+    "DarkGreen  ",
+    "DarkCyan   ",
+    "DarkRed    ",
+    "DarkMagenta",
+    "DarkYellow ",
+    "DarkGray   ",
 };
 
-static const RGB FontColor [] = 
+static const RGB FontColor [] =
 {
     {0x00, 0x00, 0x00},     /* black         */
     {0xFF, 0xFF, 0xFF},     /* white         */
@@ -135,9 +135,9 @@ typedef struct _MGU_FONT
 {
     char                name [LEN_FONT_NAME + 1];
     MGU_CHARSET         _mgu_chset;
-	int   is_ttf;//is truetype font? 
-	int   sizeCount;
-	int * supportSize;
+    int   is_ttf;//is truetype font?
+    int   sizeCount;
+    int * supportSize;
     struct _MGU_FONT    *next;
 } MGU_FONT, *MGU_PFONT;
 
@@ -149,170 +149,170 @@ typedef struct _MGU_FONTDIA
 
 /* default templates */
 CTRLDATA DefFontCtrl [] =
-{ 
-    { CTRL_STATIC, 
+{
+    { CTRL_STATIC,
         WS_CHILD | WS_VISIBLE | SS_LEFT,
         7, 5, 40, 20,
-        IDC_FSD_FONT_NOTE, 
-        "Font",  
+        IDC_FSD_FONT_NOTE,
+        "Font",
         0, WS_EX_TRANSPARENT | WS_EX_USEPARENTRDR
     },
 
-    { CTRL_COMBOBOX, 
-        WS_CHILD | WS_VISIBLE | WS_TABSTOP | CBS_DROPDOWNLIST 
+    { CTRL_COMBOBOX,
+        WS_CHILD | WS_VISIBLE | WS_TABSTOP | CBS_DROPDOWNLIST
         | CBS_NOTIFY | CBS_READONLY | WS_BORDER | CBS_EDITNOBORDER,
-        7, 27, 140, 20, 
-        IDC_FSD_FONT, 
-        "", 
-        0,  WS_EX_USEPARENTRDR 
-    },
-
-    { CTRL_STATIC, 
-        WS_CHILD | WS_VISIBLE | SS_LEFT,
-        153, 5, 40, 20,
-        IDC_FSD_STYLE_NOTE, 
-        "Style",  
-        0,  WS_EX_USEPARENTRDR
-    },
-
-    { CTRL_COMBOBOX, 
-        WS_CHILD | WS_VISIBLE | WS_TABSTOP | CBS_DROPDOWNLIST | CBS_NOTIFY 
-        | CBS_READONLY | WS_BORDER | CBS_EDITNOBORDER,
-        153, 27, 90, 20, 
-        IDC_FSD_STYLE, 
+        7, 27, 140, 20,
+        IDC_FSD_FONT,
         "",
         0,  WS_EX_USEPARENTRDR
     },
 
-    { CTRL_STATIC, 
+    { CTRL_STATIC,
         WS_CHILD | WS_VISIBLE | SS_LEFT,
-        250, 5, 40, 20,
-        IDC_FSD_SIZE_NOTE, 
-        "Size",  
-        0, WS_EX_TRANSPARENT | WS_EX_USEPARENTRDR
-    },
-
-    { CTRL_COMBOBOX, 
-        WS_CHILD | WS_VISIBLE | WS_TABSTOP | CBS_DROPDOWNLIST | CBS_NOTIFY 
-        | CBS_READONLY | WS_BORDER | CBS_EDITNOBORDER,
-        250, 27, 60, 20, 
-        IDC_FSD_SIZE, 
-        "", 
+        153, 5, 40, 20,
+        IDC_FSD_STYLE_NOTE,
+        "Style",
         0,  WS_EX_USEPARENTRDR
     },
 
-    { CTRL_STATIC, 
-        WS_CHILD | WS_VISIBLE | SS_CENTER,
-        20, 51, 40, 20,
-        IDC_FSD_EFFECTS_NOTE, 
-        "Effects",  
-        0, WS_EX_USEPARENTRDR
+    { CTRL_COMBOBOX,
+        WS_CHILD | WS_VISIBLE | WS_TABSTOP | CBS_DROPDOWNLIST | CBS_NOTIFY
+        | CBS_READONLY | WS_BORDER | CBS_EDITNOBORDER,
+        153, 27, 90, 20,
+        IDC_FSD_STYLE,
+        "",
+        0,  WS_EX_USEPARENTRDR
     },
 
-    { CTRL_STATIC, 
+    { CTRL_STATIC,
         WS_CHILD | WS_VISIBLE | SS_LEFT,
-        15, 75, 40, 20,
-        IDC_FSD_FLIP_NOTE, 
-        "Flip",  
+        250, 5, 40, 20,
+        IDC_FSD_SIZE_NOTE,
+        "Size",
         0, WS_EX_TRANSPARENT | WS_EX_USEPARENTRDR
     },
 
-    { CTRL_COMBOBOX, 
-        WS_CHILD | WS_VISIBLE | WS_TABSTOP | CBS_DROPDOWNLIST | CBS_NOTIFY 
+    { CTRL_COMBOBOX,
+        WS_CHILD | WS_VISIBLE | WS_TABSTOP | CBS_DROPDOWNLIST | CBS_NOTIFY
         | CBS_READONLY | WS_BORDER | CBS_EDITNOBORDER,
-        45, 75, 80, 20, 
-        IDC_FSD_FLIP, 
-        "", 
+        250, 27, 60, 20,
+        IDC_FSD_SIZE,
+        "",
+        0,  WS_EX_USEPARENTRDR
+    },
+
+    { CTRL_STATIC,
+        WS_CHILD | WS_VISIBLE | SS_CENTER,
+        20, 51, 40, 20,
+        IDC_FSD_EFFECTS_NOTE,
+        "Effects",
+        0, WS_EX_USEPARENTRDR
+    },
+
+    { CTRL_STATIC,
+        WS_CHILD | WS_VISIBLE | SS_LEFT,
+        15, 75, 40, 20,
+        IDC_FSD_FLIP_NOTE,
+        "Flip",
+        0, WS_EX_TRANSPARENT | WS_EX_USEPARENTRDR
+    },
+
+    { CTRL_COMBOBOX,
+        WS_CHILD | WS_VISIBLE | WS_TABSTOP | CBS_DROPDOWNLIST | CBS_NOTIFY
+        | CBS_READONLY | WS_BORDER | CBS_EDITNOBORDER,
+        45, 75, 80, 20,
+        IDC_FSD_FLIP,
+        "",
         0,0
     },
 
-    { CTRL_STATIC, 
+    { CTRL_STATIC,
         WS_CHILD | WS_VISIBLE | SS_LEFT,
         165, 75, 40, 20,
-        IDC_FSD_COLOR_NOTE, 
-        "Color",  
+        IDC_FSD_COLOR_NOTE,
+        "Color",
         0, WS_EX_TRANSPARENT | WS_EX_USEPARENTRDR
     },
 
-    { CTRL_COMBOBOX, 
-        WS_CHILD | WS_VISIBLE | WS_TABSTOP |CBS_DROPDOWNLIST | CBS_NOTIFY 
+    { CTRL_COMBOBOX,
+        WS_CHILD | WS_VISIBLE | WS_TABSTOP |CBS_DROPDOWNLIST | CBS_NOTIFY
         | CBS_READONLY | WS_BORDER | CBS_EDITNOBORDER,
-        205, 75, 80, 20, 
-        IDC_FSD_COLOR, 
-        "", 
-        0, WS_EX_USEPARENTRDR 
-    },
-
-    { CTRL_BUTTON, 
-        WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX,
-        15 , 100, 70, 20, 
-        IDC_FSD_ITALIC, 
-        "Italic", 
-        0, WS_EX_USEPARENTRDR 
-    },
-
-    { CTRL_BUTTON, 
-        WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX,
-        120 , 100, 70, 20, 
-        IDC_FSD_STRIKEOUT, 
-        "Strikeout", 
+        205, 75, 80, 20,
+        IDC_FSD_COLOR,
+        "",
         0, WS_EX_USEPARENTRDR
     },
 
-    { CTRL_BUTTON, 
+    { CTRL_BUTTON,
         WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX,
-        210 , 100, 70, 20, 
-        IDC_FSD_UNDERLINE, 
-        "Underline", 
+        15 , 100, 70, 20,
+        IDC_FSD_ITALIC,
+        "Italic",
         0, WS_EX_USEPARENTRDR
     },
 
-    { CTRL_STATIC, 
+    { CTRL_BUTTON,
+        WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX,
+        120 , 100, 70, 20,
+        IDC_FSD_STRIKEOUT,
+        "Strikeout",
+        0, WS_EX_USEPARENTRDR
+    },
+
+    { CTRL_BUTTON,
+        WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_AUTOCHECKBOX,
+        210 , 100, 70, 20,
+        IDC_FSD_UNDERLINE,
+        "Underline",
+        0, WS_EX_USEPARENTRDR
+    },
+
+    { CTRL_STATIC,
         WS_CHILD | WS_VISIBLE | SS_LEFT,
         7, 130, 40, 20,
-        IDC_FSD_SAMPLE_NOTE, 
-        "Sample",  
+        IDC_FSD_SAMPLE_NOTE,
+        "Sample",
         0, WS_EX_TRANSPARENT  | WS_EX_USEPARENTRDR
     },
 
-    { CTRL_STATIC, 
+    { CTRL_STATIC,
         WS_CHILD | WS_VISIBLE | WS_BORDER | SS_LEFT,
         7, 150, 140, 30,
-        IDC_FSD_SAMPLE, 
-        "AaBbYyZz",  
+        IDC_FSD_SAMPLE,
+        "AaBbYyZz",
         0, WS_EX_TRANSPARENT | WS_EX_USEPARENTRDR
     },
 
-    { CTRL_STATIC, 
+    { CTRL_STATIC,
         WS_CHILD | WS_VISIBLE |SS_LEFT,
         160, 130, 40, 20,
-        IDC_FSD_CHARSET_NOTE, 
-        "Charset",  
+        IDC_FSD_CHARSET_NOTE,
+        "Charset",
         0, WS_EX_TRANSPARENT | WS_EX_USEPARENTRDR
     },
 
-    { CTRL_COMBOBOX, 
-        WS_CHILD | WS_VISIBLE | WS_TABSTOP | CBS_DROPDOWNLIST | CBS_NOTIFY 
+    { CTRL_COMBOBOX,
+        WS_CHILD | WS_VISIBLE | WS_TABSTOP | CBS_DROPDOWNLIST | CBS_NOTIFY
         | CBS_READONLY | WS_BORDER | CBS_EDITNOBORDER,
-        160, 150, 150, 20, 
-        IDC_FSD_CHARSET, 
-        "", 
-        0, WS_EX_USEPARENTRDR 
-    },
-
-    { CTRL_BUTTON, 
-        WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON,
-        7 , 185, 140, 25, 
-        IDC_FSD_OK, 
-        "Ok", 
+        160, 150, 150, 20,
+        IDC_FSD_CHARSET,
+        "",
         0, WS_EX_USEPARENTRDR
     },
 
-    { CTRL_BUTTON, 
+    { CTRL_BUTTON,
         WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON,
-        160 , 185, 150, 25, 
-        IDC_FSD_CANCEL, 
-        "Cancel", 
+        7 , 185, 140, 25,
+        IDC_FSD_OK,
+        "Ok",
+        0, WS_EX_USEPARENTRDR
+    },
+
+    { CTRL_BUTTON,
+        WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON,
+        160 , 185, 150, 25,
+        IDC_FSD_CANCEL,
+        "Cancel",
         0, WS_EX_USEPARENTRDR
     }
 
@@ -320,12 +320,12 @@ CTRLDATA DefFontCtrl [] =
 
 DLGTEMPLATE DefFontDlg =
 {
-    WS_DLGFRAME | WS_BORDER | WS_CAPTION, 
+    WS_DLGFRAME | WS_BORDER | WS_CAPTION,
     WS_EX_USEPARENTRDR,
-    0, 0, 320, 240, 
-    "Font", 0, 0, 
-    TABLESIZE(DefFontCtrl), 
-    DefFontCtrl 
+    0, 0, 320, 240,
+    "Font", 0, 0,
+    TABLESIZE(DefFontCtrl),
+    DefFontCtrl
 };
 
 
@@ -339,25 +339,25 @@ static WNDPROC _oldColorStaticProc = NULL;
 
 static LRESULT _colorStaticProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
-	switch(message){
-	case CS_SETTEXTCOLOR:
-		SetWindowAdditionalData(hwnd, lParam);
-		InvalidateRect(hwnd, NULL, TRUE);
-		return 0;
-	case MSG_PAINT:
-		{
-			char szText[100];
-			HDC hdc;
-			GetWindowText(hwnd, szText,sizeof(szText)-1);
-			hdc = BeginPaint(hwnd);
-			SetBkMode(hdc, BM_TRANSPARENT);
-			SetTextColor(hdc, GetWindowAdditionalData(hwnd));
-			TextOut(hdc,0,0, szText);
-			EndPaint(hwnd,hdc);
-		}
-		return 0;
-	}
-	return (*_oldColorStaticProc)(hwnd, message, wParam, lParam);
+    switch(message){
+    case CS_SETTEXTCOLOR:
+        SetWindowAdditionalData(hwnd, lParam);
+        InvalidateRect(hwnd, NULL, TRUE);
+        return 0;
+    case MSG_PAINT:
+        {
+            char szText[100];
+            HDC hdc;
+            GetWindowText(hwnd, szText,sizeof(szText)-1);
+            hdc = BeginPaint(hwnd);
+            SetBkMode(hdc, BM_TRANSPARENT);
+            SetTextColor(hdc, GetWindowAdditionalData(hwnd));
+            TextOut(hdc,0,0, szText);
+            EndPaint(hwnd,hdc);
+        }
+        return 0;
+    }
+    return (*_oldColorStaticProc)(hwnd, message, wParam, lParam);
 }
 
 
@@ -389,7 +389,7 @@ static MGU_PFONT InsertFont (MGU_PFONT head, const char* family)
 static MGU_PFONT FindFont (MGU_PFONT head, const char* family)
 {
     MGU_PFONT cur = head->next;
-    
+
     while (cur)
     {
         if (strcasecmp (cur->name, family) == 0)
@@ -422,86 +422,86 @@ static void InsertCharset (MGU_PFONT font, const char* chset_name)
 
 static int isTrueTypeFont(const char* type)
 {
-	static const char* ttf_types[] = {
-		"ttf", "type1"
-	};
+    static const char* ttf_types[] = {
+        "ttf", "type1"
+    };
 
-	int i;
+    int i;
 
-	for(i=0;i<sizeof(ttf_types)/sizeof(char*); i++)
-		if(strcmp(type, ttf_types[i]) == 0)
-			return 1;
-	
-	return 0;
+    for(i=0;i<sizeof(ttf_types)/sizeof(char*); i++)
+        if(strcmp(type, ttf_types[i]) == 0)
+            return 1;
+
+    return 0;
 }
 
 static int * insertIntArray(int * tarr, int tn, int nin, int * newlen, int *insertAt)
 {
-	int i;
-	if(tarr == NULL)
-	{
-		tarr = (int*)malloc(sizeof(int)*1);
-		tarr[0] = nin;
-		if(newlen) 
-			*newlen = 1;
-		if(insertAt) 
-			*insertAt = 0;
-		return tarr;
-	}
-	
-	if(newlen) *newlen = tn;
-	for(i=(insertAt?*insertAt:0); i<tn; i++)
-	{
-		if(tarr[i] == nin)
-			return tarr;
-		else if(tarr[i] > nin)
-			break;
-	}
+    int i;
+    if(tarr == NULL)
+    {
+        tarr = (int*)malloc(sizeof(int)*1);
+        tarr[0] = nin;
+        if(newlen)
+            *newlen = 1;
+        if(insertAt)
+            *insertAt = 0;
+        return tarr;
+    }
 
-	tarr = (int*)realloc(tarr, sizeof(int)*(tn+1));
+    if(newlen) *newlen = tn;
+    for(i=(insertAt?*insertAt:0); i<tn; i++)
+    {
+        if(tarr[i] == nin)
+            return tarr;
+        else if(tarr[i] > nin)
+            break;
+    }
 
-	if(i<tn)
-	{
-		for(;tn>i;tn--)
-			tarr[tn] = tarr[tn-1];
-	}
-	tarr[i] = nin;
-	if(newlen) 
-		(*newlen) ++;
-	if(insertAt)
-		(*insertAt) = i;
-	return tarr;
+    tarr = (int*)realloc(tarr, sizeof(int)*(tn+1));
+
+    if(i<tn)
+    {
+        for(;tn>i;tn--)
+            tarr[tn] = tarr[tn-1];
+    }
+    tarr[i] = nin;
+    if(newlen)
+        (*newlen) ++;
+    if(insertAt)
+        (*insertAt) = i;
+    return tarr;
 }
 
 #define GetFontSize(font_ops)   ((intptr_t(*)(PLOGFONT,const DEVFONT*,int))(((intptr_t*)(font_ops))[4]))
 static void EnumSupportSize(MGU_PFONT pfont, const DEVFONT* dev_font)
 {
-	LOGFONT font;
-	const char* str, *str2;
-	int i;
-	int oldsize = 0;
-	int insertAt = 0;
+    LOGFONT font;
+    const char* str, *str2;
+    int i;
+    int oldsize = 0;
+    int insertAt = 0;
 
-	memset(&font, 0, sizeof(font));
-	str = strchr(dev_font->name,'-');
-	//type
-	strncpy(font.type, dev_font->name, str - dev_font->name);
-	if((pfont->is_ttf = isTrueTypeFont(font.type)))
-		return;
-	//family
-	str ++;
-	str2 = strchr(str, '-');
-	strncpy(font.family, str, str2-str);
-	
-	for(i=FONT_MIN_SIZE; i<=FONT_MAX_SIZE; i++)
-	{
-		int size = GetFontSize(dev_font->font_ops)(&font, dev_font, i);
-		if( size != oldsize)
-		{
-			pfont->supportSize = insertIntArray(pfont->supportSize, pfont->sizeCount, size, &pfont->sizeCount, &insertAt);
-			oldsize = size;
-		}
-	}
+    memset(&font, 0, sizeof(font));
+    str = strchr(dev_font->name,'-');
+    //type
+    strncpy(font.type, dev_font->name, str - dev_font->name);
+    if((pfont->is_ttf = isTrueTypeFont(font.type)))
+        return;
+    //family
+    str ++;
+    str2 = strchr(str, '-');
+    strncpy(font.family, str, str2-str);
+
+    for(i=FONT_MIN_SIZE; i<=FONT_MAX_SIZE; i++)
+    {
+        int size = GetFontSize(dev_font->font_ops)(&font, dev_font, i);
+        if( size != oldsize)
+        {
+            pfont->supportSize = insertIntArray(pfont->supportSize, pfont->sizeCount, size, &pfont->sizeCount, &insertAt);
+            oldsize = size;
+        }
+    }
 }
 
 static MGU_PFONT CreateFontAttrList (void)
@@ -511,7 +511,7 @@ static MGU_PFONT CreateFontAttrList (void)
     char *fn_start, *fn_end;
     char font_name[LEN_UNIDEVFONT_NAME + 2];
     MGU_PFONT font_head, cur_font;
-    const DEVFONT* dev_font = NULL; 
+    const DEVFONT* dev_font = NULL;
 
     font_head = (MGU_PFONT) malloc (sizeof (MGU_FONT));
     font_head->next = NULL;
@@ -521,18 +521,18 @@ static MGU_PFONT CreateFontAttrList (void)
     {
         strncpy (font_name, dev_font->name, LEN_DEVFONT_NAME);
         strcat (font_name, ",");
-        
+
         fn_start = strchr (font_name, '-') + 1;
         fn_end = strchr (fn_start, '-');
         *fn_end = '\0';
 
         cur_font = InsertFont (font_head, fn_start);
-        
+
         sn_start = fn_end + 1;
         for (i = 0; i < 3; i++)
             sn_start = strchr (sn_start, '-') + 1;
 
-        while (*sn_start) 
+        while (*sn_start)
         {
             sn_sep = strchr (sn_start, ',');
             *sn_sep = '\0';
@@ -541,7 +541,7 @@ static MGU_PFONT CreateFontAttrList (void)
             sn_start = sn_sep + 1;
         };
 
-		EnumSupportSize(cur_font, dev_font);
+        EnumSupportSize(cur_font, dev_font);
     }
 
     return font_head;
@@ -563,9 +563,9 @@ static void FreeFontAttrList (MGU_PFONT font_head)
             chset_cur = chset_tmp;
         }
 
-		if(font_cur->supportSize)
-			free(font_cur->supportSize);
-        
+        if(font_cur->supportSize)
+            free(font_cur->supportSize);
+
         font_tmp = font_cur->next;
         free (font_cur);
         font_cur = font_tmp;
@@ -583,7 +583,7 @@ static void InsertItem (HWND hWnd, const char** strs, int len)
     {
         SendMessage (hWnd, CB_INSERTSTRING, i, (LPARAM)strs[i]);
     }
-    
+
     SendMessage (hWnd, CB_SETCURSEL, 0, 0);
 
     return;
@@ -592,7 +592,7 @@ static void InsertItem (HWND hWnd, const char** strs, int len)
 static inline MGU_PFONT GetSelectFont(HWND hWnd)
 {
     char         buff [LEN_FONT_NAME + 1];
-	int cur_sel = SendDlgItemMessage (hWnd, IDC_FSD_FONT, CB_GETCURSEL, 0, 0);
+    int cur_sel = SendDlgItemMessage (hWnd, IDC_FSD_FONT, CB_GETCURSEL, 0, 0);
     MGU_PFONTDIA pfdia = (MGU_PFONTDIA)GetWindowAdditionalData (hWnd);
     SendDlgItemMessage (hWnd, IDC_FSD_FONT,  CB_GETLBTEXT, cur_sel, (LPARAM)buff);
     return FindFont (pfdia->_mgu_font, buff);
@@ -600,31 +600,31 @@ static inline MGU_PFONT GetSelectFont(HWND hWnd)
 
 static void RefreshSize(HWND hWnd)
 {
-	int i;
-	HWND hctrl = GetDlgItem(hWnd, IDC_FSD_SIZE);
-	MGU_PFONT cur_font = GetSelectFont(hWnd);
-	if(cur_font == NULL)
-		return ;
-	
+    int i;
+    HWND hctrl = GetDlgItem(hWnd, IDC_FSD_SIZE);
+    MGU_PFONT cur_font = GetSelectFont(hWnd);
+    if(cur_font == NULL)
+        return ;
+
     SendMessage (hctrl, CB_RESETCONTENT, 0, 0);
 
-	if(cur_font->is_ttf){
-		for(i=FONT_MIN_SIZE; i<= FONT_MAX_SIZE; i++)
-		{
-			char szbuf[10];
-			sprintf(szbuf, "%d", i);
-			SendMessage(hctrl, CB_ADDSTRING, 0, (LPARAM) szbuf);
-		}
-	}
-	else {
-		for(i=0;i<cur_font->sizeCount; i++)
-		{
-			char szbuf[10];
-			sprintf(szbuf, "%d", cur_font->supportSize[i]);
-			SendMessage(hctrl, CB_ADDSTRING,0,(LPARAM) szbuf);
-		}
-	}
-	SendMessage(hctrl, CB_SETCURSEL, 0, 0);
+    if(cur_font->is_ttf){
+        for(i=FONT_MIN_SIZE; i<= FONT_MAX_SIZE; i++)
+        {
+            char szbuf[10];
+            sprintf(szbuf, "%d", i);
+            SendMessage(hctrl, CB_ADDSTRING, 0, (LPARAM) szbuf);
+        }
+    }
+    else {
+        for(i=0;i<cur_font->sizeCount; i++)
+        {
+            char szbuf[10];
+            sprintf(szbuf, "%d", cur_font->supportSize[i]);
+            SendMessage(hctrl, CB_ADDSTRING,0,(LPARAM) szbuf);
+        }
+    }
+    SendMessage(hctrl, CB_SETCURSEL, 0, 0);
 }
 
 static int RefreshCharset (HWND hWnd)
@@ -632,12 +632,12 @@ static int RefreshCharset (HWND hWnd)
     HWND         combo;
     MGU_PFONT    cur_font;
     MGU_PCHARSET chset_cur;
-    
+
     cur_font = GetSelectFont(hWnd);
     if (!cur_font)
         return -1;
-    
-    combo = GetDlgItem (hWnd, IDC_FSD_CHARSET);    
+
+    combo = GetDlgItem (hWnd, IDC_FSD_CHARSET);
     SendMessage (combo, CB_RESETCONTENT, 0, 0);
     chset_cur = cur_font->_mgu_chset.next;
     while (chset_cur)
@@ -646,7 +646,7 @@ static int RefreshCharset (HWND hWnd)
         chset_cur = chset_cur->next;
     }
     SendMessage (combo, CB_SETCURSEL, 0, 0);
-   
+
     return 0;
 }
 
@@ -658,7 +658,7 @@ static int InitDialog (HWND hWnd)
 
     pfdia = (MGU_PFONTDIA)GetWindowAdditionalData(hWnd);
     cur_font = pfdia->_mgu_font->next;
-    
+
     hctrl = GetDlgItem (hWnd, IDC_FSD_FONT);
     while (cur_font)
     {
@@ -680,7 +680,7 @@ static int InitDialog (HWND hWnd)
     RefreshCharset (hWnd);
     RefreshSize (hWnd);
 
-	return 0;
+    return 0;
 }
 
 static LOGFONT* CreateFont(HWND hWnd)
@@ -689,9 +689,9 @@ static LOGFONT* CreateFont(HWND hWnd)
     int  sel, checked, size;
     char chset [LEN_FONT_NAME +1];
     char family [LEN_FONT_NAME +1];
-	char szSize[10];
+    char szSize[10];
     char flip, slant, weight, strikeout, underline;
-    
+
     hctrl = GetDlgItem (hWnd, IDC_FSD_FONT);
     sel = SendMessage (hctrl, CB_GETCURSEL, 0, 0);
     SendMessage (hctrl, CB_GETLBTEXT, sel, (LPARAM)family);
@@ -699,7 +699,7 @@ static LOGFONT* CreateFont(HWND hWnd)
     hctrl = GetDlgItem (hWnd, IDC_FSD_CHARSET);
     sel = SendMessage (hctrl, CB_GETCURSEL, 0, 0);
     SendMessage (hctrl, CB_GETLBTEXT, sel, (LPARAM)chset);
-    
+
     hctrl = GetDlgItem (hWnd, IDC_FSD_STYLE);
     sel = SendMessage (hctrl, CB_GETCURSEL, 0, 0);
     weight = style_arg [sel];
@@ -727,15 +727,15 @@ static LOGFONT* CreateFont(HWND hWnd)
 
     sel = SendMessage (GetDlgItem (hWnd, IDC_FSD_FLIP), CB_GETCURSEL, 0, 0);
     flip = flip_arg [sel];
-	
-	hctrl = GetDlgItem(hWnd, IDC_FSD_SIZE);
-    sel = SendMessage (hctrl, CB_GETCURSEL, 0, 0);
-	SendMessage(hctrl, CB_GETLBTEXT, sel, (LPARAM)szSize);
-	size = atoi(szSize);
 
-    return CreateLogFont (FONT_TYPE_NAME_ALL, family, 
-                chset, weight, slant, flip, 
-                FONT_OTHER_AUTOSCALE, underline, 
+    hctrl = GetDlgItem(hWnd, IDC_FSD_SIZE);
+    sel = SendMessage (hctrl, CB_GETCURSEL, 0, 0);
+    SendMessage(hctrl, CB_GETLBTEXT, sel, (LPARAM)szSize);
+    size = atoi(szSize);
+
+    return CreateLogFont (FONT_TYPE_NAME_ALL, family,
+                chset, weight, slant, flip,
+                FONT_OTHER_AUTOSCALE, underline,
                 strikeout, size, 0);
 
 }
@@ -753,13 +753,13 @@ static int GetSelectColor (HWND hDlg)
 
 static LOGFONT* UpdateFont(HWND hDlg, PLOGFONT* old_font)
 {
-	LOGFONT* font = CreateFont(hDlg);
-	if (font)
-	{
-		SetWindowFont(GetDlgItem(hDlg, IDC_FSD_SAMPLE), font);
-		return font;
-	}
-	return *old_font;
+    LOGFONT* font = CreateFont(hDlg);
+    if (font)
+    {
+        SetWindowFont(GetDlgItem(hDlg, IDC_FSD_SAMPLE), font);
+        return font;
+    }
+    return *old_font;
 }
 
 
@@ -768,9 +768,9 @@ static int SaveFontData (HWND hDlg, PLOGFONT font, int color)
     MGU_PFONTDIA pfdia = NULL;
 
     pfdia = (MGU_PFONTDIA)GetWindowAdditionalData (hDlg);
-    
+
     pfdia->pfdd->logfont = font;
-    
+
     pfdia->pfdd->color.r = FontColor[color].r;
     pfdia->pfdd->color.g = FontColor[color].g;
     pfdia->pfdd->color.b = FontColor[color].b;
@@ -801,10 +801,10 @@ LRESULT DefFontDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
                 pfdia->pfdd = (PFONTDLGDATA)lParam;
                 SetWindowAdditionalData(hDlg, (DWORD)pfdia);
 
-				_oldColorStaticProc = SetWindowCallbackProc(GetDlgItem(hDlg, IDC_FSD_SAMPLE), _colorStaticProc);
-              
+                _oldColorStaticProc = SetWindowCallbackProc(GetDlgItem(hDlg, IDC_FSD_SAMPLE), _colorStaticProc);
+
                 InitDialog (hDlg);
-                
+
                 if (NULL != (font = CreateFont (hDlg)))
                     old_font = font;
 
@@ -832,8 +832,8 @@ LRESULT DefFontDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
             {
                 HDC hdc = BeginPaint (hDlg);
 
-                /* 
-                 * paint a group box, 
+                /*
+                 * paint a group box,
                  * if we used CTRL_STATIC with style SS_GOUPBOX
                  * the combobox show error.
                  */
@@ -858,41 +858,41 @@ LRESULT DefFontDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
                     case IDC_FSD_UNDERLINE:
                         if (nc == BN_CLICKED)
                         {
-							font = UpdateFont(hDlg, &old_font);                           
+                            font = UpdateFont(hDlg, &old_font);
                         }
                         break;
                     case IDC_FSD_FONT:
                         if (nc == CBN_SELCHANGE)
-                        { 
+                        {
                             RefreshCharset (hDlg);
-							RefreshSize(hDlg);
-							font = UpdateFont(hDlg, &old_font);
+                            RefreshSize(hDlg);
+                            font = UpdateFont(hDlg, &old_font);
                         }
-						break;
+                        break;
                     case IDC_FSD_COLOR:
-						if(nc == CBN_SELCHANGE)
-						{
-							DWORD color;
-							int sel = GetSelectColor(hDlg);
-							color = RGB2Pixel(HDC_SCREEN,FontColor[sel].r, FontColor[sel].g, FontColor[sel].b);
-							SendDlgItemMessage(hDlg, IDC_FSD_SAMPLE, CS_SETTEXTCOLOR, 0, (LPARAM)color);
-						}
-						break;
+                        if(nc == CBN_SELCHANGE)
+                        {
+                            DWORD color;
+                            int sel = GetSelectColor(hDlg);
+                            color = RGB2Pixel(HDC_SCREEN,FontColor[sel].r, FontColor[sel].g, FontColor[sel].b);
+                            SendDlgItemMessage(hDlg, IDC_FSD_SAMPLE, CS_SETTEXTCOLOR, 0, (LPARAM)color);
+                        }
+                        break;
                    case IDC_FSD_CHARSET:
                     case IDC_FSD_STYLE:
                     case IDC_FSD_FLIP:
                     case IDC_FSD_SIZE:
                         if (nc == CBN_SELCHANGE)
-                        { 
-							font = UpdateFont(hDlg,&old_font);
+                        {
+                            font = UpdateFont(hDlg,&old_font);
                         }
                         break;
                     case IDC_FSD_OK:
                         if (old_font)
                             SaveFontData (hDlg, old_font, GetSelectColor(hDlg));
-                        
-                        if (!pfdia->pfdd->hook || (pfdia->pfdd->hook 
-                                    && !pfdia->pfdd->hook (hDlg, MSG_FONTSELOK, 
+
+                        if (!pfdia->pfdd->hook || (pfdia->pfdd->hook
+                                    && !pfdia->pfdd->hook (hDlg, MSG_FONTSELOK,
                                         0, (LPARAM)pfdia->pfdd)))
                         {
                             EndDialog (hDlg, IDOK);
@@ -904,8 +904,8 @@ LRESULT DefFontDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
                         if (old_font)
                             DestroyLogFont (old_font);
 
-                        if (!pfdia->pfdd->hook || (pfdia->pfdd->hook 
-                                    && !pfdia->pfdd->hook (hDlg, MSG_FONTSELCANCEL, 
+                        if (!pfdia->pfdd->hook || (pfdia->pfdd->hook
+                                    && !pfdia->pfdd->hook (hDlg, MSG_FONTSELCANCEL,
                                         0, (LPARAM)pfdia->pfdd)))
                         {
                             EndDialog (hDlg, IDCANCEL);
@@ -917,14 +917,14 @@ LRESULT DefFontDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
                 break;
             }
     }
-    
+
     return DefaultDialogProc (hDlg, message, wParam, lParam);
 }
 
 /**
- * 
+ *
  */
-BOOL FontSelectDialog  (PDLGTEMPLATE dlg_template, 
+BOOL FontSelectDialog  (PDLGTEMPLATE dlg_template,
         HWND hwnd, WNDPROC proc, PFONTDLGDATA pfdd)
 {
     PDLGTEMPLATE font_dlg;
@@ -952,7 +952,7 @@ BOOL FontSelectDialog  (PDLGTEMPLATE dlg_template,
     else {
         font_proc = DefFontDialogProc;
     }
-        
+
     return ShowCommonDialog (font_dlg, hwnd, font_proc, pfdd);
 }
 

@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -109,8 +109,8 @@ static int MAINWINDOW_BY;
 
 typedef struct tagFILEITEM{
     char                 name[NAME_MAX];
-    struct tagFILEITEM*  previous; 
-    struct tagFILEITEM*  next; 
+    struct tagFILEITEM*  previous;
+    struct tagFILEITEM*  next;
 }FILEITEM;
 
 static BOOL IsSupport (const char *filename)
@@ -210,7 +210,7 @@ static void ReleaseList(FILEITEM *head)
     }
 }
 
-static int 
+static int
 show_picture (HWND hWnd, HDC hdc, const char *path, float newrate)
 {
     BITMAP Bitmap1;
@@ -223,10 +223,10 @@ show_picture (HWND hWnd, HDC hdc, const char *path, float newrate)
 
     x = (MAINWINDOW_RX - MAINWINDOW_LX)/2 - Bitmap1.bmWidth*newrate/2;
     if (Bitmap1.bmHeight*newrate <= (MAINWINDOW_BY - MAINWINDOW_TY - TB_HEIGHT-4))
-        y = (MAINWINDOW_BY - MAINWINDOW_TY - TB_HEIGHT - 4 )/2 
+        y = (MAINWINDOW_BY - MAINWINDOW_TY - TB_HEIGHT - 4 )/2
             - Bitmap1.bmHeight*newrate/2 + TB_HEIGHT+2;
     else
-        y = TB_HEIGHT + 4; 
+        y = TB_HEIGHT + 4;
 
     FillBoxWithBitmap (hdc, x, y,
             Bitmap1.bmWidth*newrate, Bitmap1.bmHeight*newrate, &Bitmap1);
@@ -267,11 +267,11 @@ static void InitNewToolBar (HWND hWnd)
     ntb_info.image = &ntb_bmp;
 
     ntb = CreateWindow (CTRL_NEWTOOLBAR, "",
-                    WS_CHILD | WS_VISIBLE, 
+                    WS_CHILD | WS_VISIBLE,
                     IDC_TB_SELF,
-                    TB_BEGIN_X, TB_BEGIN_Y, 
+                    TB_BEGIN_X, TB_BEGIN_Y,
                     TB_WIDTH * TABLESIZE (toolbar_items),
-                    TB_HEIGHT, hWnd, 
+                    TB_HEIGHT, hWnd,
                     (DWORD) &ntb_info);
 
     pixel = GetPixelInBitmap (&ntb_bmp, 0, 0);
@@ -306,11 +306,11 @@ static LRESULT ViewWinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
 
         InitNewToolBar (hWnd);
         break;
-        
+
         case MSG_COMMAND:
         {
             int id   = HIWORD(wParam);
-            switch (id) {  
+            switch (id) {
                 case  IDC_TB_OPEN:
                 {
                     int choise=0;
@@ -318,7 +318,7 @@ static LRESULT ViewWinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
                     filepathdata.IsSave = FALSE;
                     filepathdata.filterindex = 1;
                     strcpy (filepathdata.filepath, "./");
-                    strcpy (filepathdata.filter, 
+                    strcpy (filepathdata.filter,
                             "All file(*.*) | Bitmap file(*.bmp)");
                     memset (filepathdata.filename, 0, sizeof(filepathdata.filename));
 
@@ -348,16 +348,16 @@ static LRESULT ViewWinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
                     rate = 1;
                     currentfile = currentfile->next;
                     InvalidateRect(hWnd,&rect,TRUE);
-                }                    
+                }
                 break;
-            
+
             case  IDC_TB_SMALL:
                 if(rate > 0.125) {
                     rate = rate/2;
                     InvalidateRect(hWnd,&rect,TRUE);
                 }
                 break;
-            
+
             case  IDC_TB_BIG:
                 if (rate < 8) {
                     rate = rate*2;
@@ -367,7 +367,7 @@ static LRESULT ViewWinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
             }
         }
         break;
-        
+
         case MSG_PAINT:
         {
             HDC hdc = BeginPaint (hWnd);
@@ -377,19 +377,19 @@ static LRESULT ViewWinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
                 sprintf (caption, "%s - %s", PV_ST_CAPTION, currentfile->name);
                 SetWindowCaption (hWnd, caption);
             }
-            else 
+            else
                 SetWindowCaption (hWnd, PV_ST_CAPTION);
             EndPaint (hWnd, hdc);
             return 0;
         }
-        
+
         case MSG_KEYDOWN:
         {
             switch ( LOWORD(wParam) ) {
             case SCANCODE_F1:
                 // OpenHelpWindow (HWND_DESKTOP, IDAPP_PIC, IDMSG_PIC);
                 return 0;
-                
+
             case SCANCODE_PAGEUP:
                 if (currentfile != NULL && currentfile->previous != NULL) {
                     rate = 1;
@@ -404,7 +404,7 @@ static LRESULT ViewWinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
                     currentfile = currentfile->next;
                     InvalidateRect(hWnd,&rect,TRUE);
                 }
-                return 0;            
+                return 0;
 
             case SCANCODE_BACKSPACE:
                 if (currentfile != NULL && currentfile->previous != NULL)    {
@@ -412,14 +412,14 @@ static LRESULT ViewWinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
                     currentfile = currentfile->previous;
                     InvalidateRect(hWnd,&rect,TRUE);
                 }
-                return 0;            
+                return 0;
 
             default:
                 break;
             }
             break;
         }
-        
+
         case MSG_CHAR:
         {
             RECT  rect;
@@ -434,12 +434,12 @@ static LRESULT ViewWinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam
             }
         }
         return 0;
-        
+
         case MSG_CLOSE:
         {
             if (head)
                 ReleaseList(head);
-            
+
             DestroyAllControls (hWnd);
             currentfile = NULL;
             head = NULL;
@@ -457,7 +457,7 @@ int MiniGUIMain (int args, const char* arg[])
     MSG Msg;
     HWND hMainWnd;
     MAINWINCREATE CreateInfo;
-    
+
 #ifdef _MGRM_PROCESSES
     int i;
     const char* layer = NULL;
@@ -482,7 +482,7 @@ int MiniGUIMain (int args, const char* arg[])
     MAINWINDOW_TY = 0;
     MAINWINDOW_RX = g_rcScr.right;
     MAINWINDOW_BY = g_rcScr.bottom;
-    
+
     CreateInfo.dwStyle = WS_VISIBLE | WS_BORDER | WS_CAPTION;
     CreateInfo.dwExStyle = WS_EX_NONE;
     CreateInfo.spCaption = PV_ST_CAPTION;
@@ -497,9 +497,9 @@ int MiniGUIMain (int args, const char* arg[])
     CreateInfo.iBkColor = COLOR_lightwhite;
     CreateInfo.dwAddData = 0;
     CreateInfo.hHosting = HWND_DESKTOP;
-    
+
     hMainWnd = CreateMainWindow (&CreateInfo);
-    
+
     if (hMainWnd == HWND_INVALID)
         return 3;
 

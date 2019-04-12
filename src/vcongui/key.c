@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -62,7 +62,7 @@ static k_handfn
 static k_hand key_handler[16] = {
     do_self, do_fn, do_spec, do_pad, do_dead, NULL, do_cur, NULL,
     do_meta, do_ascii, NULL, NULL, NULL, do_dead2,
-    NULL, NULL 
+    NULL, NULL
 };
 
 typedef void (*void_fnp) (key_info* kinfo);
@@ -121,7 +121,7 @@ void to_utf8 (ushort c, key_info* kinfo)
         put_queue(0x80 | ((c >> 6) & 0x3f), kinfo);
         put_queue(0x80 | (c & 0x3f), kinfo);
     }
-    
+
     /* UTF-8 is defined for words of up to 31 bits,
        but we need only 16 bits here */
 }
@@ -182,7 +182,7 @@ void handle_scancode_on_keydown (int scancode, key_info* kinfo)
     u_char type;
     int shift_final;
     ushort *key_map;
-    
+
     shift_final = compute_shiftstate (kinfo->state);
 
     key_map = __mg_key_maps [shift_final];
@@ -200,7 +200,7 @@ void handle_scancode_on_keydown (int scancode, key_info* kinfo)
                       keysym = key_map [scancode];
                 }
             }
-            
+
             if (key_handler [type])
                 (*key_handler [type]) (keysym & 0xff, kinfo);
         }
@@ -216,7 +216,7 @@ void handle_scancode_on_keyup (int scancode, key_info* kinfo)
     u_char type;
     int shift_final;
     ushort *key_map;
-    
+
     shift_final = compute_shiftstate (kinfo->state);
 
     key_map = __mg_key_maps [shift_final];
@@ -422,7 +422,7 @@ static void enter (key_info* kinfo)
         kinfo->diacr = 0;
     }
     put_queue (13, kinfo);
-    
+
     if (kinfo->kbd_mode & VC_CRLF)
         put_queue (10, kinfo);
 }

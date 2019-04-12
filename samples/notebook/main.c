@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -35,11 +35,11 @@
 ** NoteBook, the M$ Windows like notepad Editor on MiniGUI.
 ** Copyright (c) 2000, Feng Da ke (minx@thtfchain.com).
 **
-** Some idea and source come from VConGUI (Virture Console GUI) 
+** Some idea and source come from VConGUI (Virture Console GUI)
 **
 ** Create date: 2000/07/05
 ** BTW: today, my sweetheart lovly MinMin comes back from millitery training.
-*/ 
+*/
 
 /*
 **  This source is free software; you can redistribute it and/or
@@ -105,7 +105,7 @@
 
 static void AboutNotebook (HWND hParent)
 {
-    MessageBox (hParent, 
+    MessageBox (hParent,
         NB_ST_ABOUT, NB_ST_NOTEBOOK,
         MB_OK | MB_ICONEXCLAMATION);
 };
@@ -164,7 +164,7 @@ static HMENU createpmenuabout (void)
     mii.id          = 0;
     mii.typedata    = (DWORD)NB_ST_HELP;
     hmnu = CreatePopupMenu (&mii);
-    
+
     memset (&mii, 0, sizeof(MENUITEMINFO));
     mii.type        = MFT_STRING ;
     mii.state       = 0;
@@ -183,7 +183,7 @@ static HMENU createpmenusearch (void)
     mii.id          = 0;
     mii.typedata    = (DWORD)NB_ST_SEARCH;
     hmnu = CreatePopupMenu (&mii);
-    
+
     memset (&mii, 0, sizeof(MENUITEMINFO));
     mii.type        = MFT_STRING ;
     mii.state       = 0;
@@ -210,26 +210,26 @@ static HMENU createpmenufile (void)
     mii.id          = 0;
     mii.typedata    = (DWORD)NB_ST_FILE;
     hmnu = CreatePopupMenu (&mii);
-    
+
     memset (&mii, 0, sizeof(MENUITEMINFO));
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_NEW;
     mii.typedata    = (DWORD)NB_ST_NEW;
     InsertMenuItem(hmnu, 0, TRUE, &mii);
-    
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_OPEN;
     mii.typedata    = (DWORD)NB_ST_OPEN;
     InsertMenuItem(hmnu, 1, TRUE, &mii);
-    
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_SAVE;
     mii.typedata    = (DWORD)NB_ST_SAVE;
     InsertMenuItem(hmnu, 2, TRUE, &mii);
-    
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_SAVEAS;
@@ -247,7 +247,7 @@ static HMENU createpmenufile (void)
     mii.id          = IDM_PRINT;
     mii.typedata    = (DWORD)NB_ST_PRINT;
     InsertMenuItem(hmnu, 5, TRUE, &mii);
-    
+
     mii.type        = MFT_SEPARATOR;
     mii.state       = 0;
     mii.id          = 0;
@@ -272,13 +272,13 @@ static HMENU createpmenuedit (void)
     mii.id          = 0;
     mii.typedata    = (DWORD)NB_ST_EDIT;
     hmnu = CreatePopupMenu (&mii);
-    
+
     mii.type        = MFT_STRING ;
     mii.state       = 0;
     mii.id          = IDM_UNDO;
     mii.typedata    = (DWORD)NB_ST_UNDO;
     InsertMenuItem(hmnu, 0, TRUE, &mii);
-     
+
     mii.type        = MFT_SEPARATOR;
     mii.state       = 0;
     mii.id          = 0;
@@ -301,8 +301,8 @@ static HMENU createpmenuedit (void)
     mii.state       = 0;
     mii.id          = IDM_PASTE;
     mii.typedata    = (DWORD)NB_ST_PASTE;
-    InsertMenuItem(hmnu, 4, TRUE, &mii);  
-    
+    InsertMenuItem(hmnu, 4, TRUE, &mii);
+
     mii.type        = MFT_STRING ;
     mii.state       = 0;
     mii.id          = IDM_DEL;
@@ -352,31 +352,31 @@ static HMENU createpmenuview (void)
     mii.id          = 0;
     mii.typedata    = (DWORD)NB_ST_VIEW;
     hmnu = CreatePopupMenu (&mii);
-    
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_40X15;
     mii.typedata    = (DWORD)"40x15 (small)";
     InsertMenuItem(hmnu, 0, TRUE, &mii);
-     
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_80X24;
     mii.typedata    = (DWORD)"80x24 (vt100)";
     InsertMenuItem(hmnu, 1, TRUE, &mii);
-     
+
     mii.type        = MFT_STRING;
     mii.state       = MF_CHECKED;
     mii.id          = IDM_80X25;
     mii.typedata    = (DWORD)"80x25 (ibmpc)";
     InsertMenuItem(hmnu, 2, TRUE, &mii);
-     
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_80X40;
     mii.typedata    = (DWORD)"80x40 (xterm)";
     InsertMenuItem(hmnu, 3, TRUE, &mii);
-     
+
     mii.type        = MFT_STRING;
     mii.state       = 0;
     mii.id          = IDM_80X52;
@@ -406,7 +406,7 @@ static HMENU createpmenuview (void)
     mii.id          = IDM_CUSTOMIZE;
     mii.typedata    = (DWORD)NB_ST_CUSTOMED;
     InsertMenuItem(hmnu, 8, TRUE, &mii);
-    
+
     mii.type        = MFT_SEPARATOR;
     mii.state       = 0;
     mii.id          = 0;
@@ -466,7 +466,7 @@ static HMENU createmenu (void)
     mii.typedata    = (DWORD)NB_ST_EDIT;
     mii.hsubmenu    = createpmenuedit ();
     InsertMenuItem(hmnu, 1, TRUE, &mii);
-    
+
     mii.type        = MFT_STRING;
     mii.id          = 120;
     mii.typedata    = (DWORD)NB_ST_VIEW;
@@ -484,7 +484,7 @@ static HMENU createmenu (void)
     mii.typedata    = (DWORD)NB_ST_HELP;
     mii.hsubmenu    = createpmenuabout ();
     InsertMenuItem(hmnu, 4, TRUE, &mii);
-                       
+
     return hmnu;
 }
 
@@ -492,7 +492,7 @@ static HMENU createmenu (void)
 static void SetWindowSize (HWND hWnd, PNOTEINFO pNoteInfo, WPARAM cmd_id)
 {
     int col, row;
-    
+
     switch (cmd_id) {
     case IDM_40X15:
         col = 40;
@@ -567,9 +567,9 @@ static void SetWindowSize (HWND hWnd, PNOTEINFO pNoteInfo, WPARAM cmd_id)
         if (result != IDOK)
             return;
 
-        if (col < MIN_COLS || col > MAX_COLS 
+        if (col < MIN_COLS || col > MAX_COLS
                 || row < MIN_ROWS || row > MAX_ROWS) {
-            MessageBox (hWnd, 
+            MessageBox (hWnd,
                     NB_ST_RESIZEAGAIN,
                     NB_ST_NOTEBOOK,
                     MB_OK | MB_ICONINFORMATION);
@@ -650,7 +650,7 @@ BOOL NBSaveAs (PNOTEINFO pNoteInfo, HWND hParent, HWND hMLEditWnd)
     strcpy (myWinFileData.filter, "All file (*.*) |Text file (*.txt)");
     memset (myWinFileData.filename, 0, sizeof(myWinFileData.filename));
     myWinFileData.IsSave = TRUE;
-    
+
     choise = ShowOpenDialog (hParent, 0, 0, 320, 240, &myWinFileData);
     if (choise == IDOK)
     {
@@ -664,7 +664,7 @@ BOOL NBSaveAs (PNOTEINFO pNoteInfo, HWND hParent, HWND hMLEditWnd)
         }
         reallength = GetWindowTextLength(hMLEditWnd);
         GetWindowText(hMLEditWnd,buffer,102400);
-        if (fwrite(buffer, 1, reallength, file) < 0) 
+        if (fwrite(buffer, 1, reallength, file) < 0)
              MessageBox (hParent, NB_ST_FILEWIRTEERROR, NB_ST_NOTEBOOK, MB_OK | MB_ICONEXCLAMATION);
         pNoteInfo->isChanged = FALSE;
         fclose (file);
@@ -690,7 +690,7 @@ BOOL NBSave (PNOTEINFO pNoteInfo, HWND hParent, HWND hMLEditWnd)
     }
     reallength = GetWindowTextLength(hMLEditWnd);
     GetWindowText(hMLEditWnd,buffer,102399);
-    if (fwrite(buffer, 1, reallength, file) < 0) 
+    if (fwrite(buffer, 1, reallength, file) < 0)
          MessageBox (hParent, NB_ST_FILEWIRTEERROR, NB_ST_NOTEBOOK, MB_OK | MB_ICONEXCLAMATION);
     fclose (file);
     pNoteInfo->isChanged = FALSE;
@@ -707,7 +707,7 @@ BOOL NBOpen(PNOTEINFO pNoteInfo, HWND hParent, HWND hMLEditWnd)
     myWinFileData.IsSave = FALSE;
     myWinFileData.filterindex = 1;
     strcpy (myWinFileData.filepath, "./");
-    strcpy (myWinFileData.filter, 
+    strcpy (myWinFileData.filter,
             "All file(*.*)|Text file(*.txt)|Bitmap file(*.bmp)");
     memset (myWinFileData.filename, 0, sizeof(myWinFileData.filename));
 
@@ -733,7 +733,7 @@ BOOL NBOpen(PNOTEINFO pNoteInfo, HWND hParent, HWND hMLEditWnd)
             MessageBox (hParent, NB_ST_FILENOTEXIST, NB_ST_NOTEBOOK, MB_OK | MB_ICONSTOP);
         else if ( access (myWinFileData.filefullname, R_OK) < 0)
             MessageBox (hParent, NB_ST_FILENOTREAD, NB_ST_NOTEBOOK, MB_OK | MB_ICONSTOP);
-        else 
+        else
         {
             if ( access (myWinFileData.filefullname, W_OK) < 0)
                 MessageBox (hParent, NB_ST_FILENOTWRITE, NB_ST_NOTEBOOK, MB_OK | MB_ICONEXCLAMATION);
@@ -744,7 +744,7 @@ BOOL NBOpen(PNOTEINFO pNoteInfo, HWND hParent, HWND hMLEditWnd)
                  return FALSE;
             }
             old_cursor = SetDefaultCursor (GetSystemCursor (IDC_WAIT));
-            if ((reallength=read(fd,buffer,102399)) >= 102399) 
+            if ((reallength=read(fd,buffer,102399)) >= 102399)
                  MessageBox (hParent, NB_ST_FILEBREAK, NB_ST_NOTEBOOK, MB_OK | MB_ICONEXCLAMATION);
             close (fd);
             buffer[reallength]=0;
@@ -754,7 +754,7 @@ BOOL NBOpen(PNOTEINFO pNoteInfo, HWND hParent, HWND hMLEditWnd)
             DivideFileFullName(pNoteInfo);
             return TRUE;
         }
-    }    
+    }
     return FALSE;
 }
 
@@ -770,7 +770,7 @@ BOOL NBNew(PNOTEINFO pNoteInfo, HWND hParent, HWND hMLEditWnd)
 BOOL NBPrint(HWND hMLEditWnd)
 {
     char temp [255];
-    GetWindowTextLength (hMLEditWnd); 
+    GetWindowTextLength (hMLEditWnd);
     GetWindowText (hMLEditWnd, temp, 254);
     return TRUE;
 }
@@ -786,7 +786,7 @@ LRESULT NoteBookWinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     GetClientRect(hWnd,&client);
     switch (message) {
     case MSG_CREATE:
-        pNoteInfo->hMLEditWnd = CreateWindow ("medit", 
+        pNoteInfo->hMLEditWnd = CreateWindow ("medit",
                  "",  WS_CHILD | WS_VISIBLE | WS_BORDER | WS_HSCROLL | WS_VSCROLL,
                 IDC_MLEDIT, 0, 0, client.right,client.bottom , hWnd, 0);
         strcpy(title,pNoteInfo->fileName);
@@ -881,7 +881,7 @@ LRESULT NoteBookWinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                             NB_ST_FILECHANGED,
                             NB_ST_NOTEBOOK,
                             MB_YESNOCANCEL | MB_ICONQUESTION);
-                            
+
                 if ( choise == IDYES)
                     NBSave(pNoteInfo, hWnd, hMLEditWnd);
                 else if ( choise == IDCANCEL)
@@ -908,28 +908,28 @@ static HICON myLoadIcon (const char* filename)
             res_dir, MAX_PATH) < 0)
             strcpy (res_dir, "res/");
     }
-    
+
     strcpy (full_path, res_dir);
     if (full_path [strlen (full_path) - 1] != '/')
         strcat (full_path, "/");
     strcat (full_path, "notebook/");
     strcat (full_path, filename);
-    
-    return LoadIconFromFile (HDC_SCREEN, full_path, 0); 
+
+    return LoadIconFromFile (HDC_SCREEN, full_path, 0);
 }
 #endif
 
 static void InitNoteBookInfo (PMAINWINCREATE pCreateInfo, PNOTEINFO pNoteInfo)
 {
     pCreateInfo->dwStyle = WS_CAPTION | WS_BORDER |
-                        WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_VISIBLE | WS_SYSMENU;     
+                        WS_MINIMIZEBOX | WS_MAXIMIZEBOX | WS_VISIBLE | WS_SYSMENU;
     pCreateInfo->dwExStyle = WS_EX_IMECOMPOSE;
     pCreateInfo->spCaption = NB_ST_NOTEBOOK;
     pCreateInfo->hMenu = createmenu();
     pCreateInfo->hCursor = GetSystemCursor(0);
-    pCreateInfo->hIcon = LoadIconFromFile (HDC_SCREEN, "res/notebook.ico", 0); 
+    pCreateInfo->hIcon = LoadIconFromFile (HDC_SCREEN, "res/notebook.ico", 0);
     pCreateInfo->MainWindowProc = NoteBookWinProc;
-    pCreateInfo->lx = pNoteInfo->lx; 
+    pCreateInfo->lx = pNoteInfo->lx;
     pCreateInfo->ty = pNoteInfo->ty;
     pCreateInfo->rx
         = pNoteInfo->lx + ClientWidthToWindowWidth (WS_CAPTION | WS_BORDER,
@@ -937,7 +937,7 @@ static void InitNoteBookInfo (PMAINWINCREATE pCreateInfo, PNOTEINFO pNoteInfo)
     pCreateInfo->by
         = pNoteInfo->ty + ClientHeightToWindowHeight (WS_CAPTION | WS_BORDER,
                 pNoteInfo->rows * GetSysCharHeight (), TRUE);
-    pCreateInfo->iBkColor = COLOR_lightgray; 
+    pCreateInfo->iBkColor = COLOR_lightgray;
     pCreateInfo->dwAddData = (DWORD)pNoteInfo;
     pCreateInfo->hHosting = HWND_DESKTOP;
 }
@@ -1004,7 +1004,7 @@ void* NoteBook (void* data)
 void* NewNoteBook (PNOTEINFO pNoteInfo)
 {
     pthread_t th;
-    
+
     CreateThreadForMainWindow (&th, NULL, NoteBook, pNoteInfo);
 
     return NULL;
@@ -1033,7 +1033,7 @@ int MiniGUIMain (int args, const char* arg[])
         }
     }
     GetLayerInfo (layer, NULL, NULL, NULL);
-    if (JoinLayer (layer, arg[0], 
+    if (JoinLayer (layer, arg[0],
                 0 , 0) == INV_LAYER_HANDLE) {
         printf ("JoinLayer: invalid layer handle.\n");
         exit (1);

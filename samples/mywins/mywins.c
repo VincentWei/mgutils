@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -90,10 +90,10 @@ static DLGTEMPLATE DlgYourTaste =
 };
 
 static CTRLDATA CtrlYourTaste[] =
-{ 
+{
     {
         "static",
-        WS_VISIBLE | SS_GROUPBOX, 
+        WS_VISIBLE | SS_GROUPBOX,
         16, 10, 230, 215,
         IDC_STATIC,
         EXAMPLE1,
@@ -109,9 +109,9 @@ static CTRLDATA CtrlYourTaste[] =
     },
     {
         "button",
-        WS_VISIBLE | BS_PUSHBUTTON, 
-        36, 64, 200, 20, 
-        IDC_MWM, 
+        WS_VISIBLE | BS_PUSHBUTTON,
+        36, 64, 200, 20,
+        IDC_MWM,
         EXAMPLE3,
         0
     },
@@ -141,7 +141,7 @@ static CTRLDATA CtrlYourTaste[] =
     },
     {
         "button",
-        WS_VISIBLE | BS_PUSHBUTTON, 
+        WS_VISIBLE | BS_PUSHBUTTON,
         250, 40, 100, 25,
         IDC_COLOR,
         EXAMPLE7,
@@ -183,7 +183,7 @@ static CTRLDATA CtrlYourTaste[] =
         "button",
         WS_VISIBLE | BS_DEFPUSHBUTTON | WS_TABSTOP | WS_GROUP,
         250, 190, 100, 25,
-        IDOK, 
+        IDOK,
         EXAMPLE12,
         0
     },
@@ -201,18 +201,18 @@ static void my_notif_proc (HWND hwnd, LINT id, int nc, DWORD add_data)
         {
             case IDC_MMB:
                 myMessageBox(GetParent (hwnd) , MB_OK , "myMessageBox:" , "NOTE: \n %s \n" , prompts [id - IDC_MMB]);
-            break;    
+            break;
             case IDC_MWM:
                 myWinMessage(GetParent (hwnd) , "myWinMessage:" , "my button!" , "NOTE: \n%s \n" , prompts [id - IDC_MMB]);
             break;
             case IDC_COLOR:
-                myWinChoice(GetParent (hwnd) , "myWinChoice" , Flavor[0] , Flavor[1] , "NOTE: \n%s \n" , Flavor[2]); 
+                myWinChoice(GetParent (hwnd) , "myWinChoice" , Flavor[0] , Flavor[1] , "NOTE: \n%s \n" , Flavor[2]);
             break;
             case IDC_TCB:
-                myWinTernary(GetParent (hwnd) , "myWinTernary" , Ternary[0] , Ternary[1] , Ternary[2] , "NOTE: \n %s \n" , prompts [id - IDC_MMB]); 
+                myWinTernary(GetParent (hwnd) , "myWinTernary" , Ternary[0] , Ternary[1] , Ternary[2] , "NOTE: \n %s \n" , prompts [id - IDC_MMB]);
             break;
             case IDC_EEW:
-               errorWindow(GetParent (hwnd) , prompts [id - IDC_MMB] , "ErrorWindow");       
+               errorWindow(GetParent (hwnd) , prompts [id - IDC_MMB] , "ErrorWindow");
             break;
             case IDC_STW:
                 PostMessage(GetParent (hwnd) , MSG_INITBOX , id , 0);
@@ -221,7 +221,7 @@ static void my_notif_proc (HWND hwnd, LINT id, int nc, DWORD add_data)
                 PostMessage(GetParent (hwnd) , MSG_PROGRESS , IDC_PROGRESS , 0);
             break;
             case IDC_HELPMSG:
-                myWinHelpMessage(GetParent (hwnd) , 300 , 200 , 
+                myWinHelpMessage(GetParent (hwnd) , 300 , 200 ,
                         HELP_TITLE, HELP_MSG);
             break;
 
@@ -229,7 +229,7 @@ static void my_notif_proc (HWND hwnd, LINT id, int nc, DWORD add_data)
                 myWinMenu(GetParent (hwnd) , "Menu" , "Items" , 80 , 200 , Pmenu , &pListItem , MenuItems);
             break;
             case IDC_ENTRY:
-                myWinEntries(GetParent (hwnd) , "Entry" , "Entries" , 120 , 80 , TRUE , EntryItems , MenuItems); 
+                myWinEntries(GetParent (hwnd) , "Entry" , "Entries" , 120 , 80 , TRUE , EntryItems , MenuItems);
             break;
         }
     }
@@ -250,7 +250,7 @@ static LRESULT DialogBoxProc2 (HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
                 SetNotificationCallback (GetDlgItem (hDlg, i), my_notif_proc);
         }
         return 1;
-        
+
         case MSG_COMMAND:
             switch (wParam) {
             case IDOK:
@@ -259,7 +259,7 @@ static LRESULT DialogBoxProc2 (HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
             }
             break;
 
-        case MSG_INITBOX: 
+        case MSG_INITBOX:
             if (!stahwnd)
             {
                stahwnd = createStatusWin(hDlg , 400 , 50 , "status" , prompts [wParam - IDC_MMB]);
@@ -284,7 +284,7 @@ static LRESULT DialogBoxProc2 (HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
             pos_x = LOSWORD(lParam);
             pos_y = HISWORD(lParam);
             GetWindowRect(GetDlgItem (hDlg , IDC_COLOR) , &rc);
-            
+
             if (PtInRect(&rc , pos_x , pos_y) && !tiphwnd)
             {
                 tiphwnd = createToolTipWin (hDlg , pos_x , pos_y , 1000 , "This is the tip window!");
@@ -292,17 +292,17 @@ static LRESULT DialogBoxProc2 (HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
 
             if (!PtInRect(&rc , pos_x , pos_y) && tiphwnd)
             {
-               destroyToolTipWin(tiphwnd); 
+               destroyToolTipWin(tiphwnd);
                tiphwnd = 0;
             }
-            
+
         }
                break;
         case MSG_TIMER:
         {
 #ifdef _MGCTRL_PROGRESSBAR
                 if (wParam == 100 && prohwnd)
-                { 
+                {
                     if (ppos < 10)
                     {
                         SendDlgItemMessage(prohwnd , IDC_PROGRESS , PBM_SETPOS , 10*ppos , 0);
@@ -318,7 +318,7 @@ static LRESULT DialogBoxProc2 (HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
                 }
 #endif
               if (wParam == 110 && stahwnd)
-              {     
+              {
                 KillTimer(hDlg , 110);
                 destroyStatusWin (stahwnd);
                 stahwnd = 0;
@@ -326,7 +326,7 @@ static LRESULT DialogBoxProc2 (HWND hDlg, UINT message, WPARAM wParam, LPARAM lP
         }
         break;
     }
-    
+
     return DefaultDialogProc (hDlg, message, wParam, lParam);
 }
 
@@ -337,7 +337,7 @@ int MiniGUIMain (int argc, const char* argv[])
 #endif
 
     DlgYourTaste.controls = CtrlYourTaste;
-    
+
     DialogBoxIndirectParam (&DlgYourTaste, HWND_DESKTOP, DialogBoxProc2, 0L);
 
     return 0;

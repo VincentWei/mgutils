@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -96,7 +96,7 @@ void SigChildHandler (int signo)
 
     con = (PCONINFO) pthread_getspecific (con_key);
     if (!con) return;
-    
+
     if (waitpid (con->childPid, &status, WNOHANG))
        con->terminate = 1;
 }
@@ -124,12 +124,12 @@ BOOL TerminalStart (PCONINFO con, PCHILDINFO pChildInfo)
     // We must handle SIGCHLD.
     // We handle coninfo as a thread-specific data
     set_coninfo (con);
-  
+
     SetSignalHandlers ();
 
     sigemptyset (&sa_mask);
     sigaddset (&sa_mask, SIGCHLD);
-    pthread_sigmask (SIG_UNBLOCK, &sa_mask, NULL); 
+    pthread_sigmask (SIG_UNBLOCK, &sa_mask, NULL);
 
     return OpenTerminal (con, pChildInfo);
 }
@@ -142,7 +142,7 @@ void SigChildHandler (int signo)
     int status;
 
     if (!sg_coninfo) return;
-    
+
     if (waitpid (sg_coninfo->childPid, &status, WNOHANG))
        sg_coninfo->terminate = 1;
 }
@@ -162,7 +162,7 @@ BOOL TerminalStart (PCONINFO con, PCHILDINFO pChildInfo)
 {
     // We must handle SIGCHLD.
     sg_coninfo = con;
-  
+
     InstallSignalHandlers ();
 
     return OpenTerminal (con, pChildInfo);
@@ -182,7 +182,7 @@ void TerminalCleanup (PCONINFO con)
 static int TermFork (PCONINFO con, PCHILDINFO pChildInfo)
 {
     char ls, ln;
-    
+
     // 1. Looking for unused PTY/TTY Master/Slave
 
     /* Open PTY(master) from [pqrs][5-F], in fact p-z is ok? */
@@ -195,7 +195,7 @@ static int TermFork (PCONINFO con, PCHILDINFO pChildInfo)
             if ((con->masterPty = open (con->ptyName, O_RDWR)) >= 0)
                 break;
         }
-        
+
         if (con->masterPty >= 0)
             break;
     }
@@ -244,7 +244,7 @@ static int TermFork (PCONINFO con, PCHILDINFO pChildInfo)
         dup2 (slavePty, 1);
         dup2 (slavePty, 2);
         close (slavePty);
-        
+
         // execute the shell
         ChildStart (con, errfp, pChildInfo->startupMessage,
                            pChildInfo->startupStr,
@@ -314,7 +314,7 @@ static int TermFork (PCONINFO con, PCHILDINFO pChildInfo)
         dup2 (slavePty, 1);
         dup2 (slavePty, 2);
         close (slavePty);
-        
+
         // execute the shell
         ChildStart (con, errfp, pChildInfo->startupMessage,
                            pChildInfo->startupStr,
@@ -332,7 +332,7 @@ static BOOL OpenTerminal (PCONINFO con, PCHILDINFO pChildInfo)
 
     if ((iRet = TermFork (con, pChildInfo)) < 0)
         return FALSE;
-    
+
     if (iRet) {
         // In parent process.
         VtStart (con);
@@ -378,7 +378,7 @@ void HandleInputChar (PCONINFO con, WPARAM wParam, LPARAM lParam)
 {
     u_char ch [4];
     int chlen = 1;
-    
+
     ch [0] = FIRSTBYTE (wParam);
     ch [1] = SECONDBYTE (wParam);
     ch [2] = THIRDBYTE (wParam);
@@ -400,11 +400,11 @@ void HandleInputChar (PCONINFO con, WPARAM wParam, LPARAM lParam)
 void HandleInputKeyDown (PCONINFO con, WPARAM wParam, LPARAM lParam)
 {
     u_char buff [50];
-    
+
     con->kinfo.state = lParam;
     con->kinfo.buff  = buff;
     con->kinfo.pos   = 0;
-    
+
     handle_scancode_on_keydown (wParam, &con->kinfo);
 
     if (con->kinfo.pos != 0)
@@ -414,11 +414,11 @@ void HandleInputKeyDown (PCONINFO con, WPARAM wParam, LPARAM lParam)
 void HandleInputKeyUp (PCONINFO con, WPARAM wParam, LPARAM lParam)
 {
     u_char buff [50];
-    
+
     con->kinfo.state = lParam;
     con->kinfo.buff  = buff;
     con->kinfo.pos   = 0;
-    
+
     handle_scancode_on_keyup (wParam, &con->kinfo);
 
     if (con->kinfo.pos != 0)
@@ -458,7 +458,7 @@ void HandleMouseLeftDownWhenCaptured (PCONINFO con, int x, int y, WPARAM wParam)
 
     x = x / GetCharWidth ();
     y = y / GetCharHeight ();
-    
+
     KanjiAdjust (con, &x, &y);
     con->m_origx = con->m_oldx = x;
     con->m_origy = con->m_oldy = y;
@@ -476,7 +476,7 @@ void HandleMouseMoveWhenCaptured (PCONINFO con, int x, int y, WPARAM wParam)
         TextReverse (con, &con->m_origx, &con->m_origy, &x, &y);
         TextRefresh (con, true);
         TextReverse (con, &con->m_origx, &con->m_origy, &x, &y);
-        
+
         con->m_oldx = x;
         con->m_oldy = y;
     }

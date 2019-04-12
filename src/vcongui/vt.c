@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -74,7 +74,7 @@
 #define CHAR_CSI    '\x9B'
 #define CHAR_SS2    '\x8E'
 
-#define LEN_REPORT    9
+#define LEN_REPORT    64
 
 /*  Call the routines in vc.c
     TextInsertChar/TextDeleteChar
@@ -96,7 +96,7 @@ static void SaveAttr(CONINFO *con)
         tmp->prev = con->saveAttr;
     else
         tmp->prev = NULL;
-        
+
     con->saveAttr = tmp;
     con->saveAttr->x = con->x;
     con->saveAttr->y = con->y;
@@ -128,24 +128,24 @@ static void EscSetAttr (CONINFO *con, int col)
 {
     static const u_char table[] = {0, 4, 2, 6, 1, 5, 3, 7};
     u_char    swp;
-    
+
     switch(col) {
     case 0:    /* off all attributes */
         con->bcol = 0;
         con->fcol = 7;
         con->attr = 0;
         break;
-        
+
     case 1:  // highlight, fcolor
         con->attr |= ATTR_HIGH;
         con->fcol |= 8;
         break;
-        
+
     case 21:  // clear highlight
         con->attr &= ~ATTR_HIGH;
         con->fcol &= ~8;
         break;
-        
+
     case 4:    // underline, bcolor
         con->attr |= ATTR_ULINE;
         con->bcol |= 8;
@@ -155,22 +155,22 @@ static void EscSetAttr (CONINFO *con, int col)
         con->attr &= ~ATTR_ULINE;
         con->bcol &= ~8;
         break;
-        
+
     case 7:  // reverse
         if (!(con->attr & ATTR_REVERSE)) {
             con->attr |= ATTR_REVERSE;
             swp = con->fcol & 7;
-            
+
             if (con->attr & ATTR_ULINE)
                 swp |= 8;
-                
+
             con->fcol = con->bcol & 7;
             if ((con->attr & ATTR_HIGH) && con->fcol)
                 con->fcol |= 8;
             con->bcol = swp;
         }
         break;
-        
+
     case 27:  // clear reverse
         if (con->attr & ATTR_REVERSE) {
             con->attr &= ~ATTR_REVERSE;
@@ -183,7 +183,7 @@ static void EscSetAttr (CONINFO *con, int col)
             con->bcol = swp;
         }
         break;
-        
+
     default:
         if (col >= 30 && col <= 37)  // assign foreground color
         {
@@ -192,13 +192,13 @@ static void EscSetAttr (CONINFO *con, int col)
                 if (con->attr & ATTR_ULINE)
                     swp |= 8;
                 con->bcol = swp;
-            } 
+            }
             else {
                 if (con->attr & ATTR_HIGH)
                     swp |= 8;
                 con->fcol = swp;
             }
-        } 
+        }
         else if (col >= 40 && col <= 47)  // assign background color
         {
             swp = table[col - 40];
@@ -234,13 +234,13 @@ static void VtSetMode (CONINFO *con, u_char mode, bool sw)
 static void EscReport (CONINFO *con, u_char mode, u_short arg)
 {
     char report[LEN_REPORT];
-    
+
     switch(mode) {
     case 'n':
         if (arg == 6) {
             int x = (con->x < con->xmax) ? con->x : con->xmax;
             int y = (con->y < con->ymax) ? con->y : con->ymax;
-            
+
             sprintf(report, "\x1B[%d;%dR", y + 1, x + 1);
         }
         else if (arg == 5)
@@ -271,12 +271,12 @@ static void EscBracket (CONINFO *con, u_char ch)
     }
     else {
         con->esc = NULL;
-        switch (ch) 
+        switch (ch)
         {
         case 'K':
             TextClearEol (con, con->varg[0]);
             break;
-            
+
         case 'J':
             TextClearEos (con, con->varg[0]);
             break;
@@ -286,7 +286,7 @@ static void EscBracket (CONINFO *con, u_char ch)
         case 'X':
             TextClearChars (con, con->varg[0]);
             break;
-            
+
         case 'A':
             con->y -= con->varg[0] ? con->varg[0]: 1;
             if (con->y < con->ymin) {
@@ -294,7 +294,7 @@ static void EscBracket (CONINFO *con, u_char ch)
                 con->y = con->ymin;
             }
             break;
-            
+
         case 'B':
             con->y += con->varg[0] ? con->varg[0]: 1;
             if (con->y > con->ymax) {
@@ -302,55 +302,55 @@ static void EscBracket (CONINFO *con, u_char ch)
                 con->y = con->ymax;
             }
             break;
-            
+
         case 'C':
             con->x += con->varg[0] ? con->varg[0]: 1;
             con->wrap = false;
             break;
-            
+
         case 'D':
             con->x -= con->varg[0] ? con->varg[0]: 1;
             con->wrap = false;
             break;
-            
+
         case 'G':
             con->x = con->varg[0] ? con->varg[0] - 1: 0;
             con->wrap = false;
             break;
-            
+
         case 'P':
             TextDeleteChar (con, con->varg[0] ? con->varg[0]: 1);
             break;
-            
+
         case '@':
             TextInsertChar (con, con->varg[0] ? con->varg[0]: 1);
             break;
-            
+
         case 'L':
             TextMoveDown (con, con->y, con->ymax, con->varg[0]?con->varg[0]:1);
             break;
-            
+
         case 'M':
             TextMoveUp (con, con->y, con->ymax, con->varg[0]?con->varg[0]:1);
             break;
-            
+
         case 'H':
         case 'f':
             if (con->varg[1])
                 con->x = con->varg[1] - 1;
-            else 
+            else
                 con->x = 0;
             con->wrap = false;
-            
+
         case 'd':
             con->y = con->varg[0] ? con->varg[0] - 1: 0;
             break;
-            
+
         case 'm':
             for (n = 0; n <= con->narg; n ++)
                 EscSetAttr (con, con->varg[n]);
             break;
-            
+
         case 'r':
             con->ymin = con->varg[0]? (con->varg[0] - 1): 0;
             con->ymax = con->varg[1]? (con->varg[1] - 1): (con->dispymax - 1);
@@ -364,36 +364,36 @@ static void EscBracket (CONINFO *con, u_char ch)
                 con->soft = false;
 #endif
             break;
-            
+
         case 'l':
             for (n = 0; n <= con->narg; n ++)
                 VtSetMode (con, con->varg[n], false);
             break;
-            
+
         case 'h':
             for (n = 0; n <= con->narg; n ++)
                 VtSetMode (con, con->varg[n], true);
             break;
-            
+
         case '?':
             con->question = true;
             con->esc = EscBracket;
             break;
-            
+
         case 's':
             SaveAttr (con);
             break;
-            
+
         case 'u':
             RestoreAttr (con);
             break;
-            
+
         case 'n':
         case 'c':
             if (con->question != true)
                 EscReport (con, ch, con->varg[0]);
             break;
-            
+
         case 'R':
             break;
         }
@@ -452,25 +452,25 @@ CODINGINFO DCodingInfo [] = {
 static void EscSetDCodeG0 (CONINFO *con, u_char ch)
 {
     int i = 0;
-    
+
     switch(ch) {
     case '(': /* EscSetDCodeG0 */
     case ')': /* EscSetDCodeG1 */
         return;
-        
+
     case '@':
         ch = 'B';
-        
+
     default:
-    	while (DCodingInfo [i].sign0) {
-	        if (DCodingInfo[i].sign0 == ch) {
-		        con->db = (u_char)i|LATCH_1;
-		        break;
-	        }
-	        i ++;
-	    }
-	    con->trans = CS_DBCS;
-	    break;
+        while (DCodingInfo [i].sign0) {
+            if (DCodingInfo[i].sign0 == ch) {
+                con->db = (u_char)i|LATCH_1;
+                break;
+            }
+            i ++;
+        }
+        con->trans = CS_DBCS;
+        break;
     }
     con->esc = NULL;
 }
@@ -478,26 +478,26 @@ static void EscSetDCodeG0 (CONINFO *con, u_char ch)
 static void EscSetSCodeG0 (CONINFO *con, u_char ch)
 {
     int i = 0;
-    
+
     switch(ch) {
     case 'U':
         con->g[0] = CS_GRAPH;
         break;
-        
+
     default:
-    	while (SCodingInfo [i].sign0) {
-	        if (SCodingInfo [i].sign0 == ch) {
-		        con->sb = (u_char)i;
-		        con->g[0] = CS_LEFT;
-		        break;
-	        }
+        while (SCodingInfo [i].sign0) {
+            if (SCodingInfo [i].sign0 == ch) {
+                con->sb = (u_char)i;
+                con->g[0] = CS_LEFT;
+                break;
+            }
             else if (SCodingInfo [i].sign1 == ch) {
-		        con->sb = (u_char)i;
-		        con->g[0] = CS_RIGHT;
-		        break;
-	        }
-	        i ++;
-	    }
+                con->sb = (u_char)i;
+                con->g[0] = CS_RIGHT;
+                break;
+            }
+            i ++;
+        }
     }
 
     con->trans = con->g[0];
@@ -510,17 +510,17 @@ static void EscSetSCodeG1 (CONINFO *con, u_char ch)
     case 'U':
         con->g[1] = CS_LEFT;
         break;
-        
+
     case '0':
         con->g[1] = CS_GRAPH;
         break;
-        
+
     case 'A':
     case 'J':
     case 'B':
         break;
     }
-    
+
     con->trans = con->g[1];
     con->esc = NULL;
 }
@@ -529,25 +529,25 @@ static void EscSetSCodeG1 (CONINFO *con, u_char ch)
 static void EscStart (CONINFO *con, u_char ch)
 {
     con->esc = NULL;
-    
+
     switch (ch) {
     case '[':
         con->esc = EscBracket;
     break;
-    
+
     case '$':/* Set Double Byte Code */
         con->esc = EscSetDCodeG0;
     break;
-    
+
     case '(':/* Set 94 to G0 */
     case ',':/* Set 96 to G0 */
         con->esc = EscSetSCodeG0;
     break;
-    
+
     case ')':/* Set G1 */
         con->esc = EscSetSCodeG1;
     break;
-    
+
     case 'E':
         con->x = 0;
         con->wrap = false;
@@ -557,7 +557,7 @@ static void EscStart (CONINFO *con, u_char ch)
         else
             con->y ++;
         break;
-        
+
     case 'M':
         if (con->y == con->ymin)
             con->scroll --;
@@ -576,17 +576,17 @@ static void EscStart (CONINFO *con, u_char ch)
         con->trans = CS_LEFT;
         con->sb = 0;
         con->db = LATCH_1;
-        
+
     case '*':
         con->x = con->y = 0;
         con->wrap = false;
         TextClearAll (con);
         break;
-    
+
     case '7':
         SaveAttr (con);
         break;
-        
+
     case '8':
         RestoreAttr (con);
         con->wrap = false;
@@ -638,7 +638,7 @@ static inline bool iskanji (PCONINFO con, u_char c, u_char c1)
     case CODE_GBK:
         return (c >= 0x81 && c <= 0xFE && c1 >= 0x40 && c1 <= 0xFE);
     case CODE_BIG5:
-       return ((c >=0xa1 && c<=0xfe) 
+       return ((c >=0xa1 && c<=0xfe)
                 && ((c >=0x40 && c<=0x7e) || (c >=0xa1 && c<=0xfe)));
     default:
         return (c & 0x80);
@@ -653,7 +653,7 @@ static inline u_int text_offset (CONINFO *con, u_int x, u_int y)
 int FirstOrSecondByte (CONINFO* con, u_char ch)
 {
     u_int prev_addr = -1;
-    
+
     if (con->x == 0) {
         if (con->y > con->ymin) {
             prev_addr = text_offset (con, con->xmax, con->y - 1);
@@ -678,7 +678,7 @@ void RearrangeLineWhenInsSB (CONINFO* con)
     int i;
     int prev = CODEIS_S;
     u_char ch, ch1;
-    
+
     addr = text_offset (con, con->x, con->y) + 1;
 
     for (i = 0; i < con->xmax - con->x - 1; i++) {
@@ -723,18 +723,18 @@ void VtWrite (CONINFO *con, const char *buff, int nchars)
     for(i = 0; i < nchars; i++)
         fprintf (fff, "%c", buff[i]);
         fprintf (fff," (%d, %d)\n", con->x, con->y);
-	fclose (fff);
+    fclose (fff);
     }
 #endif
 
     while (nchars-- > 0) {
         ch = *buff++;
         ch1 = *buff;
-        
+
         if (!ch)
             continue;
 
-        if (con->esc) 
+        if (con->esc)
             con->esc (con, ch);   // in escape mode, parse the parameters
         else {
             switch (ch)
@@ -742,16 +742,16 @@ void VtWrite (CONINFO *con, const char *buff, int nchars)
             case CHAR_BEL:  // 0x07
                 Ping ();
                 break;
-                
+
             case CHAR_DEL:  // 0x7F
                 break;
-                
+
             case CHAR_BS:   // 0x08
                 if (con->x)
                     con->x--;
                 con->wrap = false;
             break;
-            
+
             case CHAR_HT:  //0x09
                 con->x += con->tab - (con->x % con->tab);
                 con->wrap = false;
@@ -759,7 +759,7 @@ void VtWrite (CONINFO *con, const char *buff, int nchars)
                     con->x -= con->xmax + 1;
                 else
                     break;
-                    
+
             case CHAR_VT:  // 0x0B
             case CHAR_FF:  // 0x0C
 #if 1
@@ -776,24 +776,24 @@ void VtWrite (CONINFO *con, const char *buff, int nchars)
                 else
                     con->y ++;
                 break;
-                
+
             case CHAR_CR:  // 0x0D
                 con->x = 0;
                 con->wrap = false;
                 break;
-                
+
             case CHAR_ESC:  // 0x1B
                 con->esc = EscStart;
                 continue;
-                
+
             case CHAR_SO:  // 0x0E
                 con->trans = con->g[1] | G1_SET;
                 continue;
-                
+
             case CHAR_SI:  // 0x0F
                 con->trans = con->g[0];
                 continue;
-            
+
             default:
                 if (con->x == con->xmax + 1) {
                     con->wrap = true;
@@ -826,7 +826,7 @@ void VtWrite (CONINFO *con, const char *buff, int nchars)
                 if (iskanji (con, ch, ch1)) {
                     if (con->ins)
                         TextInsertChar (con, 1);
-                    
+
                     switch (FirstOrSecondByte (con, ch)) {
                     case CODEIS_1:
                         TextWput1 (con, ch);
@@ -846,7 +846,7 @@ void VtWrite (CONINFO *con, const char *buff, int nchars)
                 else {
                     if (con->ins)
                         TextInsertChar (con, 1);
-                        
+
                     TextSput (con, ch);
                     RearrangeLineWhenInsSB (con);
 
@@ -860,10 +860,10 @@ void VtWrite (CONINFO *con, const char *buff, int nchars)
                      )
                    ) {
                     short oldx, oldy;
-                    
+
                     /* special handling for Japanese char */
                     if (con->knj1 & 0x80) {
-                        switch(con->sysCoding) 
+                        switch(con->sysCoding)
                         {
                         case CODE_EUC:
                             if (con->knj1 == (u_char)CHAR_SS2) {
@@ -878,7 +878,7 @@ void VtWrite (CONINFO *con, const char *buff, int nchars)
                             con->knj1 &= 0x7F;
                             ch &= 0x7F;
                             break;
-                            
+
                         case CODE_SJIS:
                             sjistojis (con->knj1, ch);
                             break;
@@ -888,15 +888,15 @@ void VtWrite (CONINFO *con, const char *buff, int nchars)
                         if (con->db == (DF_BIG5_0|LATCH_1))
                             muletobig5 (con->db, con->knj1, ch);
                     }
-                    
+
                     oldx = con->x; oldy = con->y;
                     con->x = con->knj1x; con->y = con->knj1y;
 
                     if (con->ins)
                         TextInsertChar (con, 2);
-                        
+
                     TextWput (con, con->knj1, ch);
-                    
+
                     con->x = oldx + 2;
                     con->y = oldy;
                     con->knj1 = 0;
@@ -930,7 +930,7 @@ void VtWrite (CONINFO *con, const char *buff, int nchars)
             }  /* switch */
         }
 
-        if (con->scroll > 0) 
+        if (con->scroll > 0)
             ScrollUp (con, con->scroll);
         else if (con->scroll < 0)
             ScrollDown (con, -con->scroll);
@@ -978,7 +978,7 @@ bool VtStart (PCONINFO con)
     if (con->textBuff == NULL || con->attrBuff == NULL ||
         con->flagBuff == NULL)
         return false;
-    
+
     con->textSize = con->cols * (con->rows);
 
     con->currentScroll = con->scrollLine = 0;
@@ -1002,7 +1002,7 @@ bool VtStart (PCONINFO con)
     else if (strcmp (charset, FONT_CHARSET_BIG5) == 0)
         con->sysCoding = CODE_BIG5;
 
-    memset (con->varg, 0, MAX_NARG);
+    memset (con->varg, 0, sizeof(u_short)*MAX_NARG);
     con->narg = 0;
     con->question = 0;
 
@@ -1022,17 +1022,17 @@ bool VtChangeWindowSize (PCONINFO con, int new_row, int new_col)
     textBuff = (u_char *)calloc (text_size, 1);
     attrBuff = (u_char *)calloc (text_size, 1);
     flagBuff = (u_char *)calloc (text_size, 1);
-    
+
     if (textBuff == NULL || attrBuff == NULL || flagBuff == NULL)
         return false;
-    
+
     for (i = 0; i < MIN (new_row, con->rows); i++)
         for (j = 0; j < MIN (new_col, con->cols); j++) {
             textBuff [i*new_col + j] = con->textBuff [i*con->cols +j];
             attrBuff [i*new_col + j] = con->attrBuff [i*con->cols +j];
             flagBuff [i*new_col + j] = con->flagBuff [i*con->cols +j];
         }
-    
+
     free (con->textBuff);
     free (con->attrBuff);
     free (con->flagBuff);
@@ -1061,7 +1061,7 @@ void VtCleanup (PCONINFO con)
 
     con->scrollLine = con->textHead = con->currentScroll = 0;
     con->scroll = 0;
-    
+
     SafeFree ((void*)&(con->textBuff));
     SafeFree ((void*)&(con->attrBuff));
     SafeFree ((void*)&(con->flagBuff));

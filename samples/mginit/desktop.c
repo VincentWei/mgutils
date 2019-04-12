@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -50,7 +50,7 @@
 
 #include "desktop.h"
 
-#ifdef _LANG_ZHCN 
+#ifdef _LANG_ZHCN
 #include "desktop_res_cn.h"
 #elif defined _LANG_ZHTW
 #include "desktop_res_tw.h"
@@ -82,19 +82,19 @@ static BOOL get_dsp_app (void)
     int i;
     DSPITEM* item;
     char section [10];
-	int distance_x = START_X;
-	int distance_y = START_Y;
+    int distance_x = START_X;
+    int distance_y = START_Y;
     SIZE size;
 
     if (GetIntValueFromEtcFile (APP_INFO_FILE, "desktop", "app_nr", &icon_info.nr_apps) != ETC_OK)
         return FALSE;
-    
+
     if (icon_info.nr_apps <= 0)
         return FALSE;
-    
+
     if (GetValueFromEtcFile (APP_INFO_FILE, "desktop", "bg_pic", icon_info.bg_path, PATH_MAX) != ETC_OK)
         return FALSE;
-    
+
     if ((icon_info.app_items = (DSPITEM*)calloc (icon_info.nr_apps, sizeof (DSPITEM))) == NULL) {
         return FALSE;
     }
@@ -115,13 +115,13 @@ static BOOL get_dsp_app (void)
 
         if (LoadBitmap (HDC_SCREEN, &item->bmp, item->bmp_path) != ERR_BMP_OK)
             goto error;
-        
+
         item->cdpath = TRUE;
 
-		item->hot_spot_rc.left   = distance_x;
-		item->hot_spot_rc.right  = item->hot_spot_rc.left + DEF_WIDTH;
-		item->hot_spot_rc.top    = distance_y;
-		item->hot_spot_rc.bottom = item->hot_spot_rc.top + DEF_HEIGHT;
+        item->hot_spot_rc.left   = distance_x;
+        item->hot_spot_rc.right  = item->hot_spot_rc.left + DEF_WIDTH;
+        item->hot_spot_rc.top    = distance_y;
+        item->hot_spot_rc.bottom = item->hot_spot_rc.top + DEF_HEIGHT;
 
         GetTextExtent(HDC_SCREEN, item->name, -1, &size);
 
@@ -129,13 +129,13 @@ static BOOL get_dsp_app (void)
         item->text_rc.left    = (item->hot_spot_rc.right + item->hot_spot_rc.left - size.cx)/2;
         item->text_rc.bottom  = item->text_rc.top + size.cy;
         item->text_rc.right   = item->text_rc.left + size.cx;
-		
+
         distance_y += SPACE + RECTH(item->hot_spot_rc);
         if(distance_y + DEF_HEIGHT >= g_rcDesktop.bottom)
         {
             distance_y = START_Y;
             distance_x += SPACE + DEF_WIDTH;
-        }	
+        }
     }
     return TRUE;
 error:
@@ -153,7 +153,7 @@ static HMENU create_icon_menu (void)
     mii.id          = 0;
     mii.typedata    = (DWORD)"";
     hmnu = CreatePopupMenu (&mii);
-    
+
     memset (&mii, 0, sizeof(MENUITEMINFO));
     mii.type        = MFT_STRING ;
     mii.state       = 0;
@@ -184,21 +184,21 @@ static void* this_init(void)
         LoadBitmapFromFile(HDC_SCREEN, con->bg, icon_info.bg_path);
     }
     else
-        con->bg = NULL; 
+        con->bg = NULL;
 
-    con->icon_menu = create_icon_menu();   
+    con->icon_menu = create_icon_menu();
 
     return (void *)con;
 }
 
 static void this_deinit(void* context)
 {
-    if(((Context *)context)->bg) 
+    if(((Context *)context)->bg)
         UnloadBitmap (((Context *)context)->bg);
 
     free_dsp_app ();
 
-	if (context != NULL) free(context);
+    if (context != NULL) free(context);
 
     return;
 }
@@ -206,7 +206,7 @@ static void this_deinit(void* context)
 static void this_paint_desktop(void* context, HDC dc_desktop, const RECT* inv_rc)
 {
     PBITMAP bg_bmp = NULL;
-	int i = 0;
+    int i = 0;
     DSPITEM* item;
 
     if(((Context *)context)->bg)
@@ -221,32 +221,32 @@ static void this_paint_desktop(void* context, HDC dc_desktop, const RECT* inv_rc
         FillBox(dc_desktop, g_rcDesktop.left, g_rcDesktop.top,
                 RECTW(g_rcDesktop), RECTH(g_rcDesktop));
     }
-    
+
     item = icon_info.app_items;
     for(i = 0; i < icon_info.nr_apps; i++, item++)
-	{
+    {
         if(i == icon_info.focus)
         {
             SetBrushColor (dc_desktop, PIXEL_darkblue);
-            FillBox(dc_desktop, item->hot_spot_rc.left, 
+            FillBox(dc_desktop, item->hot_spot_rc.left,
                     item->hot_spot_rc.top,
-                    RECTW(item->hot_spot_rc), 
+                    RECTW(item->hot_spot_rc),
                     RECTH(item->hot_spot_rc));
         }
         FillBoxWithBitmap (dc_desktop,
                 item->hot_spot_rc.left,
                 item->hot_spot_rc.top,
                 RECTW(item->hot_spot_rc),
-                RECTH(item->hot_spot_rc), 
+                RECTH(item->hot_spot_rc),
                 &item->bmp);
         SetBkMode(dc_desktop, BM_TRANSPARENT);
-        TextOut(dc_desktop, 
+        TextOut(dc_desktop,
                 item->text_rc.left, item->text_rc.top, item->name);
-	}
+    }
 }
 
-static void this_keyboard_handler(void* context, int message, 
-		                               WPARAM wParam, LPARAM lParam)
+static void this_keyboard_handler(void* context, int message,
+                                       WPARAM wParam, LPARAM lParam)
 {
     switch(message)
     {
@@ -293,7 +293,7 @@ pid_t exec_app_name (const char* file_name, const char* app_name, const char * a
     }
     else if (pid == 0) {
         if (execl (file_name, app_name, argv, NULL) < 0)
-			fprintf(stderr, "execl error\n");
+            fprintf(stderr, "execl error\n");
         perror ("execl");
         _exit (1);
     }
@@ -304,8 +304,8 @@ pid_t exec_app_name (const char* file_name, const char* app_name, const char * a
     return pid;
 }
 
-static void this_mouse_handler(void* context, int message, 
-		                            WPARAM wParam, LPARAM lParam)
+static void this_mouse_handler(void* context, int message,
+                                    WPARAM wParam, LPARAM lParam)
 {
     int x, y;
     int i = 0;
@@ -319,14 +319,14 @@ static void this_mouse_handler(void* context, int message,
         case MSG_DT_LBUTTONDOWN:
             {
                 item = icon_info.app_items;
-                for(i = 0; i < icon_info.nr_apps; i++, item++) 
+                for(i = 0; i < icon_info.nr_apps; i++, item++)
                 {
-                    if (PtInRect(&item->hot_spot_rc, x, y)) 
+                    if (PtInRect(&item->hot_spot_rc, x, y))
                     {
                         icon_info.focus = i;
                         old_x = x;
                         old_y = y;
-                        SendMessage(HWND_DESKTOP, MSG_ERASEDESKTOP, 
+                        SendMessage(HWND_DESKTOP, MSG_ERASEDESKTOP,
                                 0, (LPARAM)&item->hot_spot_rc);
                         break;
                     }
@@ -344,9 +344,9 @@ static void this_mouse_handler(void* context, int message,
             {
                 char buff [PATH_MAX + NAME_MAX + 1];
                 item = icon_info.app_items;
-                for(i = 0; i < icon_info.nr_apps; i++, item++) 
+                for(i = 0; i < icon_info.nr_apps; i++, item++)
                 {
-                    if (PtInRect(&item->hot_spot_rc, x, y)) 
+                    if (PtInRect(&item->hot_spot_rc, x, y))
                     {
                         if(item->cdpath) {
                             if (chdir(item->path)) {
@@ -369,12 +369,12 @@ static void this_mouse_handler(void* context, int message,
                 if (icon_info.focus == 0xFFFF) break;
 
                 item = icon_info.app_items;
-                for(i = 0; i < icon_info.nr_apps; i++, item++) 
+                for(i = 0; i < icon_info.nr_apps; i++, item++)
                 {
-                    if (i == icon_info.focus ) 
+                    if (i == icon_info.focus )
                     {
                         GetBoundRect(&rc, &item->text_rc, &item->hot_spot_rc);
-                        
+
                         item->hot_spot_rc.left      += x - old_x;
                         item->hot_spot_rc.right     += x - old_x;
                         item->hot_spot_rc.top       += y - old_y;
@@ -384,7 +384,7 @@ static void this_mouse_handler(void* context, int message,
                         item->text_rc.right     += x - old_x;
                         item->text_rc.top       += y - old_y;
                         item->text_rc.bottom    += y - old_y;
-                        
+
                         old_x = x;
                         old_y = y;
                         GetBoundRect(&rc, &rc, &item->hot_spot_rc);
@@ -399,14 +399,14 @@ static void this_mouse_handler(void* context, int message,
             {
                 BOOL flag = FALSE;
                 item = icon_info.app_items;
-                for(i = 0; i < icon_info.nr_apps; i++, item++) 
+                for(i = 0; i < icon_info.nr_apps; i++, item++)
                 {
-                    if (PtInRect(&item->hot_spot_rc, x, y)) 
+                    if (PtInRect(&item->hot_spot_rc, x, y))
                     {
                         icon_info.focus = i;
-                        SendMessage(HWND_DESKTOP, MSG_ERASEDESKTOP, 
+                        SendMessage(HWND_DESKTOP, MSG_ERASEDESKTOP,
                                 0, (LPARAM)&item->hot_spot_rc);
-                        TrackPopupMenu (((Context *)context)->icon_menu, 
+                        TrackPopupMenu (((Context *)context)->icon_menu,
                                 TPM_DEFAULT, x, y, HWND_DESKTOP);
                         flag = TRUE;
                         break;
@@ -430,22 +430,22 @@ static void this_desktop_menucmd_handler (void* context, int id)
 #if 0
     else if(id == ID_CB)
     {
- 		NEWFILEDLGDATA file_data;
-		int choise = 0;
-//		file_data.IsSave = FALSE;
-		strcpy(file_data.filepath,".");
-		choise = ShowOpenDialog(HWND_DESKTOP, 50, 50, 300, 200, &file_data);
-		if(choise == IDOK)
-		{
-			if(access(file_data.filefullname, F_OK) < 0)
-			{
-				printf("file not exist!\n");
-			}
-			else
-			{
-				printf("ok!\n");
-			}
-		}
+         NEWFILEDLGDATA file_data;
+        int choise = 0;
+//        file_data.IsSave = FALSE;
+        strcpy(file_data.filepath,".");
+        choise = ShowOpenDialog(HWND_DESKTOP, 50, 50, 300, 200, &file_data);
+        if(choise == IDOK)
+        {
+            if(access(file_data.filefullname, F_OK) < 0)
+            {
+                printf("file not exist!\n");
+            }
+            else
+            {
+                printf("ok!\n");
+            }
+        }
     }
 #endif
     else if(id == ID_AB)
@@ -464,9 +464,9 @@ static void this_desktop_menucmd_handler (void* context, int id)
         DSPITEM* item;
         char buff [PATH_MAX + NAME_MAX + 1];
         item = icon_info.app_items;
-        for(i = 0; i < icon_info.nr_apps; i++, item++) 
+        for(i = 0; i < icon_info.nr_apps; i++, item++)
         {
-            if (i == icon_info.focus) 
+            if (i == icon_info.focus)
             {
                 if(item->cdpath) {
                     if (chdir(item->path)) {

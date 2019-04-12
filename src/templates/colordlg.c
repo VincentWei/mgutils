@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -44,21 +44,21 @@
 
 #include "colorpanel.h"
 
-typedef struct hsv_struct 
+typedef struct hsv_struct
 {
     Uint16 clrh;
     Uint8  clrs;
     Uint8  clrv;
 } HSV;
 
-typedef struct indication 
+typedef struct indication
 {
     int px;
     int py;
     int pz;
 } INDICAT;
 
-typedef struct scd_struct 
+typedef struct scd_struct
 {
     HDC             SpaceDC;
     PCOLORDLGDATA   pclr;
@@ -66,7 +66,7 @@ typedef struct scd_struct
     RECT            rcSpace;
     RECT            rcYSpace;
     RECT            rcSelSpace;
-    HSV             hsv;     
+    HSV             hsv;
 } SCOLORDIA, *PSCOLORDIA;
 
 #define px          indicat.px
@@ -86,13 +86,13 @@ typedef struct scd_struct
 #define PIXEL       pclr->pixel
 
 CTRLDATA DefColorCtrl [] =
-{ 
-    { CTRL_STATIC, 
+{
+    { CTRL_STATIC,
         WS_VISIBLE | SS_LEFT,
         7, 5, 60, 20,
-        IDC_CSD_BASIC_COLOR_NOTE, 
-        "basic color",  
-        0, WS_EX_TRANSPARENT 
+        IDC_CSD_BASIC_COLOR_NOTE,
+        "basic color",
+        0, WS_EX_TRANSPARENT
     },
 
     {
@@ -104,12 +104,12 @@ CTRLDATA DefColorCtrl [] =
         0, WS_EX_TRANSPARENT
     },
 
-    { CTRL_STATIC, 
+    { CTRL_STATIC,
         WS_VISIBLE | SS_LEFT,
         7, 140, 60, 20,
-        IDC_CSD_BASIC_COLOR_NOTE, 
-        "custom color",  
-        0, WS_EX_TRANSPARENT 
+        IDC_CSD_BASIC_COLOR_NOTE,
+        "custom color",
+        0, WS_EX_TRANSPARENT
     },
 
     {
@@ -121,137 +121,137 @@ CTRLDATA DefColorCtrl [] =
         0, WS_EX_TRANSPARENT
     },
 
-    { CTRL_STATIC, 
+    { CTRL_STATIC,
         WS_CHILD | WS_VISIBLE | SS_LEFT,
         210, 122, 15, 18,
-        IDC_CSD_NOTE_H, 
-        "H",  
+        IDC_CSD_NOTE_H,
+        "H",
         0, WS_EX_TRANSPARENT
     },
 
-    { CTRL_STATIC, 
+    { CTRL_STATIC,
         WS_CHILD | WS_VISIBLE | SS_LEFT,
         210, 142, 15, 18,
-        IDC_CSD_NOTE_S, 
-        "S",  
+        IDC_CSD_NOTE_S,
+        "S",
         0, WS_EX_TRANSPARENT
     },
 
-    { CTRL_STATIC, 
+    { CTRL_STATIC,
         WS_CHILD | WS_VISIBLE | SS_LEFT,
         210, 162, 15, 18,
-        IDC_CSD_NOTE_V, 
-        "V",  
+        IDC_CSD_NOTE_V,
+        "V",
         0, WS_EX_TRANSPARENT
     },
 
-    { CTRL_STATIC, 
+    { CTRL_STATIC,
         WS_CHILD | WS_VISIBLE | SS_LEFT,
         260, 122, 15, 18,
-        IDC_CSD_NOTE_R, 
-        "R",  
+        IDC_CSD_NOTE_R,
+        "R",
         0, WS_EX_TRANSPARENT
     },
 
-    { CTRL_STATIC, 
+    { CTRL_STATIC,
         WS_CHILD | WS_VISIBLE | SS_LEFT,
         260, 142, 15, 18,
-        IDC_CSD_NOTE_G, 
-        "G",  
+        IDC_CSD_NOTE_G,
+        "G",
         0, WS_EX_TRANSPARENT
     },
 
-    { CTRL_STATIC, 
+    { CTRL_STATIC,
         WS_CHILD | WS_VISIBLE | SS_LEFT,
         260, 162, 15, 18,
-        IDC_CSD_NOTE_B, 
-        "B",  
+        IDC_CSD_NOTE_B,
+        "B",
         0, WS_EX_TRANSPARENT
     },
 
-    { CTRL_SLEDIT, 
+    { CTRL_SLEDIT,
         WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP,
         225, 120, 27, 18,
-        IDC_CSD_VALUE_H, 
-        "180",  
-        0,0 
+        IDC_CSD_VALUE_H,
+        "180",
+        0,0
     },
 
-    { CTRL_SLEDIT, 
+    { CTRL_SLEDIT,
         WS_CHILD | WS_VISIBLE | WS_BORDER |WS_TABSTOP,
         225, 140, 27, 18,
-        IDC_CSD_VALUE_S, 
-        "50",  
-        0,0 
+        IDC_CSD_VALUE_S,
+        "50",
+        0,0
     },
 
-    { CTRL_SLEDIT, 
+    { CTRL_SLEDIT,
         WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP,
         225, 160, 27, 18,
-        IDC_CSD_VALUE_V, 
-        "50",  
-        0,0 
+        IDC_CSD_VALUE_V,
+        "50",
+        0,0
     },
 
-    { CTRL_SLEDIT, 
+    { CTRL_SLEDIT,
         WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP,
         280, 120, 27, 18,
-        IDC_CSD_VALUE_R, 
-        "64",  
-        0,0 
+        IDC_CSD_VALUE_R,
+        "64",
+        0,0
     },
 
-    { CTRL_SLEDIT, 
+    { CTRL_SLEDIT,
         WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP,
         280, 140, 27, 18,
-        IDC_CSD_VALUE_G, 
-        "128",  
+        IDC_CSD_VALUE_G,
+        "128",
         0, 0
     },
 
-    { CTRL_SLEDIT, 
+    { CTRL_SLEDIT,
         WS_CHILD | WS_VISIBLE | WS_BORDER | WS_TABSTOP,
         280, 160, 27, 18,
-        IDC_CSD_VALUE_B, 
-        "128",  
-        0,0 
+        IDC_CSD_VALUE_B,
+        "128",
+        0,0
     },
 
-    { CTRL_BUTTON, 
+    { CTRL_BUTTON,
         WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON,
-        160 , 185, 150, 20 , 
-        IDC_CSD_ADD, 
-        "Add to custom", 
-        0 
+        160 , 185, 150, 20 ,
+        IDC_CSD_ADD,
+        "Add to custom",
+        0
     },
 
 
-    { CTRL_BUTTON, 
+    { CTRL_BUTTON,
         WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON,
-        7, 185, 70, 20, 
-        IDC_CSD_OK, 
-        "Ok", 
-        0 
+        7, 185, 70, 20,
+        IDC_CSD_OK,
+        "Ok",
+        0
     },
 
-    { CTRL_BUTTON, 
+    { CTRL_BUTTON,
         WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON,
-        80, 185, 70, 20, 
-        IDC_CSD_CANCEL, 
-        "Cancel", 
-        0 
+        80, 185, 70, 20,
+        IDC_CSD_CANCEL,
+        "Cancel",
+        0
     }
 
 };
 
 DLGTEMPLATE DefColorDlg =
 {
-    WS_DLGFRAME | WS_BORDER | WS_CAPTION, 
+    WS_DLGFRAME | WS_BORDER | WS_CAPTION,
     WS_EX_CLIPCHILDREN,
-    0, 0, 320, 240, 
-    "Color", 0, 0, 
-    TABLESIZE(DefColorCtrl), 
-    DefColorCtrl 
+    0, 0, 320, 240,
+    "Color", 0, 0,
+    TABLESIZE(DefColorCtrl),
+    DefColorCtrl
 };
 
 CTRLDATA DefSimpleColorCtrl [] =
@@ -265,39 +265,39 @@ CTRLDATA DefSimpleColorCtrl [] =
         0, WS_EX_TRANSPARENT
     },
 
-    { CTRL_BUTTON, 
+    { CTRL_BUTTON,
         WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON,
-        7, 115, 70, 20, 
-        IDC_CSD_OK, 
-        "Ok", 
-        0 
+        7, 115, 70, 20,
+        IDC_CSD_OK,
+        "Ok",
+        0
     },
 
-    { CTRL_BUTTON, 
+    { CTRL_BUTTON,
         WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON,
-        80, 115, 70, 20, 
-        IDC_CSD_CANCEL, 
-        "Cancel", 
-        0 
+        80, 115, 70, 20,
+        IDC_CSD_CANCEL,
+        "Cancel",
+        0
     }
 
 };
 
 DLGTEMPLATE DefSimpleColorDlg =
 {
-    WS_DLGFRAME | WS_BORDER | WS_CAPTION, 
+    WS_DLGFRAME | WS_BORDER | WS_CAPTION,
     WS_EX_NONE,
-    0, 0, 163, 165, 
-    "Color", 0, 0, 
-    TABLESIZE(DefSimpleColorCtrl), 
-    DefSimpleColorCtrl 
+    0, 0, 163, 165,
+    "Color", 0, 0,
+    TABLESIZE(DefSimpleColorCtrl),
+    DefSimpleColorCtrl
 };
 
 static inline void drawWindow3DFrame(HWND hwnd, HDC hdc, const RECT* rt)
 {
     WINDOW_ELEMENT_RENDERER * wrdr = GetWindowInfo(hwnd)->we_rdr;
     if(wrdr){
-		DWORD color;
+        DWORD color;
         HDC hdct = hdc;
         if(hdct == HDC_INVALID)
             hdct = GetClientDC(hwnd);
@@ -344,7 +344,7 @@ static int getSlEditTextPrepareInsert(HWND hwnd, int ch, char* szText, int maxle
     SendMessage(hwnd,EM_GETSEL,maxlen, (LPARAM)szText);
     if(GetWindowText(hwnd, szText, maxlen-1)<=0)
         return 0;
-    
+
     insertbegin = SendMessage(hwnd, EM_GETSELPOS,(WPARAM)&line_pos, (LPARAM)&char_pos);
     insertend = SendMessage(hwnd, EM_GETCARETPOS,(WPARAM)&line_pos, (LPARAM)&char_pos);
     if(insertbegin > insertend){
@@ -398,13 +398,13 @@ static LRESULT sleditNumberLimitProc(HWND hwnd, UINT message, WPARAM wParam, LPA
             int max = dw >> 16;
             switch(wParam){
             case 127:
-            case '\b': 
+            case '\b':
                 _oldSleditProc(hwnd, message, wParam, lParam);
                 if(GetWindowTextLength(hwnd) <= 0)
                     SetEditInt(hwnd, 0);
                 return 0;
             case '0': case '1': case '2': case '3': case '4':
-			case '5': case '6': case '7': case '8': case '9':
+            case '5': case '6': case '7': case '8': case '9':
                 if(wParam == '0'){
                     if(GetWindowTextLength(hwnd) >= 1 && SendMessage(hwnd, EM_GETCARETPOS,0,0) <= 0)
                         return 0; //put '0' in the head of a value will not change number's value
@@ -418,7 +418,7 @@ static LRESULT sleditNumberLimitProc(HWND hwnd, UINT message, WPARAM wParam, LPA
                 }
 
                 if(getSlEditTextPrepareInsert(hwnd,(int)wParam, szNumber,sizeof(szNumber))<=0)
-                    break; //ok vertify 
+                    break; //ok vertify
                 value = atoi(szNumber);
                 if(value < min)
                 {
@@ -466,7 +466,7 @@ static int DrawIndication (HDC hdc, PSCOLORDIA scld)
     scld->py = RECTH(scld->rcSpace) - scld->clrs * RECTH(scld->rcSpace)/100;
     SetBrushColor (hdc, RGB2Pixel (hdc, 0, 0, 0));
     Circle(hdc, scld->px, scld->py, 5);
-    
+
     return 0;
 }
 
@@ -479,17 +479,17 @@ static int DrawColorSpace (HDC hdc, int x, int y, int w, int h, PSCOLORDIA scld)
     DrawIndication (mdc, scld);
     BitBlt (mdc, 0, 0, w, h, hdc, x, y, 0);
     DeleteMemDC (mdc);
-    
+
     return 0;
 }
 
 static RGB _rgbCustom[6] = {
-	{ 0xFF,0xFF,0xFF,0xFF },
-	{ 0xFF,0xFF,0xFF,0xFF },
-	{ 0xFF,0xFF,0xFF,0xFF },
-	{ 0xFF,0xFF,0xFF,0xFF },
-	{ 0xFF,0xFF,0xFF,0xFF },
-	{ 0xFF,0xFF,0xFF,0xFF }
+    { 0xFF,0xFF,0xFF,0xFF },
+    { 0xFF,0xFF,0xFF,0xFF },
+    { 0xFF,0xFF,0xFF,0xFF },
+    { 0xFF,0xFF,0xFF,0xFF },
+    { 0xFF,0xFF,0xFF,0xFF },
+    { 0xFF,0xFF,0xFF,0xFF }
 };
 
 static void InitColorPanels(HWND hDlg)
@@ -514,7 +514,7 @@ static void InitColorPanels(HWND hDlg)
         { 0x80, 0x00, 0x80, 0xFF}, /* Very Dark Yellow */
         { 0xC0, 0xFF, 0xFF, 0xFF}, /* Light Cyan */
         { 0x00, 0xFF, 0xFF, 0xFF}, /* Cyan */
-        { 0x00, 0xC0, 0xC0, 0xFF}, /* Dark Cyan */ 
+        { 0x00, 0xC0, 0xC0, 0xFF}, /* Dark Cyan */
         { 0xFF, 0xFF, 0xC0, 0xFF}, /* Light Magenta */
         { 0xFF, 0xFF, 0x00, 0xFF}, /* Magenta */
         { 0xC0, 0xC0, 0x00, 0xFF}, /* Dark Magenta */
@@ -528,12 +528,12 @@ static void InitColorPanels(HWND hDlg)
         { 0x00, 0x00, 0x00, 0xFF}  /* Black */
     };
 
-    RGBCELLINFO rgbcellInfoBasic = { 
-        0, 0, 
+    RGBCELLINFO rgbcellInfoBasic = {
+        0, 0,
         sizeof(rgbBasics)/sizeof(RGB),
         rgbBasics
     };
-    
+
     hctrl = GetDlgItem(hDlg, IDC_CSD_BASIC_COLOR);
     SendMessage(hctrl, CP_SETROWCOL, 5, 6);
     SendMessage(hctrl, CP_SETCELLS, 0, (LPARAM)&rgbcellInfoBasic);
@@ -568,7 +568,7 @@ static int DrawYSpace ( HDC hdc, int x, int y, int w, int h, PSCOLORDIA scld)
     Uint8   r, g, b;
 
     SelectClipRect(hdc, &scld->rcYSpace);
-    
+
     mdc = CreateCompatibleDCEx (hdc, w, 101);
     for (i = 0; i <= 100; i ++) {
         HSV2RGB (scld->clrh, scld->clrs, i, &r, &g, &b );
@@ -580,7 +580,7 @@ static int DrawYSpace ( HDC hdc, int x, int y, int w, int h, PSCOLORDIA scld)
     FillBox (mdc, (w>>2)*3, 0, w, 101);
     StretchBlt (mdc, 0, 0, w, 101, hdc, x, y, w, h, 0);
     DeleteMemDC (mdc);
-    
+
     scld->pz = scld->clrv * h / 100;
     SetPenColor (hdc, PIXEL_black);
     MoveTo (hdc, x+(w>>2)*3-1, y + scld->pz);
@@ -589,18 +589,18 @@ static int DrawYSpace ( HDC hdc, int x, int y, int w, int h, PSCOLORDIA scld)
     LineTo (hdc, x+w-1, (scld->pz+2 >= h ? (y+h) : (y+scld->pz+2)));
 
     SelectClipRect(hdc, NULL);
-    
+
     return 0;
 }
 
 static int DrawSelSpace (HDC dc, int x, int y, int w, int h, PSCOLORDIA scld)
 {
     Uint8 r, g, b;
-    
+
     HSV2RGB (scld->clrh, scld->clrs, scld->clrv, &r, &g, &b);
     SetBrushColor (dc, RGB2Pixel(dc, r, g, b));
     FillBox (dc, x, y, w, h);
-    
+
     return 0;
 }
 
@@ -611,15 +611,15 @@ static int DrawSelSpace (HDC dc, int x, int y, int w, int h, PSCOLORDIA scld)
 static int DrawAllSpace (HWND hDlg, HDC dc, PSCOLORDIA scld)
 {
     DrawRectFrame(hDlg, dc, &scld->rcSpace,2);
-    DrawColorSpace (dc, scld->rcSpace.left, scld->rcSpace.top, 
+    DrawColorSpace (dc, scld->rcSpace.left, scld->rcSpace.top,
             RECTW(scld->rcSpace), RECTH(scld->rcSpace), scld);
 
     DrawRectFrame(hDlg, dc, &scld->rcYSpace,2);
-    DrawYSpace (dc, scld->rcYSpace.left, scld->rcYSpace.top, 
+    DrawYSpace (dc, scld->rcYSpace.left, scld->rcYSpace.top,
             RECTW(scld->rcYSpace), RECTH(scld->rcYSpace), scld);
 
     DrawRectFrame(hDlg, dc, &scld->rcSelSpace,2);
-    DrawSelSpace (dc, scld->rcSelSpace.left, scld->rcSelSpace.top, 
+    DrawSelSpace (dc, scld->rcSelSpace.left, scld->rcSelSpace.top,
                 RECTW(scld->rcSelSpace), RECTH(scld->rcSelSpace), scld);
     return 0;
 }
@@ -631,9 +631,9 @@ static void SetValue (HWND hDlg, PSCOLORDIA scld, int flag)
 {
 
     if(flag & SVF_HSV){
-        SetDlgEditInt(hDlg, IDC_CSD_VALUE_H, scld->clrh);    
-        SetDlgEditInt(hDlg, IDC_CSD_VALUE_S, scld->clrs);    
-        SetDlgEditInt(hDlg, IDC_CSD_VALUE_V, scld->clrv);    
+        SetDlgEditInt(hDlg, IDC_CSD_VALUE_H, scld->clrh);
+        SetDlgEditInt(hDlg, IDC_CSD_VALUE_S, scld->clrs);
+        SetDlgEditInt(hDlg, IDC_CSD_VALUE_V, scld->clrv);
     }
 
     if(flag & SVF_RGB){
@@ -649,39 +649,39 @@ static void SetValue (HWND hDlg, PSCOLORDIA scld, int flag)
 static void UpdateValue (HWND hDlg, int id, PSCOLORDIA scld)
 {
     Uint8 r, g, b;
-    
+
     HDC dc = GetClientDC (hDlg);
     int value = GetDlgEditInt(hDlg, id);
     int flag = 0;
-       
+
     HSV2RGB(scld->clrh, scld->clrs, scld->clrv, &r, &g, &b);
     switch (id) {
-    case IDC_CSD_VALUE_H:  
+    case IDC_CSD_VALUE_H:
         scld->clrh = value;
         flag |= SVF_RGB;
         break;
-    case IDC_CSD_VALUE_S:  
+    case IDC_CSD_VALUE_S:
         scld->clrs = value;
         flag |= SVF_RGB;
         break;
-    case IDC_CSD_VALUE_V:  
+    case IDC_CSD_VALUE_V:
         scld->clrv = value;
         flag |= SVF_RGB;
         break;
-    case IDC_CSD_VALUE_R:  
+    case IDC_CSD_VALUE_R:
         RGB2HSV (value, g, b, &scld->clrh, &scld->clrs, &scld->clrv);
         flag |= SVF_HSV;
         break;
-    case IDC_CSD_VALUE_G:  
+    case IDC_CSD_VALUE_G:
         RGB2HSV (r,value, b, &scld->clrh, &scld->clrs, &scld->clrv);
         flag |= SVF_HSV;
         break;
-    case IDC_CSD_VALUE_B:  
+    case IDC_CSD_VALUE_B:
         RGB2HSV (r, g, value, &scld->clrh, &scld->clrs, &scld->clrv);
         flag |= SVF_HSV;
         break;
     }
-    
+
     SetValue(hDlg, scld, flag);
     DrawAllSpace (hDlg, dc, scld);
     ReleaseDC (dc);
@@ -690,7 +690,7 @@ static void UpdateValue (HWND hDlg, int id, PSCOLORDIA scld)
 static int InitScolorDia (HWND hDlg, PSCOLORDIA scld, PCOLORDLGDATA pcdd)
 {
     char str[8];
-    
+
     SetRect(&scld->rcSpace, 162,12,162+118, 12+98);
     SetRect(&scld->rcYSpace, 289,12,289+18, 12+98);
     SetRect(&scld->rcSelSpace, 162, 122, 162+38, 122+38);
@@ -717,7 +717,7 @@ static int InitScolorDia (HWND hDlg, PSCOLORDIA scld, PCOLORDLGDATA pcdd)
 static int AddColor2Custom (HWND hDlg, Uint8 r, Uint8 g, Uint8 b)
 {
     RGB rgb = {r, g, b, 0xFF};
-      SendDlgItemMessage(hDlg, IDC_CSD_CUSTOM, CP_INSERTCOLOR, 0, *(LPARAM*)&rgb); 
+      SendDlgItemMessage(hDlg, IDC_CSD_CUSTOM, CP_INSERTCOLOR, 0, *(LPARAM*)&rgb);
     return 0;
 }
 
@@ -729,14 +729,14 @@ static int ResetAllSpace (HWND hDlg, PSCOLORDIA scld)
     if(!getSelectColorPanel(hDlg,&color))
         return -1;
 
-    RGB2HSV (color.r, color.g, color.b, 
+    RGB2HSV (color.r, color.g, color.b,
             &scld->clrh, &scld->clrs, &scld->clrv );
-    
+
     hdc = GetClientDC (hDlg);
     DrawAllSpace (hDlg, hdc, scld);
     SetValue (hDlg, scld, SVF_ALL);
     ReleaseDC (hdc);
-    
+
     return 0;
 }
 
@@ -745,7 +745,7 @@ static int SaveColor (HWND hDlg, PSCOLORDIA scld)
     scld->H = scld->clrh;
     scld->S = scld->clrs;
     scld->V = scld->clrv;
-    HSV2RGB (scld->clrh, scld->clrs, scld->clrv, 
+    HSV2RGB (scld->clrh, scld->clrs, scld->clrv,
              &scld->R, &scld->G, &scld->B);
     scld->PIXEL = RGB2Pixel (HDC_SCREEN, scld->R, scld->G, scld->B);
 
@@ -771,7 +771,7 @@ LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
     int         i, j, x, y;
     int         id, msg, scancode;
     PSCOLORDIA  scld;
-    
+
     switch (message)
     {
         case MSG_INITDIALOG:
@@ -782,11 +782,11 @@ LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
                     fprintf(stderr, "DefColorDialogProc : memoy alloc error!");
                     return -1;
                 }
-                
+
                 if (0 == InitScolorDia (hDlg, scld, (PCOLORDLGDATA)lParam))
                 {
                     hdc = GetClientDC (hDlg);
-                    scld->SpaceDC = CreateCompatibleDCEx(hdc, 
+                    scld->SpaceDC = CreateCompatibleDCEx(hdc,
                             RECTW(scld->rcSpace), RECTH(scld->rcSpace));
                     mdc = CreateCompatibleDCEx (hdc, 360, 101);
                     for (i =  0; i <= 360; i ++) {
@@ -796,14 +796,14 @@ LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
                         }
                     }
 
-                    StretchBlt(mdc, 0, 0, 360, 256, scld->SpaceDC, 
+                    StretchBlt(mdc, 0, 0, 360, 256, scld->SpaceDC,
                             0, 0, RECTW(scld->rcSpace), RECTH(scld->rcSpace), 0);
                     DeleteMemDC(mdc);
                     ReleaseDC(hdc);
                 }
                 else
                 {
-                    scld->SpaceDC = HDC_INVALID; 
+                    scld->SpaceDC = HDC_INVALID;
                 }
 
                 SetWindowAdditionalData (hDlg, (LPARAM)scld);
@@ -812,34 +812,34 @@ LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
                 InitDlgLimitEdit(hDlg, IDC_CSD_VALUE_G,0, 255);
                 InitDlgLimitEdit(hDlg, IDC_CSD_VALUE_B,0, 255);
 
-                
+
                 InitDlgLimitEdit(hDlg, IDC_CSD_VALUE_H,0, 360);
                 InitDlgLimitEdit(hDlg, IDC_CSD_VALUE_S,0, 100);
                 InitDlgLimitEdit(hDlg, IDC_CSD_VALUE_V,0, 100);
 
                 InitColorPanels(hDlg);
- 
-                if (scld->pclr->hook) 
+
+                if (scld->pclr->hook)
                 {
                     return scld->pclr->hook (hDlg, message, wParam, lParam);
                 }
                 return TRUE;
-                
-               }        
+
+               }
             break;
-        
+
         case MSG_CLOSE:
             EndDialog (hDlg, IDCANCEL);
             break;
 
         case MSG_DESTROY:
             scld = (PSCOLORDIA)GetWindowAdditionalData (hDlg);
-			save_custom_colors(GetDlgItem(hDlg, IDC_CSD_CUSTOM));
+            save_custom_colors(GetDlgItem(hDlg, IDC_CSD_CUSTOM));
             if (scld->SpaceDC != HDC_INVALID)
                 DeleteMemDC (scld->SpaceDC);
             free(scld);
             break;
-        
+
         case MSG_PAINT:
             {
                 hdc  = BeginPaint (hDlg);
@@ -876,14 +876,14 @@ LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
                                 id==IDC_CSD_CUSTOM?IDC_CSD_BASIC_COLOR:IDC_CSD_CUSTOM,
                                 CP_SETSELCELL,
                                 (WPARAM)-1,(LPARAM) -1); //cancel cell
-                            ResetAllSpace(hDlg,scld);    
+                            ResetAllSpace(hDlg,scld);
                         }
                         break;
                     case IDC_CSD_ADD:
                         {
                             hdc = GetClientDC (hDlg);
                             ReleaseDC (hdc);
-                            HSV2RGB (scld->clrh, scld->clrs, scld->clrv, 
+                            HSV2RGB (scld->clrh, scld->clrs, scld->clrv,
                                    // &scld->R, &scld->G, &scld->B);
                                     &r, &g, &b);
                             AddColor2Custom (hDlg, r, g, b);
@@ -891,8 +891,8 @@ LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
                         }
                     case IDC_CSD_CANCEL:
                         {
-                            if (!scld->pclr->hook || (scld->pclr->hook 
-                                && !scld->pclr->hook (hDlg, MSG_COLORSELCANCEL, 
+                            if (!scld->pclr->hook || (scld->pclr->hook
+                                && !scld->pclr->hook (hDlg, MSG_COLORSELCANCEL,
                                     0, (LPARAM)scld->pclr)))
                             {
                                 EndDialog (hDlg, IDCANCEL);
@@ -904,8 +904,8 @@ LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
                     case IDC_CSD_OK:
                         {
                             SaveColor(hDlg, scld);
-                            if (!scld->pclr->hook || (scld->pclr->hook 
-                                && !scld->pclr->hook (hDlg, MSG_COLORSELOK, 
+                            if (!scld->pclr->hook || (scld->pclr->hook
+                                && !scld->pclr->hook (hDlg, MSG_COLORSELOK,
                                     0, (LPARAM)scld->pclr)))
                             {
                                 EndDialog (hDlg, IDOK);
@@ -919,7 +919,7 @@ LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
                 }
                 break;
             }
-            
+
         case MSG_LBUTTONDOWN:
             {
                 x    = LOSWORD (lParam);
@@ -975,14 +975,14 @@ LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
         default:
             break;
     }
-    
+
     return DefaultDialogProc (hDlg, message, wParam, lParam);
 }
 
 /**
- * 
+ *
  */
-BOOL ColorSelectDialog (PDLGTEMPLATE dlg_template, 
+BOOL ColorSelectDialog (PDLGTEMPLATE dlg_template,
         HWND hwnd, WNDPROC proc, PCOLORDLGDATA pcdd)
 {
     PDLGTEMPLATE color_dlg;
@@ -1007,7 +1007,7 @@ BOOL ColorSelectDialog (PDLGTEMPLATE dlg_template,
     else {
         color_proc = DefColorDialogProc;
     }
-        
+
     return ShowCommonDialog (color_dlg, hwnd, color_proc, pcdd);
 }
 

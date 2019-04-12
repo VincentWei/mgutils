@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -96,13 +96,13 @@ BOOL skin_init (skin_head_t* skin, skin_event_cb_t event_cb, skin_msg_cb_t msg_c
 #endif
 
     InitFreeClipRectList (&skin->rc_heap, skin->nr_items);
-    
+
     item = skin->items;
     for (i = 0; i < skin->nr_items; i++, item++) {
-    
+
         /* init item's #hostskin# */
         item->hostskin = skin;
-        
+
         /* init item's #ops# */
         if ( !item_init_ops (item) ){
             fprintf (stderr, "Error when init item %d's ops\n", item->id);
@@ -110,11 +110,11 @@ BOOL skin_init (skin_head_t* skin, skin_event_cb_t event_cb, skin_msg_cb_t msg_c
         }
         if (item->ops->init && (item->ops->init (skin, item)==0) )
             continue;
-        
+
         /* init item's #shape# */
         if ( item->bmp_index >= 0 )
             bmp = &item->hostskin->bmps[item->bmp_index];
-            
+
         item->shape.left = item->x;
         item->shape.top = item->y;
 
@@ -146,18 +146,18 @@ BOOL skin_init (skin_head_t* skin, skin_event_cb_t event_cb, skin_msg_cb_t msg_c
         }
 
         switch (item->style & SI_TEST_SHAPE_MASK){
-        case SI_TEST_SHAPE_RECT: 
+        case SI_TEST_SHAPE_RECT:
             SetClipRgn (&item->region, &item->rc_hittest);
             break;
 #ifdef _USE_NEWGAL
-        case SI_TEST_SHAPE_ELLIPSE: 
-            InitEllipseRegion (&item->region, 
+        case SI_TEST_SHAPE_ELLIPSE:
+            InitEllipseRegion (&item->region,
                     (item->rc_hittest.left + item->rc_hittest.right) / 2,
                     (item->rc_hittest.top + item->rc_hittest.bottom) / 2,
                     (item->rc_hittest.right - item->rc_hittest.left) / 2,
                     (item->rc_hittest.bottom - item->rc_hittest.top) / 2);
             break;
-        case SI_TEST_SHAPE_LOZENGE: 
+        case SI_TEST_SHAPE_LOZENGE:
             if ( pt_num == 0 ){
                 pt_num = 4;
                 pt[0].x = item->rc_hittest.left;
@@ -169,10 +169,10 @@ BOOL skin_init (skin_head_t* skin, skin_event_cb_t event_cb, skin_msg_cb_t msg_c
                 pt[3].x = pt[1].x;
                 pt[3].y = item->rc_hittest.bottom;
             }
-        case SI_TEST_SHAPE_LTRIANGLE: 
-        case SI_TEST_SHAPE_RTRIANGLE: 
-        case SI_TEST_SHAPE_UTRIANGLE: 
-        case SI_TEST_SHAPE_DTRIANGLE: 
+        case SI_TEST_SHAPE_LTRIANGLE:
+        case SI_TEST_SHAPE_RTRIANGLE:
+        case SI_TEST_SHAPE_UTRIANGLE:
+        case SI_TEST_SHAPE_DTRIANGLE:
             if ( pt_num == 0 ) {
                 pt_num = 3;
                 pt[0].x = item->rc_hittest.left;    pt[0].y = item->rc_hittest.bottom;
@@ -180,21 +180,21 @@ BOOL skin_init (skin_head_t* skin, skin_event_cb_t event_cb, skin_msg_cb_t msg_c
                 pt[2].x = item->rc_hittest.right;    pt[2].y = item->rc_hittest.top;
                 pt[3].x = item->rc_hittest.right;    pt[3].y = item->rc_hittest.bottom;
                 switch (item->style & SI_TEST_SHAPE_MASK){
-                    case SI_TEST_SHAPE_LTRIANGLE: 
+                    case SI_TEST_SHAPE_LTRIANGLE:
                         pt[1] = pt[2];    pt[2] = pt[3];
                         pt[0].y = (pt[1].y + pt[2].y) / 2;
                         break;
-                    case SI_TEST_SHAPE_UTRIANGLE: 
+                    case SI_TEST_SHAPE_UTRIANGLE:
                         pt[1] = pt[3];    pt[2] = pt[0];
                         pt[0].x = (pt[3].x + pt[0].x) / 2;
                         pt[0].y = item->rc_hittest.top;
                         break;
-                    case SI_TEST_SHAPE_RTRIANGLE: 
+                    case SI_TEST_SHAPE_RTRIANGLE:
                         pt[1] = pt[1];    pt[2] = pt[0];
                         pt[0].y = (pt[1].y + pt[2].y) / 2;
                         pt[0].x = item->rc_hittest.right;
                         break;
-                    case SI_TEST_SHAPE_DTRIANGLE: 
+                    case SI_TEST_SHAPE_DTRIANGLE:
                         pt[1] = pt[1];    pt[2] = pt[2];
                         pt[0].x = (pt[1].x + pt[2].x) / 2;
                         break;
@@ -306,7 +306,7 @@ static void on_paint (HWND hwnd, skin_head_t* skin)
 
     /* draw skin window background */
     //FillBoxWithBitmap (hdc, 0, 0, 0, 0, &skin->bmps[skin->bk_bmp_index]);
-    
+
     /* draw items */
     item = skin->items;
     for (i = 0; i < skin->nr_items; i++, item++) {
@@ -322,7 +322,7 @@ static skin_item_t* find_item (skin_head_t* skin, int x, int y)
 {
     int i;
     skin_item_t* item;
-    
+
      item = skin->items;
     for ( i = 0; i < skin->nr_items; i++, item++) {
         if ( (item->style & SI_TYPE_MASK) == SI_TYPE_CONTROL )    continue;
@@ -343,7 +343,7 @@ static void on_lbuttondown (HWND hwnd, skin_head_t* skin, int x, int y)
 
     /* if an enabled item is mousedowned, call it's msg proc : LBUTTONDOWN */
     if (item && item_enable(item)){
-        if (item->ops->item_msg_proc 
+        if (item->ops->item_msg_proc
                 && item->ops->item_msg_proc (item, SKIN_MSG_LBUTTONDOWN, x, y)){
             if (skin->hilighted != item) {
                 set_item_hilighted (skin->hilighted, FALSE);
@@ -423,7 +423,7 @@ static void on_mousemove (HWND hwnd, skin_head_t* skin, int x, int y)
         if ( item->ops && item->ops->op )    \
             item->ops->op (item);    \
     }    \
-}    
+}
 
 static LRESULT SkinWndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -437,19 +437,19 @@ static LRESULT SkinWndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
 
     if (skin == NULL)
         return 0;
-     
+
     /* msg_cb */
     if ( skin && skin->msg_cb ){
         skin->msg_cb (hwnd, message, wParam, lParam, &result);
     }
     switch (result){
-    case MSG_CB_GOON: /* continue */ 
+    case MSG_CB_GOON: /* continue */
         switch (message) {
         case MSG_CREATE:
             skin->hwnd = hwnd;
             ITEM_OPS(skin,on_create);
             break;
-            
+
         case MSG_DESTROY:
             ITEM_OPS(skin,on_destroy);
             break;
@@ -494,7 +494,7 @@ static LRESULT SkinWndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
             break;
 
         case MSG_MOUSEMOVE:
-            x = LOSWORD (lParam); 
+            x = LOSWORD (lParam);
             y = HISWORD (lParam);
             if (wParam & KS_CAPTURED)
                 ScreenToClient (hwnd, &x, &y);
@@ -502,7 +502,7 @@ static LRESULT SkinWndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
             break;
 
         case MSG_LBUTTONDOWN:
-            x = LOSWORD (lParam); 
+            x = LOSWORD (lParam);
             y = HISWORD (lParam);
             on_lbuttondown (hwnd, skin, x, y);
             break;
@@ -522,7 +522,7 @@ static LRESULT SkinWndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lPara
                 DestroyMainWindow (hwnd);
             return 0;
         }
-    case MSG_CB_DEF_GOON:    /* continue default only */ 
+    case MSG_CB_DEF_GOON:    /* continue default only */
         if (IsControl(hwnd)) {
             return DefaultControlProc (hwnd, message, wParam, lParam);
         }
@@ -559,7 +559,7 @@ BOOL is_skin_main_window (HWND hwnd)
 /* Internal use extended style. */
 #define WS_EX_MODALDISABLED     0x10000000L
 
-HWND create_skin_main_window_ex(skin_head_t* skin, HWND hosting, 
+HWND create_skin_main_window_ex(skin_head_t* skin, HWND hosting,
         int lx, int ty, int rx, int by, DWORD dwExStyle, BOOL modal)
 {
     MSG Msg;
@@ -583,7 +583,7 @@ HWND create_skin_main_window_ex(skin_head_t* skin, HWND hosting,
     skin->hwnd = CreateMainWindow (&CreateInfo);
     if (skin->hwnd == HWND_INVALID)
         return HWND_INVALID;
-                
+
     ShowWindow (skin->hwnd, SW_SHOWNORMAL);
 
     /* modal window */
@@ -599,7 +599,7 @@ HWND create_skin_main_window_ex(skin_head_t* skin, HWND hosting,
                 IncludeWindowExStyle (hosting, WS_EX_MODALDISABLED);
             }
         }
-                
+
         while (GetMessage (&Msg, skin->hwnd)) {
             TranslateMessage (&Msg);
             DispatchMessage (&Msg);
@@ -673,7 +673,7 @@ skin_item_t* skin_get_item (skin_head_t* skin, int id)
     skin_item_t *item = skin_get_item (skin, id); \
     if (!item || !item->ops || !item->ops->func)   \
         return error;
-    
+
 const char* skin_get_item_label (skin_head_t* skin, int id)
 {
     CHECK_OPS(get_value, NULL);
@@ -683,7 +683,7 @@ const char* skin_get_item_label (skin_head_t* skin, int id)
 
 BOOL skin_set_item_label (skin_head_t* skin, int id, const char* label)
 {
-    BOOL ret;    
+    BOOL ret;
     CHECK_OPS(set_value, FALSE);
 
     ret = (BOOL)( item->ops->set_value (item, (DWORD)label) );
@@ -701,18 +701,18 @@ DWORD skin_set_item_status ( skin_head_t* skin, int id, DWORD status )
 {
     skin_item_t *item = skin_get_item (skin, id);
 
-    DWORD old_status =  get_item_status (item); 
+    DWORD old_status =  get_item_status (item);
     if ( old_status ){
         item->style |= status;
         refresh_item (item);
     }
-    return old_status; 
+    return old_status;
 }
 
 DWORD skin_show_item (skin_head_t* skin, int id, BOOL show)
 {
     skin_item_t *item = skin_get_item (skin, id);
-    
+
     set_item_visible ( item, show );
 
     return get_item_status ( item );
@@ -721,7 +721,7 @@ DWORD skin_show_item (skin_head_t* skin, int id, BOOL show)
 DWORD skin_enable_item (skin_head_t* skin, int id, BOOL enable)
 {
     skin_item_t *item = skin_get_item (skin, id);
-    
+
     set_item_disabled( item, !enable );
 
     return get_item_status ( item );
@@ -763,9 +763,9 @@ BOOL skin_set_thumb_pos (skin_head_t* skin, int id, int pos)
     CHECK_OPS(set_value, FALSE);
 
     ret = (BOOL) (item->ops->set_value (item, pos) );
-    
+
     refresh_item (item);
-    return ret; 
+    return ret;
 }
 
 BOOL skin_get_slider_info (skin_head_t* skin, int id, sie_slider_t* sie)
@@ -792,7 +792,7 @@ BOOL skin_set_slider_info (skin_head_t* skin, int id, const sie_slider_t* sie)
 
 int skin_scale_slider_pos (const sie_slider_t* org, int new_min, int new_max)
 {
-    return (.5 + new_min + 1. * (new_max - new_min) * 
+    return (.5 + new_min + 1. * (new_max - new_min) *
         (org->cur_pos - org->min_pos) / (org->max_pos - org->min_pos) );
 }
 

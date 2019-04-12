@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -74,7 +74,7 @@ void WindowClearAll (PCONINFO con, int color)
 {
     HDC hdc;
     RECT rcClient;
-    
+
     GetClientRect (con->hWnd, &rcClient);
 
     hdc = GetClientDC (con->hWnd);
@@ -95,12 +95,12 @@ void WindowScrollUp (PCONINFO con, int scroll, int color)
         rcScroll.top  = 0;
         rcScroll.right = con->xmax * GetCharWidth ();
         rcScroll.bottom = con->ymax * GetCharHeight ();
-        ScrollWindow (con->hWnd, 0, -scroll * GetCharHeight (), 
+        ScrollWindow (con->hWnd, 0, -scroll * GetCharHeight (),
             &rcScroll, NULL);
     }
     else
         ScrollWindow (con->hWnd, 0, -scroll * GetCharHeight (), NULL, NULL);
-        
+
 }
 
 void WindowScrollDown (PCONINFO con, int scroll, int color)
@@ -114,26 +114,26 @@ void WindowScrollDown (PCONINFO con, int scroll, int color)
         rcScroll.top  = 0;
         rcScroll.right = con->xmax * GetCharWidth ();
         rcScroll.bottom = con->ymax * GetCharHeight ();
-        ScrollWindow (con->hWnd, 0, scroll * GetCharHeight (), 
+        ScrollWindow (con->hWnd, 0, scroll * GetCharHeight (),
             &rcScroll, NULL);
     }
     else
         ScrollWindow (con->hWnd, 0, scroll * GetCharHeight (), NULL, NULL);
 }
 
-void WindowStringPut (PCONINFO con, const char* text, 
+void WindowStringPut (PCONINFO con, const char* text,
                             int fc, int bc, int x, int y)
 {
     HDC hdc;
-    
+
 #if 0
     {
     FILE *fff;
 
     fff = fopen("/tmp/ccegb-output.log", "a");
-    fprintf (fff,"x=%d, y=%d, fc=%d, bc=%d, text=%s\n", 
+    fprintf (fff,"x=%d, y=%d, fc=%d, bc=%d, text=%s\n",
                 x, y, fc, bc, text);
-	fclose (fff);
+    fclose (fff);
     }
 #endif
 
@@ -156,10 +156,10 @@ void WindowWput (PCONINFO con, WORD word, int fc, int bc, int pos)
     szCharBuff [0] = HIBYTE (word);
     szCharBuff [1] = LOBYTE (word);
     szCharBuff [2] = '\0';
-   
+
     col = pos % con->cols;
     row = pos / con->cols;
-   
+
     hdc = GetClientDC (con->hWnd);
     SetTextColor (hdc, SysColorIndex [color_map (fc) & 0x0F]);
     SetBkColor (hdc, SysColorIndex [color_map (bc) & 0x0F]);
@@ -175,10 +175,10 @@ void WindowSput (PCONINFO con, u_char ch, int fc, int bc, int pos)
 
     szCharBuff [0] = ch;
     szCharBuff [1] = '\0';
-   
+
     col = pos % con->cols;
     row = pos / con->cols;
-   
+
     hdc = GetClientDC (con->hWnd);
     SetTextColor (hdc, SysColorIndex [color_map (fc) & 0x0F]);
     SetBkColor (hdc, SysColorIndex [color_map (bc) & 0x0F]);

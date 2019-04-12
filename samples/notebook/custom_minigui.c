@@ -1,31 +1,31 @@
 /*
  *   This file is part of mGUtils, a component for MiniGUI.
- * 
+ *
  *   Copyright (C) 2003~2018, Beijing FMSoft Technologies Co., Ltd.
  *   Copyright (C) 1998~2002, WEI Yongming
- * 
+ *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation, either version 3 of the License, or
  *   (at your option) any later version.
- * 
+ *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU General Public License for more details.
- * 
+ *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
+ *
  *   Or,
- * 
+ *
  *   As this program is a library, any link to this program must follow
  *   GNU General Public License version 3 (GPLv3). If you cannot accept
  *   GPLv3, you need to be licensed from FMSoft.
- * 
+ *
  *   If you have got a commercial license of this program, please use it
  *   under the terms and conditions of the commercial license.
- * 
+ *
  *   For more information about the commercial license, please refer to
  *   <http://www.minigui.com/en/about/licensing-policy/>.
  */
@@ -352,7 +352,7 @@ static int read_key (void)
         kbd_state [last] = 0;
     }
     else {
-        scancode = keycode_to_scancode (HIWORD (kbd_data.unicode) & 0x00FF, 
+        scancode = keycode_to_scancode (HIWORD (kbd_data.unicode) & 0x00FF,
                     LOWORD (kbd_data.unicode));
         kbd_state [scancode] = kbd_data.press ? 1 : 0;
         last = scancode;
@@ -403,7 +403,7 @@ static int wait_event (int which, int maxfd, fd_set *in, fd_set *out, fd_set *ex
     e = select (FD_SETSIZE, in, out, except, timeout) ;
 #endif
 
-    if (e > 0) { 
+    if (e > 0) {
         fd = mouse_fd;
         /* If data is present on the mouse fd, service it: */
         if (fd >= 0 && FD_ISSET (fd, in)) {
@@ -500,22 +500,22 @@ static char *PCXVFB_VALUES[] = {"pc_xvfb", "640x480-16bpp", "/usr/local/bin/qvfb
 static char *FBCON_VALUES[] = {"640x480-16bpp", ""};
 #endif
 
-static char *SYSTEM_VALUES[] = 
+static char *SYSTEM_VALUES[] =
 {
     "pc_xvfb", "pc_xvfb", "/dev/input/mice", "imps2"
 };
 
 static char *SYSTEMFONT_KEYS[] =
 {
-    "font_number", "font0", "font1", "font2", "default", 
+    "font_number", "font0", "font1", "font2", "default",
     "wchar_def", "fixed", "caption", "menu", "control"
 };
 
 static char *SYSTEMFONT_VALUES[] =
 {
     "3",
-    "rbf-fixed-rrncnn-8-16-ISO8859-1", 
-    "*-fixed-rrncnn-*-16-GB2312", 
+    "rbf-fixed-rrncnn-8-16-ISO8859-1",
+    "*-fixed-rrncnn-*-16-GB2312",
     "*-SansSerif-rrncnn-*-16-GB2312",
     "0", "1", "1", "2", "2", "2"
 };
