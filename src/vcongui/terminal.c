@@ -33,6 +33,7 @@
 #include <stdio.h>
 #define __USE_GNU
 #define __USE_XOPEN
+#define __USE_XOPEN_EXTENDED
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
