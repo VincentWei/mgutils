@@ -95,7 +95,8 @@ static inline void lzero(void *head, int n)
 static inline void lzero (void *head, int n)
 {
     int i;
-    LONG* l = (LONG*) head;
+//    LONG* l = (LONG*) head;
+    int * l = (int*) head;
 
     for (i = 0; i < (n>>2); i ++)
         l [i] = 0;
