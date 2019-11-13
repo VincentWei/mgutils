@@ -39,7 +39,7 @@
  *   under the terms and conditions of the commercial license.
  * 
  *   For more information about the commercial license, please refer to
- *   <http://www.minigui.com/en/about/licensing-policy/>.
+ *   <http://www.minigui.com/blog/minigui-licensing-policy/>.
  */
 /* 
  * $Id: taskbar.h 1 2008-01-30 07:41:08Z wangjian $
