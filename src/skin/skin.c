@@ -826,7 +826,11 @@ BOOL RegisterSkinControl (void)
     SkinClass.dwStyle        = 0;
     SkinClass.dwExStyle      = 0;
     SkinClass.hCursor        = GetSystemCursor (IDC_ARROW);
-    SkinClass.iBkColor       = COLOR_lightwhite;
+#ifdef _MGSCHEMA_COMPOSITING
+    SkinClass.dwBkColor      = COLOR_lightwhite;
+#else
+    SkinClass.iBkColor       = PIXEL_lightwhite;
+#endif
     SkinClass.WinProc        = SkinWndProc;
     SkinClass.dwAddData      = 0;
 

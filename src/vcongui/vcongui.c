@@ -697,7 +697,7 @@ static void InitCreateInfo (PMAINWINCREATE pCreateInfo,
     pCreateInfo->by
         = y + ClientHeightToWindowHeight (WS_CAPTION | WS_BORDER,
                 pConInfo->rows * GetCharHeight (), fMenu);
-    pCreateInfo->iBkColor = COLOR_black;
+    pCreateInfo->iBkColor = PIXEL_black;
     pCreateInfo->dwAddData = (DWORD)pConInfo;
     pCreateInfo->hHosting = HWND_DESKTOP;
 }

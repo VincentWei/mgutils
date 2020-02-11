@@ -300,7 +300,11 @@ BOOL RegisterColorPanel(void)
     WndClass.dwStyle     = WS_NONE;
     WndClass.dwExStyle   = WS_EX_CLIPCHILDREN;
     WndClass.hCursor     = GetSystemCursor (IDC_ARROW);
+#ifdef _MGSCHEMA_COMPOSITING
+    WndClass.dwBkColor   = GetWindowElementAttr (HWND_NULL, WE_MAINC_THREED_BODY);
+#else
     WndClass.iBkColor    = GetWindowElementPixel (HWND_NULL, WE_MAINC_THREED_BODY);
+#endif
     WndClass.WinProc     = ColorPanelProc;
     return RegisterWindowClass (&WndClass);
 }

@@ -949,7 +949,7 @@ static void InitNoteBookInfo (PMAINWINCREATE pCreateInfo, PNOTEINFO pNoteInfo)
     pCreateInfo->by
         = pNoteInfo->ty + ClientHeightToWindowHeight (WS_CAPTION | WS_BORDER,
                 pNoteInfo->rows * GetSysCharHeight (), TRUE);
-    pCreateInfo->iBkColor = COLOR_lightgray;
+    pCreateInfo->iBkColor = PIXEL_lightgray;
     pCreateInfo->dwAddData = (DWORD)pNoteInfo;
     pCreateInfo->hHosting = HWND_DESKTOP;
 }

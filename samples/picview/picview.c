@@ -506,7 +506,7 @@ int MiniGUIMain (int args, const char* arg[])
     CreateInfo.ty = MAINWINDOW_TY;
     CreateInfo.rx = MAINWINDOW_RX;
     CreateInfo.by = MAINWINDOW_BY;
-    CreateInfo.iBkColor = COLOR_lightwhite;
+    CreateInfo.iBkColor = PIXEL_lightwhite;
     CreateInfo.dwAddData = 0;
     CreateInfo.hHosting = HWND_DESKTOP;
 
