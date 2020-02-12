@@ -313,7 +313,7 @@ static inline void drawWindow3DFrame(HWND hwnd, HDC hdc, const RECT* rt)
         HDC hdct = hdc;
         if(hdct == HDC_INVALID)
             hdct = GetClientDC(hwnd);
-        color = GetWindowElementPixel(hwnd, WE_FGC_THREED_BODY);
+        color = GetWindowElementPixelEx (hwnd, hdc, WE_FGC_THREED_BODY);
         wrdr->draw_3dbox(hdc, rt, color, LFRDR_BTN_STATUS_PRESSED);
     }
 }

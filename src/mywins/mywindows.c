@@ -331,7 +331,8 @@ HWND createStatusWin (HWND hParentWnd, int width, int height,
     CreateInfo.ty = (GetGDCapability (HDC_SCREEN, GDCAP_MAXY) - height) >> 1;
     CreateInfo.rx = CreateInfo.lx + width;
     CreateInfo.by = CreateInfo.ty + height;
-    CreateInfo.iBkColor    = GetWindowElementPixel (HWND_NULL, WE_MAINC_THREED_BODY);
+    CreateInfo.iBkColor =
+        GetWindowElementPixelEx (HWND_NULL, HDC_SCREEN, WE_MAINC_THREED_BODY);
     CreateInfo.dwAddData = buf ? (DWORD) buf : (DWORD) text;
     CreateInfo.hHosting = hParentWnd;
 
@@ -381,7 +382,8 @@ HWND createProgressWin (HWND hParentWnd, const char* title, const char* label,
     CreateInfo.ty = (GetGDCapability (HDC_SCREEN, GDCAP_MAXY) - wh) >> 1;
     CreateInfo.rx = CreateInfo.lx + ww;
     CreateInfo.by = CreateInfo.ty + wh;
-    CreateInfo.iBkColor = GetWindowElementPixel (HWND_NULL, WE_MAINC_THREED_BODY);
+    CreateInfo.iBkColor =
+        GetWindowElementPixelEx (HWND_NULL, HDC_SCREEN, WE_MAINC_THREED_BODY);
     CreateInfo.dwAddData = 0L;
     CreateInfo.hHosting = hParentWnd;
 
