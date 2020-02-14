@@ -542,8 +542,8 @@ int myWinMenu (HWND hParentWnd, const char* title, const char* label,
     ww = ClientWidthToWindowWidth (DlgBoxData.dwStyle, cw);
     wh = ClientHeightToWindowHeight (DlgBoxData.dwStyle, ch, FALSE);
 
-    DlgBoxData.x = (GetGDCapability (HDC_SCREEN, GDCAP_HPIXEL) - ww)/2;
-    DlgBoxData.y = (GetGDCapability (HDC_SCREEN, GDCAP_VPIXEL) - wh)/2;
+    DlgBoxData.x = (g_rcScr.right - ww)/2;
+    DlgBoxData.y = (g_rcScr.bottom - wh)/2;
     DlgBoxData.w = ww;
     DlgBoxData.h = wh;
 
@@ -740,8 +740,8 @@ int myWinEntries (HWND hParentWnd, const char* title, const char* label,
     ww = ClientWidthToWindowWidth (DlgBoxData.dwStyle, cw);
     wh = ClientHeightToWindowHeight (DlgBoxData.dwStyle, ch, FALSE);
 
-    DlgBoxData.x = (GetGDCapability (HDC_SCREEN, GDCAP_HPIXEL) - ww)/2;
-    DlgBoxData.y = (GetGDCapability (HDC_SCREEN, GDCAP_VPIXEL) - wh)/2;
+    DlgBoxData.x = (g_rcScr.right - ww)/2;
+    DlgBoxData.y = (g_rcScr.bottom - wh)/2;
     DlgBoxData.w = ww;
     DlgBoxData.h = wh;
 
