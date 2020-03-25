@@ -1,12 +1,12 @@
 # Release Notes
 
-## Version 1.4.0
+## Version 1.5.0
 
-The MiniGUI development team announces the availability of mGUtils 1.4.0.
+The MiniGUI development team announces the availability of mGUtils 1.5.0.
 All users of MiniGUI are encouraged to use this version, and report
 any bugs and incompatibilities on GitHub:
 
-<https://github.com/VincentWei/mgutils/tree/dev-4-1>
+<https://github.com/VincentWei/mgutils/tree/rel-5-0>
 
 ### What's new in this version
 
