@@ -722,7 +722,7 @@ static LRESULT WinFileProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
     char chPath[MY_PATHMAX+1];
     char chFilter[MAX_FILTER_LEN+1];
     char chFileName[MY_NAMEMAX+1];
-    char chFullName[MY_PATHMAX+MY_NAMEMAX+1];
+    char chFullName[MY_PATHMAX+MY_NAMEMAX+2];
     HLVITEM hSelItem;
     int  nIsDir;
     LVSUBITEM subItem;
@@ -812,8 +812,18 @@ static LRESULT WinFileProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
                             break;
                         SendMessage (hCtrlWnd, LVM_GETSUBITEMTEXT,
                                 (WPARAM)hSelItem, (LPARAM)&subItem);
+#if 0
                         sprintf (chPath, "%s/%s",
                             strcmp (chPath, "/") == 0 ? "" : chPath, subItem.pszText);
+#else
+                        if (strcmp (chPath, "/") == 0) {
+                            strcat (chPath, subItem.pszText);
+                        }
+                        else {
+                            strcat (chPath, "/");
+                            strcat (chPath, subItem.pszText);
+                        }
+#endif
                         hCtrlWnd = GetDlgItem (hDlg, IDC_PATH);
                         if (GetAccessMode (hDlg, chPath, 0, TRUE) == 0){
                             GetFileAndDirList (hDlg, chPath, chFilter);

@@ -947,7 +947,7 @@ LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
     char chPath[MY_PATHMAX+1];
     char chFilter[MAX_FILTER_LEN+1];
     char chFileName[MY_NAMEMAX+1];
-    char chFullName[MY_PATHMAX+MY_NAMEMAX+1];
+    char chFullName[MY_PATHMAX+MY_NAMEMAX+2];
     GHANDLE  nSelItem;
     int  nIsDir;
     LVSUBITEM subItem;
@@ -1076,8 +1076,16 @@ LRESULT DefFileDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam
                                             sprintf(chPath,"%s\\%s",chPath,subItem.pszText);
                                     }
 #else
-                                    sprintf (chPath, "%s/%s",
-                                            strcmp (chPath, "/") == 0 ? "" : chPath, subItem.pszText);
+                                    /* VW: avoiding warning
+                                    snprintf (chPath, MY_PATHMAX + 1, "%s/%s",
+                                            strcmp (chPath, "/") == 0 ? "" : chPath, subItem.pszText); */
+                                    if (strcmp (chPath, "/") == 0) {
+                                        strcat (chPath, subItem.pszText);
+                                    }
+                                    else {
+                                        strcat (chPath, "/");
+                                        strcat (chPath, subItem.pszText);
+                                    }
 #endif
                                     hCtrlWnd = GetDlgItem (hDlg, IDC_FOSD_PATH);
                                     if (GetAccessMode (hDlg, chPath, 0, TRUE) == 0){

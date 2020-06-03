@@ -309,14 +309,10 @@ static void do_self (unsigned char value, key_info* kinfo)
     put_queue (value, kinfo);
 }
 
-#define SIZE(x) (sizeof(x)/sizeof((x)[0]))
-
 static void do_fn (unsigned char value, key_info* kinfo)
 {
-    if (value < SIZE (__mg_func_table)) {
-        if (__mg_func_table [value])
-            puts_queue (__mg_func_table [value], kinfo);
-    }
+    if (__mg_func_table [value])
+        puts_queue (__mg_func_table [value], kinfo);
 }
 
 static void do_pad(unsigned char value, key_info* kinfo)
@@ -417,6 +413,8 @@ static void do_shift (unsigned char value, key_info* kinfo)
         kinfo->npadch = -1;
     }
 }
+
+#define SIZE(x) (sizeof(x)/sizeof((x)[0]))
 
 static void do_spec(unsigned char value, key_info* kinfo)
 {

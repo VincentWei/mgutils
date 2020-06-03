@@ -90,7 +90,7 @@ void WindowClearAll (PCONINFO con, int color)
     GetClientRect (con->hWnd, &rcClient);
 
     hdc = GetClientDC (con->hWnd);
-    SetBrushColor (hdc, SysColorIndex [color_map (color)]);
+    SetBrushColor (hdc, SysPixelIndex [color_map (color)]);
     FillBox (hdc, rcClient.left, rcClient.top,
                   RECTW (rcClient), RECTH (rcClient));
     ReleaseDC (hdc);
@@ -153,8 +153,8 @@ void WindowStringPut (PCONINFO con, const char* text,
     y *= GetCharHeight ();
 
     hdc = GetClientDC (con->hWnd);
-    SetTextColor (hdc, SysColorIndex [color_map (fc) & 0x0F]);
-    SetBkColor (hdc, SysColorIndex [color_map (bc) & 0x0000000F]);
+    SetTextColor (hdc, SysPixelIndex [color_map (fc) & 0x0F]);
+    SetBkColor (hdc, SysPixelIndex [color_map (bc) & 0x0000000F]);
     TextOut (hdc, x, y, text);
     ReleaseDC (hdc);
 }
@@ -173,8 +173,8 @@ void WindowWput (PCONINFO con, WORD word, int fc, int bc, int pos)
     row = pos / con->cols;
 
     hdc = GetClientDC (con->hWnd);
-    SetTextColor (hdc, SysColorIndex [color_map (fc) & 0x0F]);
-    SetBkColor (hdc, SysColorIndex [color_map (bc) & 0x0F]);
+    SetTextColor (hdc, SysPixelIndex [color_map (fc) & 0x0F]);
+    SetBkColor (hdc, SysPixelIndex [color_map (bc) & 0x0F]);
     TextOut (hdc, col * GetCharWidth (), row * GetCharHeight (), szCharBuff);
     ReleaseDC (hdc);
 }
@@ -192,8 +192,8 @@ void WindowSput (PCONINFO con, u_char ch, int fc, int bc, int pos)
     row = pos / con->cols;
 
     hdc = GetClientDC (con->hWnd);
-    SetTextColor (hdc, SysColorIndex [color_map (fc) & 0x0F]);
-    SetBkColor (hdc, SysColorIndex [color_map (bc) & 0x0F]);
+    SetTextColor (hdc, SysPixelIndex [color_map (fc) & 0x0F]);
+    SetBkColor (hdc, SysPixelIndex [color_map (bc) & 0x0F]);
     TextOut (hdc, col * GetCharWidth (), row * GetCharHeight (), szCharBuff);
     ReleaseDC (hdc);
 }

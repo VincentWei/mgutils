@@ -521,7 +521,7 @@ static MGU_PFONT CreateFontAttrList (void)
     int  i;
     char *sn_start, *sn_sep;
     char *fn_start, *fn_end;
-    char font_name[LEN_UNIDEVFONT_NAME + 2];
+    char font_name[LEN_UNIDEVFONT_NAME + 1];
     MGU_PFONT font_head, cur_font;
     const DEVFONT* dev_font = NULL;
 
@@ -531,7 +531,7 @@ static MGU_PFONT CreateFontAttrList (void)
 
     while ((dev_font = GetNextDevFont (dev_font)))
     {
-        strncpy (font_name, dev_font->name, LEN_DEVFONT_NAME);
+        strcpy (font_name, dev_font->name);
         strcat (font_name, ",");
 
         fn_start = strchr (font_name, '-') + 1;
