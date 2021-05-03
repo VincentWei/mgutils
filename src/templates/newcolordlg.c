@@ -328,7 +328,8 @@ static LRESULT ColorDlgProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPar
                 }
             }
 
-            StretchBlt(mdc, 0, 0, 360, 256, scld->SpaceDC, 0, 0, scld->sp_w, scld->sp_h, 0);
+            //StretchBlt(mdc, 0, 0, 360, 256, scld->SpaceDC, 0, 0, scld->sp_w, scld->sp_h, 0);
+            BitBlt(mdc, 0, 0, 360, 256, scld->SpaceDC, 0, 0, 0);
             DeleteMemDC(mdc);
             ReleaseDC(hdc);
         }

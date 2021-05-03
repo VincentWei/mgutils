@@ -800,15 +800,15 @@ LRESULT DefColorDialogProc (HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
                     hdc = GetClientDC (hDlg);
                     scld->SpaceDC = CreateCompatibleDCEx(hdc,
                             RECTW(scld->rcSpace), RECTH(scld->rcSpace));
-                    mdc = CreateCompatibleDCEx (hdc, 360, 101);
-                    for (i =  0; i <= 360; i ++) {
+                    mdc = CreateCompatibleDCEx (hdc, 360, 100);
+                    for (i = 0; i <= 360; i ++) {
                         for (j = 0; j <= 100; j ++) {
                             HSV2RGB (i, j, 65, &r, &g, &b);
                             SetPixelRGB(mdc, i, 100-j, r, g, b);
                         }
                     }
 
-                    StretchBlt(mdc, 0, 0, 360, 256, scld->SpaceDC,
+                    StretchBlt(mdc, 0, 0, 360, 100, scld->SpaceDC,
                             0, 0, RECTW(scld->rcSpace), RECTH(scld->rcSpace), 0);
                     DeleteMemDC(mdc);
                     ReleaseDC(hdc);
