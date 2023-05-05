@@ -54,7 +54,7 @@
 #include <minigui/window.h>
 #include <minigui/control.h>
 
-#ifdef __LINUX__
+#if defined(__LINUX__) || defined(__DARWIN__)
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/types.h>
@@ -600,7 +600,7 @@ ListViewSortByDate( HLVITEM nItem1, HLVITEM nItem2, PLVSORTDATA sortdata)
     return nResult;
 }
 
-#ifdef __LINUX__
+#if defined(__LINUX__) || defined(__DARWIN__)
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
@@ -611,7 +611,7 @@ static inline BOOL is_dir(const char* path)
     if(path == NULL)
         return FALSE;
 
-#ifdef __LINUX__
+#if defined(__LINUX__) || defined(__DARWIN__)
     struct stat    s;
     if(stat(path, &s) != 0)
         return FALSE;
