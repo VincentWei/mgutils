@@ -5,9 +5,11 @@
 *.a
 *.so
 \#
+ltmain.sh
 am--include-marker
 Makefile
 Makefile.in
+m4/
 .deps/
 .libs/
 /acinclude.m4

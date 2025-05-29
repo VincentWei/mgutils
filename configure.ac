@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.71])
-AC_INIT([libmgutils],[1.5.1])
+AC_INIT([libmgutils],[1.5.2])
 AC_CONFIG_SRCDIR(src/templates/colordlg.c)
 AC_CONFIG_MACRO_DIRS([m4])
 
@@ -20,9 +20,9 @@ dnl Set various version strings
 #
 MGUTILS_MAJOR_VERSION=1
 MGUTILS_MINOR_VERSION=5
-MGUTILS_MICRO_VERSION=1
-MGUTILS_INTERFACE_AGE=1
-MGUTILS_BINARY_AGE=1
+MGUTILS_MICRO_VERSION=2
+MGUTILS_INTERFACE_AGE=2
+MGUTILS_BINARY_AGE=2
 
 MGUTILS_VERSION=$MGUTILS_MAJOR_VERSION.$MGUTILS_MINOR_VERSION.$MGUTILS_MICRO_VERSION
 
