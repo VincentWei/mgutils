@@ -1,3 +1,5 @@
+ACLOCAL_AMFLAGS = -I m4
+
 SUBDIRS = src include $(SAMPLES) m4 cmake
 
 # The directory where the include files will be installed

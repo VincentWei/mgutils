@@ -1,8 +1,9 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
-AC_PREREQ(2.60)
-AC_INIT(libmgutils, 1.5.1)
+AC_PREREQ([2.71])
+AC_INIT([libmgutils],[1.5.1])
 AC_CONFIG_SRCDIR(src/templates/colordlg.c)
+AC_CONFIG_MACRO_DIRS([m4])
 
 MGUTILS_NAME="mgutils"
 
@@ -43,20 +44,18 @@ AC_SUBST(LT_CURRENT)
 AC_SUBST(LT_REVISION)
 AC_SUBST(LT_AGE)
 
-AC_CANONICAL_SYSTEM
+AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE
 
-AC_CONFIG_HEADER(mgutilsconfig.h)
+AC_CONFIG_HEADERS([mgutilsconfig.h])
 
 dnl ========================================================================
 # Checks for programs.
 AC_PROG_CC
-AC_PROG_LD
-AC_PROG_RANLIB
-AC_PROG_LIBTOOL
 AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
+LT_INIT
 
 dnl ========================================================================
 dnl Put the name and version of the package here
@@ -65,7 +64,6 @@ dnl Put the name and version of the package here
 
 # Checks for header files.
 AC_HEADER_DIRENT
-AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
 AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h sys/time.h termio.h termios.h unistd.h])
 
@@ -210,14 +208,14 @@ if test "x$devel_mode" = "xyes"; then
         CPPFLAGS="$CPPFLAGS -DDEBUG"
     fi
 
-    if test "$ac_cv_prog_gcc" = "yes"; then
+    if test "$ac_cv_c_compiler_gnu" = "yes"; then
         CPPFLAGS="$CPPFLAGS -Wall -Werror"
     fi
 else
     CPPFLAGS="$CPPFLAGS -DNDEBUG"
 fi
 
-if test "$ac_cv_prog_gcc" = "yes"; then
+if test "$ac_cv_c_compiler_gnu" = "yes"; then
     CFLAGS="$CFLAGS -O2 -Wstrict-prototypes -pipe"
 fi
 
@@ -237,7 +235,7 @@ PC_CFLAGS=""
 AC_SUBST(PC_LIBS)
 AC_SUBST(PC_CFLAGS)
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
         mgutils.pc
         Makefile
         include/Makefile
@@ -249,3 +247,4 @@ AC_OUTPUT([
         src/templates/Makefile
         m4/Makefile
 ])
+AC_OUTPUT
