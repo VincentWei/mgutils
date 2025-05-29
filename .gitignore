@@ -5,6 +5,7 @@
 *.a
 *.so
 \#
+ltmain.sh
 am--include-marker
 Makefile
 Makefile.in
